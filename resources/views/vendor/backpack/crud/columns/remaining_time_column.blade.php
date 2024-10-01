@@ -1,1 +1,0 @@
-{{$entry->adoption_date}}

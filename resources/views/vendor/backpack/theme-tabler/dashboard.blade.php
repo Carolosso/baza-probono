@@ -1,6 +1,8 @@
 @extends(backpack_view('layouts.' . (backpack_theme_config('layout') ?? 'vertical')))
 
 @php
+use App\Models\Child;
+
 	// Merge widgets that were fluently declared with widgets declared without the fluent syntax:
 	// - $data['widgets']['before_content']
 	// - $data['widgets']['after_content']
@@ -11,6 +13,7 @@
 			}
 		}
 	} */
+        $childrenCount = Child::count();
 
 	Widget::add([
     'type'        => 'jumbotron',
@@ -19,13 +22,16 @@
     //'button_link' => backpack_url('child'),
     //'button_text' => 'Lista dzieci',
     // OPTIONAL:
-    'heading_class' => 'display-3',
+    'heading_class' => 'display-4',
 	]);
+
 	Widget::add([
-    'type'        => 'progress',
+    'type'        => 'card',
     'class'       => 'card text-white bg-primary mb-2',
-    'value'       => '2',
-    'description' => 'Adoptowanych dzieci',
+    'content' => [
+		'header' =>'Dodanych dzieci',
+		'body' => $childrenCount,
+	],
     //'progress'    => 57, // integer
     //'hint'        => '8544 more until next milestone.',
 ]);

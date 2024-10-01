@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->date('adoption_date')->nullable();
             $table->integer('length_of_adoption')->nullable();
+            $table->integer('remaining_days_of_adoption')->nullable();
             $table->string('adopter_first_name')->nullable();
             $table->string('adopter_last_name')->nullable();
             $table->string('flag')->nullable();
