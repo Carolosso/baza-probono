@@ -33,7 +33,7 @@
               <ul class="list-group list-group-flush rounded-3">
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0">Data rozpoczęcia:</p>
-                  <p class="mb-0">{{$entry->adoption_date}}</p>
+                  <p class="mb-0">{{$entry->adoption_start_date}}</p>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0">Data zakończenia:</p>

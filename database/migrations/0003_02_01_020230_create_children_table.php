@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('age')->nullable();
             $table->string('birth_place')->nullable();
             $table->string('country')->nullable();
-            $table->date('adoption_date')->nullable();
+            $table->date('adoption_start_date')->nullable();
+            $table->date('adoption_end_date')->nullable();
             $table->integer('length_of_adoption')->nullable();
             $table->integer('remaining_days_of_adoption')->nullable();
             $table->string('adopter_first_name')->nullable();

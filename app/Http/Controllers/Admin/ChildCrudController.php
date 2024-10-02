@@ -95,7 +95,7 @@ class ChildCrudController extends CrudController
             ],
         ]);
          CRUD::column([
-            'name' => 'adoption_date',
+            'name' => 'adoption_start_date',
             'label' => 'Data adopcji',
             'type' => 'date',
             'wrapper' => [
@@ -200,7 +200,7 @@ class ChildCrudController extends CrudController
         ])->tab('Dane dziecka');
 
         CRUD::field([
-            'name' => 'adoption_date',
+            'name' => 'adoption_start_date',
             'label' => 'Data adopcji',
             'type' => 'date'
         ])->tab('Dane dziecka');
@@ -363,7 +363,7 @@ class ChildCrudController extends CrudController
 
         
         CRUD::column([
-            'name' => 'adoption_date',
+            'name' => 'adoption_start_date',
             'label' => 'Data adopcji',
             'type' => 'date',
             'wrapper' => [

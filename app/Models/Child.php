@@ -29,7 +29,8 @@ class Child extends Model
         'birth_place',
         'country',
         'remaining_days_of_adoption',
-        'adoption_date',
+        'adoption_start_date',
+        'adoption_end_date',
         'length_of_adoption',
         'adopter_first_name',
         'adopter_last_name',
@@ -53,7 +54,7 @@ class Child extends Model
     public function getRemainingTime()
     {
         $currentDate = Carbon::now();
-        $adoptionStartDate = Carbon::parse($this->adoption_date);
+        $adoptionStartDate = Carbon::parse($this->adoption_start_date);
         $lengthOfAdoption = $this->length_of_adoption;
 
         // Calculate the adoption end date
