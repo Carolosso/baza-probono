@@ -28,7 +28,7 @@ return [
      * Pick a login page layout.
      * Possible values: default, illustration, cover
      */
-    'auth_layout' => 'illustration', // default, illustration, cover
+    'auth_layout' => 'cover', // default, illustration, cover
 
     /**
      * Here you can easily load your own extra css styles.
@@ -54,7 +54,7 @@ return [
          * The available color modes.
          */
         'colorModes' => [
-            //'system' => 'la-desktop',
+            'system' => 'la-desktop',
             'light' => 'la-sun',
             'dark' => 'la-moon',
         ],

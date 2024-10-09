@@ -1,0 +1,19 @@
+{
+	"name": "DADP",
+	"icons": [
+		{
+			"src": "/hearts_logo_192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/hearts_logo_512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"theme_color": "#161c2d",
+	"background_color": "#161c2d",
+	"start_url": "/admin",
+	"display": "standalone"
+}

@@ -37,7 +37,7 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0">Data zakończenia:</p>
-                  <p class="mb-0"> /w budowie\</p>
+                  <p class="mb-0"> {{$entry->adoption_end_date}}</p>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0">Czas trwania:</p>
@@ -172,7 +172,11 @@
       <div class="d-flex justify-content-center m-4">
         <a href="{{ url($crud->route.'/'.$entry->getKey().'/edit') }}">
         <button type="button" data-mdb-button-init="" data-mdb-ripple-init="" class="btn btn-primary" data-mdb-button-initialized="true">Edytuj profil</button>    
-
+        </a>
+      </div>
+      <div class="d-flex justify-content-center m-4">
+        <a href="{{ url($crud->route) }}">
+        <button type="button" data-mdb-button-init="" data-mdb-ripple-init="" class="btn btn-secondary" data-mdb-button-initialized="true">Powrót</button>    
         </a>
       </div>
     </section>

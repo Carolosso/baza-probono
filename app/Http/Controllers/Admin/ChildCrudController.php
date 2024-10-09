@@ -79,14 +79,6 @@ class ChildCrudController extends CrudController
         ]);
        
         CRUD::column([
-            'name' => 'flag',
-            'label' => 'Chorągiew',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-        CRUD::column([
             'name' => 'flag_comandory',
             'label' => 'Komandoria',
             'type' => 'text',
@@ -125,7 +117,7 @@ class ChildCrudController extends CrudController
                 $remainingDays = $entry->getRemainingTime(); // Call your method to get remaining days
                 
                 if ($remainingDays < 1) {
-                    return '<div class="d-flex justify-content-center"><span class="badge bg-red text-red-fg badge-notification badge-blink">Wygasło</span>'; 
+                    return '<div class="d-flex justify-content-center"><span class="badge bg-red text-red-fg">Wygasło</span>'; 
                 }
                 else if($remainingDays >= 1 && $remainingDays < 30){
                     return '<div class="d-flex justify-content-center"><span class="badge bg-orange text-orange-fg">'.$remainingDays.' dni</span></div>';
@@ -134,7 +126,7 @@ class ChildCrudController extends CrudController
                     return '<div class="d-flex justify-content-center"><span class="badge bg-yellow text-yellow-fg">'.$remainingDays.' dni</span></div>';
                 }
                 else {
-                    return '<div class="d-flex justify-content-center"><span class="badge bg-green text-green-fg position-relative">'.$remainingDays.' dni</span></div>';
+                    return '<div class="d-flex justify-content-center"><span class="badge bg-green text-green-fg">'.$remainingDays.' dni</span></div>';
                 }
             }
         ]);
@@ -164,11 +156,17 @@ class ChildCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(ChildRequest::class);
+        //CRUD::setValidation(ChildRequest::class);
         $this->crud->setTitle('Dodaj','create');
         $this->crud->setHeading('Tworzenie profil dziecka','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');
         //CRUD::setFromDb(); // set fields from db columns.
+         // First, store the entry
+        $entry = $this->crud->create($request->all());
+        // Calculate and save adoption_end_date
+        $this->calculateAndSaveAdoptionEndDate($entry, $request);
+        return redirect()->to($this->crud->route);
+
         CRUD::field([
             'name' => 'first_name',
             'label' => 'Imię dziecka',
@@ -188,6 +186,17 @@ class ChildCrudController extends CrudController
         ])->suffix("lat")->tab('Dane dziecka');
 
         CRUD::field([
+            'name' => 'sex',
+            'label' => 'Płeć',
+            'type' => 'radio',
+            'options' => [
+                'kobieta' => "Kobieta",
+                'mężczyzna' => "Mężczyzna",
+            ],
+            'inline' => true,
+        ])->tab('Dane dziecka');
+
+        CRUD::field([
             'name' => 'birth_place',
             'label' => 'Miejscowość pochodzenia',
             'type' => 'text'
@@ -196,7 +205,216 @@ class ChildCrudController extends CrudController
         CRUD::field([
             'name' => 'country',
             'label' => 'Kraj pochodzenia',
-            'type' => 'text'
+            'type' => 'select_from_array',
+            'options' => [
+                'Afganistan' => 'Afganistan',
+                'Albania' => 'Albania',
+                'Algieria' => 'Algieria',
+                'Andora' => 'Andora',
+                'Angola' => 'Angola',
+                'Antigua i Barbuda' => 'Antigua i Barbuda',
+                'Arabia Saudyjska' => 'Arabia Saudyjska',
+                'Argentyna' => 'Argentyna',
+                'Armenia' => 'Armenia',
+                'Australia' => 'Australia',
+                'Austria' => 'Austria',
+                'Azerbejdżan' => 'Azerbejdżan',
+                'Bahamy' => 'Bahamy',
+                'Bahrajn' => 'Bahrajn',
+                'Bangladesz' => 'Bangladesz',
+                'Barbados' => 'Barbados',
+                'Belgia' => 'Belgia',
+                'Belize' => 'Belize',
+                'Benin' => 'Benin',
+                'Bhutan' => 'Bhutan',
+                'Białoruś' => 'Białoruś',
+                'Boliwia' => 'Boliwia',
+                'Bośnia i Hercegowina' => 'Bośnia i Hercegowina',
+                'Botswana' => 'Botswana',
+                'Brazylia' => 'Brazylia',
+                'Brunei' => 'Brunei',
+                'Bułgaria' => 'Bułgaria',
+                'Burkina Faso' => 'Burkina Faso',
+                'Burundi' => 'Burundi',
+                'Czad' => 'Czad',
+                'Chile' => 'Chile',
+                'Chiny' => 'Chiny',
+                'Chorwacja' => 'Chorwacja',
+                'Cypr' => 'Cypr',
+                'Czarnogóra' => 'Czarnogóra',
+                'Czechy' => 'Czechy',
+                'Dania' => 'Dania',
+                'Djibouti' => 'Dżibuti',
+                'Dominika' => 'Dominika',
+                'Dominikana' => 'Dominikana',
+                'Dżibuti' => 'Dżibuti',
+                'Egipt' => 'Egipt',
+                'Ekwador' => 'Ekwador',
+                'Erytrea' => 'Erytrea',
+                'Estonia' => 'Estonia',
+                'Eswatini' => 'Eswatini',
+                'Etiopia' => 'Etiopia',
+                'Fidżi' => 'Fidżi',
+                'Filipiny' => 'Filipiny',
+                'Finlandia' => 'Finlandia',
+                'Francja' => 'Francja',
+                'Gabon' => 'Gabon',
+                'Gambia' => 'Gambia',
+                'Ghana' => 'Ghana',
+                'Grecja' => 'Grecja',
+                'Grenada' => 'Grenada',
+                'Gruzja' => 'Gruzja',
+                'Gujana' => 'Gujana',
+                'Gwatemala' => 'Gwatemala',
+                'Gwinea' => 'Gwinea',
+                'Gwinea Bissau' => 'Gwinea Bissau',
+                'Gwinea Równikowa' => 'Gwinea Równikowa',
+                'Haiti' => 'Haiti',
+                'Hiszpania' => 'Hiszpania',
+                'Holandia' => 'Holandia',
+                'Honduras' => 'Honduras',
+                'Indie' => 'Indie',
+                'Indonezja' => 'Indonezja',
+                'Irak' => 'Irak',
+                'Iran' => 'Iran',
+                'Irlandia' => 'Irlandia',
+                'Islandia' => 'Islandia',
+                'Izrael' => 'Izrael',
+                'Jamajka' => 'Jamajka',
+                'Japonia' => 'Japonia',
+                'Jemen' => 'Jemen',
+                'Jordania' => 'Jordania',
+                'Kambodża' => 'Kambodża',
+                'Kamerun' => 'Kamerun',
+                'Kanada' => 'Kanada',
+                'Katar' => 'Katar',
+                'Kazachstan' => 'Kazachstan',
+                'Kenia' => 'Kenia',
+                'Kirgistan' => 'Kirgistan',
+                'Kiribati' => 'Kiribati',
+                'Kolumbia' => 'Kolumbia',
+                'Komory' => 'Komory',
+                'Kongo' => 'Kongo',
+                'Korea Południowa' => 'Korea Południowa',
+                'Korea Północna' => 'Korea Północna',
+                'Kostaryka' => 'Kostaryka',
+                'Kuba' => 'Kuba',
+                'Kuwejt' => 'Kuwejt',
+                'Laos' => 'Laos',
+                'Lesotho' => 'Lesotho',
+                'Liban' => 'Liban',
+                'Liberia' => 'Liberia',
+                'Libia' => 'Libia',
+                'Liechtenstein' => 'Liechtenstein',
+                'Litwa' => 'Litwa',
+                'Luksemburg' => 'Luksemburg',
+                'Łotwa' => 'Łotwa',
+                'Macedonia' => 'Macedonia',
+                'Madagaskar' => 'Madagaskar',
+                'Malawi' => 'Malawi',
+                'Malediwy' => 'Malediwy',
+                'Malezja' => 'Malezja',
+                'Mali' => 'Mali',
+                'Malta' => 'Malta',
+                'Maroko' => 'Maroko',
+                'Mauritius' => 'Mauritius',
+                'Meksyk' => 'Meksyk',
+                'Mikronezja' => 'Mikronezja',
+                'Mjanma' => 'Mjanma',
+                'Mołdawia' => 'Mołdawia',
+                'Monako' => 'Monako',
+                'Mongolia' => 'Mongolia',
+                'Mozambik' => 'Mozambik',
+                'Namibia' => 'Namibia',
+                'Nauru' => 'Nauru',
+                'Nepal' => 'Nepal',
+                'Niemcy' => 'Niemcy',
+                'Niger' => 'Niger',
+                'Nigeria' => 'Nigeria',
+                'Nikaragua' => 'Nikaragua',
+                'Norwegia' => 'Norwegia',
+                'Nowa Zelandia' => 'Nowa Zelandia',
+                'Oman' => 'Oman',
+                'Pakistan' => 'Pakistan',
+                'Panama' => 'Panama',
+                'Papua Nowa Gwinea' => 'Papua Nowa Gwinea',
+                'Paragwaj' => 'Paragwaj',
+                'Peru' => 'Peru',
+                'Polska' => 'Polska',
+                'Portugalia' => 'Portugalia',
+                'Republika Południowej Afryki' => 'Republika Południowej Afryki',
+                'Republika Środkowoafrykańska' => 'Republika Środkowoafrykańska',
+                'Republika Zielonego Przylądka' => 'Republika Zielonego Przylądka',
+                'Rosja' => 'Rosja',
+                'Rumunia' => 'Rumunia',
+                'Rwanda' => 'Rwanda',
+                'Salwador' => 'Salwador',
+                'Samoa' => 'Samoa',
+                'San Marino' => 'San Marino',
+                'Senegal' => 'Senegal',
+                'Serbia' => 'Serbia',
+                'Seszele' => 'Seszele',
+                'Sierra Leone' => 'Sierra Leone',
+                'Singapur' => 'Singapur',
+                'Słowacja' => 'Słowacja',
+                'Słowenia' => 'Słowenia',
+                'Somalia' => 'Somalia',
+                'Sri Lanka' => 'Sri Lanka',
+                'Stany Zjednoczone' => 'Stany Zjednoczone',
+                'Sudan' => 'Sudan',
+                'Sudan Południowy' => 'Sudan Południowy',
+                'Surinam' => 'Surinam',
+                'Syria' => 'Syria',
+                'Szwajcaria' => 'Szwajcaria',
+                'Szwecja' => 'Szwecja',
+                'Tadżykistan' => 'Tadżykistan',
+                'Tajlandia' => 'Tajlandia',
+                'Tanzania' => 'Tanzania',
+                'Togo' => 'Togo',
+                'Tonga' => 'Tonga',
+                'Trynidad i Tobago' => 'Trynidad i Tobago',
+                'Tunezja' => 'Tunezja',
+                'Turcja' => 'Turcja',
+                'Turkmenistan' => 'Turkmenistan',
+                'Tuvalu' => 'Tuvalu',
+                'Uganda' => 'Uganda',
+                'Ukraina' => 'Ukraina',
+                'Urugwaj' => 'Urugwaj',
+                'Uzbekistan' => 'Uzbekistan',
+                'Vanuatu' => 'Vanuatu',
+                'Watykan' => 'Watykan',
+                'Wenezuela' => 'Wenezuela',
+                'Węgry' => 'Węgry',
+                'Wielka Brytania' => 'Wielka Brytania',
+                'Wietnam' => 'Wietnam',
+                'Wybrzeże Kości Słoniowej' => 'Wybrzeże Kości Słoniowej',
+                'Wyspy Marshalla' => 'Wyspy Marshalla',
+                'Wyspy Salomona' => 'Wyspy Salomona',
+                'Zambia' => 'Zambia',
+                'Zimbabwe' => 'Zimbabwe',
+                'Zjednoczone Emiraty Arabskie' => 'Zjednoczone Emiraty Arabskie',
+
+            ]
+        ])->tab('Dane dziecka');
+
+        CRUD::field([
+            'name' => 'group',
+            'label' => 'Zgromadzenie',
+            'type' => 'select_from_array',
+            'options' => [
+                'michalitki' => 'michalitki',
+                'pasjonistki' => 'pasjonistki',
+                'klawerianki' => 'klawerianki',
+                'opatrzności bożej' => 'opatrzności bożej',
+                'urszulanki' => 'urszulanki',
+                'franciszkanie' => 'franciszkanie',
+            ]
+        ])->tab('Dane dziecka');
+
+        CRUD::field([
+            'name' => 'adoption_start_date',
+            'label' => 'Data adopcji',
+            'type' => 'date'
         ])->tab('Dane dziecka');
 
         CRUD::field([
@@ -231,6 +449,37 @@ class ChildCrudController extends CrudController
         ])->tab('Dane dziecka');
         
         CRUD::field([
+            'name' => 'others',
+            'label' => 'Uwagi',
+            'type' => 'textarea'
+        ])->tab('Dane dziecka');
+        
+        CRUD::field([
+            'name' => 'coordinator_first_name',
+            'label' => 'Imię koordynatora',
+            'type' => 'text'
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
+            'name' => 'coordinator_last_name',
+            'label' => 'Nazwisko koordynatora',
+            'type' => 'text'
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
+            'name' => 'adopter_type',
+            'label' => 'Rodzaj opiekuna',
+            'type' => 'select_from_array',
+            'options' => [
+                'Chorągiew' => 'Chorągiew',
+                'Komandoria' => 'Komandoria',
+                'Schola' => 'Schola',
+                'Rada Rodziców' => 'Rada Rodziców',
+                'Osoba świecka' => 'Osoba świecka',
+            ]
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
             'name' => 'adopter_first_name',
             'label' => 'Imię opiekuna',
             'type' => 'text'
@@ -243,21 +492,65 @@ class ChildCrudController extends CrudController
         ])->tab('Dane opiekuna');
         
         CRUD::field([
-            'name' => 'adopter_last_name',
-            'label' => 'Nazwisko opiekuna',
-            'type' => 'text'
+            'name' => 'adopter_email',
+            'label' => 'Adres Email opiekuna',
+            'type' => 'email'
         ])->tab('Dane opiekuna');
 
         CRUD::field([
-            'name' => 'flag',
-            'label' => 'Nazwa chorągwi koordynującej adopcję',
+            'name' => 'adopter_phone',
+            'label' => 'Numer telefonu opiekuna',
             'type' => 'text'
         ])->tab('Dane opiekuna');
 
         CRUD::field([
             'name' => 'flag_comandory',
-            'label' => 'Nazwa komandorii',
-            'type' => 'text'
+            'label' => 'Komandoria',
+            'type' => 'select_from_array',
+            'options' => [
+                'białostocka' => 'białostocka',
+                'bielsko-żywiecka' => 'bielsko-żywiecka',
+                'bydgoska' => 'bydgoska',
+                'częstochowska' => 'częstochowska',
+                'drohiczyńska' => 'drohiczyńska',
+                'elbląska' => 'elbląska',
+                'ełcka' => 'ełcka',
+                'gdańska' => 'gdańska',
+                'gliwicka' => 'gliwicka',
+                'gnieźnieńska' => 'gnieźnieńska',
+                'kaliska' => 'kaliska',
+                'katowicka' => 'katowicka',
+                'kielecka' => 'kielecka',
+                'koszalińsko-kołobrzeska' => 'koszalińsko-kołobrzeska',
+                'krakowska' => 'krakowska',
+                'legnicka' => 'legnicka',
+                'lubelska' => 'lubelska',
+                'łomżyńska' => 'łomżyńska',
+                'łowicka' => 'łowicka',
+                'łódzka' => 'łódzka',
+                'warmińska' => 'warmińska',
+                'opolska' => 'opolska',
+                'pelplińska' => 'pelplińska',
+                'płocka' => 'płocka',
+                'poznańska' => 'poznańska',
+                'przemyska' => 'przemyska',
+                'radomska' => 'radomska',
+                'rzeszowska' => 'rzeszowska',
+                'sandomierska' => 'sandomierska',
+                'siedlecka' => 'siedlecka',
+                'sosnowiecka' => 'sosnowiecka',
+                'szczecińsko-kamieńska' => 'szczecińsko-kamieńska',
+                'świdnicka' => 'świdnicka',
+                'tarnowska' => 'tarnowska',
+                'toruńska' => 'toruńska',
+                'warszawska' => 'warszawska',
+                'warszawsko-praska' => 'warszawsko-praska',
+                'włocławska' => 'włocławska',
+                'wrocławska' => 'wrocławska',
+                'zamojsko-lubaczowska' => 'zamojsko-lubaczowska',
+                'zielonogórsko-gorzowska' => 'zielonogórsko-gorzowska',
+
+            ]
         ])->tab('Dane opiekuna');
     
         CRUD::field([
@@ -479,16 +772,25 @@ class ChildCrudController extends CrudController
 
 
 
+    private function calculateAndSaveAdoptionEndDate($entry, $request)
+    {
+        // Get the adoption_start_date and length_of_adoption from the request
+        $adoptionStartDate = $request->input('adoption_start_date');
+        $lengthOfAdoption = $request->input('length_of_adoption');
+
+        // Ensure both fields are available
+        if ($adoptionStartDate && $lengthOfAdoption) {
+            // Parse the adoption start date and add the length of adoption days
+            $adoptionEndDate = Carbon::parse($adoptionStartDate)->addDays($lengthOfAdoption);
+
+            // Save the adoption end date in the entry
+            $entry->adoption_end_date = $adoptionEndDate;
+            $entry->save(); // Save the entry with the updated adoption_end_date
+        }
+    }
+
    private function addAdoptionField($child_age)
     {
-        // Add a hidden field to store the child's age
-        CRUD::field([
-            'name' => 'child_age',
-            'label' => 'Child Age',
-            'type' => 'hidden',
-            'value' => $child_age,
-        ]);
-
         // Add the select field
         CRUD::field([ 
             'name' => 'length_of_adoption',

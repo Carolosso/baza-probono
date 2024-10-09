@@ -23,25 +23,33 @@ class Child extends Model
     // public $timestamps = false;
     protected $guarded = ['id',];
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'age',
-        'birth_place',
-        'country',
-        'remaining_days_of_adoption',
-        'adoption_start_date',
-        'adoption_end_date',
-        'length_of_adoption',
-        'adopter_first_name',
-        'adopter_last_name',
-        'flag',
-        'flag_comandory',
-        'image_url',
-        'one_time_pay',
-        'first_pay',
-        'second_pay',
-        'third_pay',
-        'forth_pay'
+        'first_name', //C
+        'last_name', //C
+        'age',  //C
+        'birth_place', //C
+        'country',  //C
+        'sex',  //C
+        'others', //C
+        'coordinator_first_name', //C
+        'coordinator_last_name', //C
+        'remaining_days_of_adoption', //C
+        'adoption_start_date', //C
+        'adoption_end_date', //C
+        'group', //C
+        'length_of_adoption', //C
+        'adopter_first_name', //C
+        'adopter_last_name', //C
+        'adopter_city', 
+        'adopter_type', //C
+        'adopter_email', //C
+        'adopter_phone', //C
+        'flag_comandory', //C
+        'image_url', //C
+        'one_time_pay', //C
+        'first_pay', //C
+        'second_pay', //C
+        'third_pay', //C
+        'forth_pay' //C
     ];
     // protected $hidden = [];
 
