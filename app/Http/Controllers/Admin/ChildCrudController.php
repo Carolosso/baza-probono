@@ -7,6 +7,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Backpack\CRUD\app\Library\Widget;
 
 
 /**
@@ -21,6 +22,7 @@ class ChildCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -112,11 +114,11 @@ class ChildCrudController extends CrudController
             'name' => 'remaining_time',
             'label' => 'Pozostało',
             'type' => 'custom_html',
-            'orderable'  => false, // use custom_html
+            'orderable'  => true, // use custom_html
             'value' => function($entry) {
                 $remainingDays = $entry->getRemainingTime(); // Call your method to get remaining days
-                
-                if ($remainingDays < 1) {
+                return $remainingDays;
+                /* if ($remainingDays < 1) {
                     return '<div class="d-flex justify-content-center"><span class="badge bg-red text-red-fg">Wygasło</span>'; 
                 }
                 else if($remainingDays >= 1 && $remainingDays < 30){
@@ -127,25 +129,9 @@ class ChildCrudController extends CrudController
                 }
                 else {
                     return '<div class="d-flex justify-content-center"><span class="badge bg-green text-green-fg">'.$remainingDays.' dni</span></div>';
-                }
+                } */
             }
         ]);
-
-        // // Add the remaining time column dynamically calculated
-        // CRUD::addColumn([
-        //     'name' => 'remaining_time',
-        //     'label' => 'Remaining Time (days)',
-        //     'type' => 'model_function',
-        //     'function_name' => 'getRemainingTime', // Will call a model function
-        //     'escaped' => false, // If you don't want the HTML to be escaped
-        // ]);
-
-        //CRUD::setFromDb(); // set columns from db columns.
-       
-        /**
-         * Columns can be defined using the fluent syntax:
-         * - CRUD::column('price')->type('number');
-         */
     }
 
     /**
@@ -161,6 +147,7 @@ class ChildCrudController extends CrudController
         $this->crud->setHeading('Tworzenie profil dziecka','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');
         //CRUD::setFromDb(); // set fields from db columns.
+        Widget::add()->type('script')->content('js/end_date.js');
 
         CRUD::field([
             'name' => 'first_name',
@@ -418,21 +405,36 @@ class ChildCrudController extends CrudController
             'type' => 'date'
         ])->tab('Dane dziecka');
 
-        $child_age = 0; // Default to 0 for new entries
-        $this->addAdoptionField($child_age);
+        CRUD::field([ 
+            'name' => 'length_of_adoption',
+            'label' => 'Czas adopcji',
+            'type' => 'select_from_array',
+            'options' => [
+                365 => '1 rok',
+                365*2 => '2 lata',
+                365*3 => '3 lata',
+                'to_be_calculated' => 'do uzyskania pełnoletności',
+                //'do ukończenia szkoły' => 'do ukończenia szkoły',
+            ],
+            'allows_null' => false,
+            'default' => 365,  // default to 1 year if none selected
+        ])->tab('Dane dziecka');
 
        /*  CRUD::field([
             'name' => 'remaining_days_of_adoption',
-            'label' => 'Pozostało dni',
-            'type' => 'number',
-            'attributes' => [
-            //'placeholder' => 'Some text when empty',
-            //'class' => 'form-control some-class',
-            'readonly'  => 'readonly',
-            //'disabled'  => 'disabled',
-            ]           
+            'label' => 'Data zakończenia szkoły',
+            'type' => 'date',
+
+        ])->tab('Dane dziecka'); */
+
+        CRUD::field([
+            'name' => 'adoption_end_date',
+            'label' => 'Data zakończenia adopcji',
+            'type' => 'date',
+
         ])->tab('Dane dziecka');
- */
+
+        
 
         CRUD::field([
             'name' => 'image_url',
@@ -591,170 +593,11 @@ class ChildCrudController extends CrudController
         $this->crud->setTitle('Edycja '. $child->first_name,'edit');
         $this->crud->setHeading('Edycja profilu '. $child->first_name . ' ' . $child->last_name,'edit');
         $this->crud->setSubHeading('Edytuj informacje','edit');
-        $this->setupCreateOperation();
-        
+        $this->setupCreateOperation();       
     }
 
     protected function setupShowOperation(){
-            //$this->crud->setShowView('vendor.backpack.crud.show');
 
-        CRUD::column([
-            'name' => 'image_url',
-            'label' => 'Zdjęcie',
-            'type' => 'image',
-            'prefix' => '/storage/',
-            'height' => '40%',
-            'width' => '30%',
-        ]);
-        CRUD::column([
-            'name' => 'first_name',
-            'label' => 'Imię dziecka',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-        CRUD::column([
-            'name' => 'last_name',
-            'label' => 'Nazwisko dziecka',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-       CRUD::column([
-            'name' => 'age',
-            'label' => 'Wiek dziecka',
-            'type' => 'number',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ])->suffix(" lat");
-
-        CRUD::column([
-            'name' => 'birth_place',
-            'label' => 'Miejscowość pochodzenia',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
-        CRUD::column([
-            'name' => 'country',
-            'label' => 'Kraj pochodzenia',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
-        
-        CRUD::column([
-            'name' => 'adoption_start_date',
-            'label' => 'Data adopcji',
-            'type' => 'date',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
-        CRUD::column([
-            'name' => 'length_of_adoption',
-            'label' => 'Okres adopcji',
-            'type' => 'text',
-            'suffix' => ' lat',
-            'value' => function($entry){
-                $days = $entry->length_of_adoption;
-                return intval($days/365);
-            },
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
-        CRUD::Column([
-            'name' => 'remaining_time',
-            'label' => 'Pozostało',
-            'type' => 'custom_html',
-            'orderable'  => false, // use custom_html
-            'value' => function($entry) {
-                $remainingDays = $entry->getRemainingTime(); // Call your method to get remaining days
-                
-                if ($remainingDays < 1) {
-                    return '<span class="badge bg-red text-red-fg">Wygasło</span>'; 
-                }
-                else if($remainingDays >= 1 && $remainingDays < 30){
-                    return '<span class="badge bg-orange text-orange-fg">'.$remainingDays.' dni</span>';
-                }
-                else if($remainingDays >= 30 && $remainingDays <= 90){
-                    return '<span class="badge bg-yellow text-yellow-fg">'.$remainingDays.' dni</span>';
-                }
-                else {
-                    return '<span class="badge bg-green text-green-fg ">'.$remainingDays.' dni</span>';
-                }
-            }
-        ]);
-        CRUD::column([
-            'name' => 'adopter_first_name',
-            'label' => 'Imię opiekuna',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ])->tab('Dane opiekuna');
-
-        CRUD::column([
-            'name' => 'adopter_last_name',
-            'label' => 'Nazwisko opiekuna',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ])->tab('Dane opiekuna');
-
-        CRUD::column([
-            'name' => 'flag',
-            'label' => 'Chorągiew',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-        CRUD::column([
-            'name' => 'flag_comandory',
-            'label' => 'Komandoria',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
-        CRUD::column([
-            'name' => 'one_time_pay',
-            'label' => 'Data wpłaty jednorazowej',
-            'type' => 'date'
-        ]);
-        CRUD::column([
-            'name' => 'first_pay',
-            'label' => 'Data wpłaty I raty',
-            'type' => 'date'
-        ]);
-        CRUD::column([
-            'name' => 'second_pay',
-            'label' => 'Data wpłaty II raty',
-            'type' => 'date'
-        ]);
-        CRUD::column([
-            'name' => 'third_pay',
-            'label' => 'Data wpłaty III raty',
-            'type' => 'date'
-        ]);
-         CRUD::column([
-            'name' => 'forth_pay',
-            'label' => 'Data wpłaty IV raty',
-            'type' => 'date'
-        ]);
     }
 
     protected function setupDeleteOperation()
@@ -764,43 +607,4 @@ class ChildCrudController extends CrudController
         // Alternatively, if you are not doing much more than defining fields in your create operation:
         // $this->setupCreateOperation();
     }
-
-
-
-    private function calculateAndSaveAdoptionEndDate($entry, $request)
-    {
-        // Get the adoption_start_date and length_of_adoption from the request
-        $adoptionStartDate = $request->input('adoption_start_date');
-        $lengthOfAdoption = $request->input('length_of_adoption');
-
-        // Ensure both fields are available
-        if ($adoptionStartDate && $lengthOfAdoption) {
-            // Parse the adoption start date and add the length of adoption days
-            $adoptionEndDate = Carbon::parse($adoptionStartDate)->addDays($lengthOfAdoption);
-
-            // Save the adoption end date in the entry
-            $entry->adoption_end_date = $adoptionEndDate;
-            $entry->save(); // Save the entry with the updated adoption_end_date
-        }
-    }
-
-   private function addAdoptionField($child_age)
-    {
-        // Add the select field
-        CRUD::field([ 
-            'name' => 'length_of_adoption',
-            'label' => 'Czas adopcji',
-            'type' => 'select_from_array',
-            'options' => [
-                365 => '1 rok',
-                365*2 => '2 lata',
-                365*3 => '3 lata',
-                'to_be_calculated' => 'do uzyskania pełnoletności',
-            ],
-            'allows_null' => false,
-            'default' => 365,  // default to 1 year if none selected
-        ])->tab('Dane dziecka');
-    }
-
-    
 }
