@@ -161,11 +161,6 @@ class ChildCrudController extends CrudController
         $this->crud->setHeading('Tworzenie profil dziecka','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');
         //CRUD::setFromDb(); // set fields from db columns.
-         // First, store the entry
-        $entry = $this->crud->create($request->all());
-        // Calculate and save adoption_end_date
-        $this->calculateAndSaveAdoptionEndDate($entry, $request);
-        return redirect()->to($this->crud->route);
 
         CRUD::field([
             'name' => 'first_name',
