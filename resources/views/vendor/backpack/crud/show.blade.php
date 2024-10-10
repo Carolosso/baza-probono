@@ -162,19 +162,19 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Imię:</p>
-                      <p class="mb-0 fw-bolder">{{$entry->adopter_first_name}}</p>
+                      <p class="mb-0">{{$entry->adopter_first_name}}</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Nazwisko:</p>
-                      <p class="mb-0 fw-bolder"> {{$entry->adopter_last_name}}</p>
+                      <p class="mb-0"> {{$entry->adopter_last_name}}</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Email:</p>
-                      <p class="mb-0 fw-bolder"> {{$entry->adopter_email}}</p>
+                      <p class="mb-0"> {{$entry->adopter_email}}</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Telefon:</p>
-                      <p class="mb-0 fw-bolder"> {{$entry->adopter_phone}}</p>
+                      <p class="mb-0"> {{$entry->adopter_phone}}</p>
                     </li>  
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Komandoria:</p>
