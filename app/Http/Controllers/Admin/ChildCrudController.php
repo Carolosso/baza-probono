@@ -117,7 +117,7 @@ class ChildCrudController extends CrudController
             'orderable'  => true, // use custom_html
             'value' => function($entry) {
                 $remainingDays = $entry->getRemainingTime(); // Call your method to get remaining days
-                return $remainingDays;
+                //return $remainingDays;
                 if ($remainingDays < 1) {
                     return '<div class="d-flex justify-content-center"><span class="badge bg-red text-red-fg">Wygasło</span>'; 
                 }
