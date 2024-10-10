@@ -41,7 +41,7 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0 fw-bolder">Data zakończenia:</p>
-                  <p class="mb-0"> {{$entry->adoption_end_date}}</p>
+                  <p class="mb-0">w budowie</p>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0 fw-bolder">Czas trwania:</p>

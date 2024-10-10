@@ -58,7 +58,7 @@ class ChildCrudController extends CrudController
             'type' => 'image',
             'prefix' => '/storage/',
             'height' => 'auto',
-            'width' => '6rem',  
+            'width' => '5rem',  
             'wrapper' => [
                 'class' => 'd-flex justify-content-center'
             ],       
