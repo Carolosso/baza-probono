@@ -58,7 +58,7 @@ class ChildCrudController extends CrudController
             'type' => 'image',
             'prefix' => '/storage/',
             'height' => 'auto',
-            'width' => '10rem',  
+            'width' => '6rem',  
             'wrapper' => [
                 'class' => 'd-flex justify-content-center'
             ],       
@@ -118,7 +118,7 @@ class ChildCrudController extends CrudController
             'value' => function($entry) {
                 $remainingDays = $entry->getRemainingTime(); // Call your method to get remaining days
                 return $remainingDays;
-                /* if ($remainingDays < 1) {
+                if ($remainingDays < 1) {
                     return '<div class="d-flex justify-content-center"><span class="badge bg-red text-red-fg">Wygasło</span>'; 
                 }
                 else if($remainingDays >= 1 && $remainingDays < 30){
@@ -129,7 +129,7 @@ class ChildCrudController extends CrudController
                 }
                 else {
                     return '<div class="d-flex justify-content-center"><span class="badge bg-green text-green-fg">'.$remainingDays.' dni</span></div>';
-                } */
+                }
             }
         ]);
     }
