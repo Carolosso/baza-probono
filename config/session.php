@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'driver' => env('SESSION_DRIVER', 'file'),
+    'driver' => env('SESSION_DRIVER', 'database'),
 
     /*
     |--------------------------------------------------------------------------
@@ -143,7 +143,7 @@ return [
     |
     */
 
-    'path' => env('SESSION_PATH', '/'),
+    'path' => env('SESSION_PATH', '/admin'),
 
     /*
     |--------------------------------------------------------------------------
