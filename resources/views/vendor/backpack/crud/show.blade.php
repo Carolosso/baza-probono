@@ -175,7 +175,11 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Telefon:</p>
                       <p class="mb-0"> {{$entry->adopter_phone}}</p>
-                    </li>  
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <p class="mb-0 fw-bolder">Adres:</p>
+                      <p class="mb-0"> {{$entry->address}}</p>
+                    </li>   
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Komandoria:</p>
                       <p class="mb-0">{{$entry->flag_comandory}}</p>
