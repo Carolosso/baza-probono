@@ -44,6 +44,7 @@ class Child extends Model
         'adopter_email', //C
         'adopter_phone', //C
         'flag_comandory', //C
+        'address', //C
         'image_url', //C
         'one_time_pay', //C
         'first_pay', //C

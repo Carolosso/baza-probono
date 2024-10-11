@@ -79,7 +79,15 @@ class ChildCrudController extends CrudController
                 //'class' => 'fs-3'
             ],
         ]);
-       
+       CRUD::column([
+            'name' => 'group',
+            'label' => 'Zgromadzenie',
+            'type' => 'text',
+            'wrapper' => [
+                //'class' => 'fs-3'
+            ],
+        ]);
+
         CRUD::column([
             'name' => 'flag_comandory',
             'label' => 'Komandoria',
@@ -88,7 +96,8 @@ class ChildCrudController extends CrudController
                 //'class' => 'fs-3'
             ],
         ]);
-         CRUD::column([
+
+        CRUD::column([
             'name' => 'adoption_start_date',
             'label' => 'Data adopcji',
             'type' => 'date',
@@ -497,6 +506,12 @@ class ChildCrudController extends CrudController
         CRUD::field([
             'name' => 'adopter_phone',
             'label' => 'Numer telefonu opiekuna',
+            'type' => 'text'
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
+            'name' => 'address',
+            'label' => 'Adres',
             'type' => 'text'
         ])->tab('Dane opiekuna');
 
