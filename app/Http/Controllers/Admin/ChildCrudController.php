@@ -425,8 +425,7 @@ class ChildCrudController extends CrudController
                 'to_be_calculated' => 'do uzyskania pełnoletności',
                 //'do ukończenia szkoły' => 'do ukończenia szkoły',
             ],
-            'allows_null' => false,
-            'default' => 365,  // default to 1 year if none selected
+            'allows_null' => false,  // default to 1 year if none selected
         ])->tab('Dane dziecka');
 
        /*  CRUD::field([
