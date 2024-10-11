@@ -60,7 +60,7 @@ return [
     // The string below will be passed through the url() helper.
     // - default: '' (project root)
     // - alternative: 'admin' (the admin's dashboard)
-    'home_link' => '',
+    'home_link' => 'admin',
 
     // Menu logo. You can replace this with an <img> tag if you have a logo.
     'project_logo' => '<img src="/hearts_logo_192x192.png" height="40px width="auto"></img>&nbsp<b>Hearts</b>OMSIPII',
