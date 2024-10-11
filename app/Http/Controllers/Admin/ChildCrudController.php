@@ -142,7 +142,7 @@ class ChildCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        //CRUD::setValidation(ChildRequest::class);
+        CRUD::setValidation(ChildRequest::class);
         $this->crud->setTitle('Dodaj','create');
         $this->crud->setHeading('Tworzenie profil dziecka','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');

@@ -6,6 +6,7 @@ use Closure;
 
 class CheckIfAdmin
 {
+    
     /**
      * Checked that the logged in user is an administrator.
      *
