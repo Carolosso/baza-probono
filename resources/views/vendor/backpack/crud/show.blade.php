@@ -23,7 +23,7 @@
                @if($entry->image_url)
               <img src="{{ asset('storage/'.$entry->image_url) }}" alt="avatar" class="rounded" style="max-height: 200px; height: 60%; width: auto">
             @else
-              <img src="{{ asset('storage/Blank-profile.png') }}" alt="no_avatar" class="rounded" style="max-height: 200px; height: 60%; width: auto">
+              <img src="{{ asset('storage/photos/Blank-profile.png') }}" alt="no_avatar" class="rounded" style="max-height: 200px; height: 60%; width: auto">
             @endif
             </div>
           </div>
