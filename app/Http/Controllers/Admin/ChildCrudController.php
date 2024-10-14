@@ -425,7 +425,12 @@ class ChildCrudController extends CrudController
                 'to_be_calculated' => 'do uzyskania pełnoletności',
                 //'do ukończenia szkoły' => 'do ukończenia szkoły',
             ],
-            'allows_null' => false,  // default to 1 year if none selected
+            'allows_null' => false, 
+            'value' =>  $this->crud->getCurrentEntry() 
+                ? ($this->crud->getCurrentEntry()->length_of_adoption > (365 * 3) 
+                ? 'to_be_calculated'                  // If length_of_adoption > 3 years, select 'to_be_calculated'
+                : $this->crud->getCurrentEntry()->length_of_adoption) 
+                 : null,  
         ])->tab('Dane dziecka');
 
        /*  CRUD::field([
@@ -442,15 +447,14 @@ class ChildCrudController extends CrudController
 
         ])->tab('Dane dziecka');
 
-        
-
         CRUD::field([
             'name' => 'image_url',
             'type' => 'upload',
-            'label' => 'Zdjęcie'          
+            'label' => 'Zdjęcie',
         ])->withFiles([
         'disk' => 'public', // the disk where file will be stored
-        'path' => 'photos'
+        'path' => 'photos',
+
         ])->tab('Dane dziecka');
         
         CRUD::field([
