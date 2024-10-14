@@ -31,10 +31,15 @@ use App\Models\Child;
     'content' => [
 		'header' =>'Dodanych dzieci',
 		'body' => $childrenCount,
-	],
-    //'progress'    => 57, // integer
-    //'hint'        => '8544 more until next milestone.',
-]);
+	]]);
+	Widget::add([
+    'type'        => 'card',
+    'class'       => 'card text-white bg-danger mb-2',
+    'content' => [
+		'header' =>'Uwaga!',
+		'body' => 'Proszę o sprawdzenie okresu adopcji ostatnio edytowanych dzieci. Występował błąd, który mógł nieoczekiwanie zmieniać okres adopcji na 1 rok.',
+	]]);
+
 @endphp
 
 @section('before_breadcrumbs_widgets')

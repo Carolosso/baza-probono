@@ -38,14 +38,14 @@
     /* Subtle blue for borders */
 
     /* Secondary Color: Purple */
-    --tblr-secondary: #6c5ce7;
+    --tblr-secondary: #cdcbdb;
     /* Deep purple for secondary actions */
     --tblr-secondary-rgb: 108, 92, 231;
-    --tblr-secondary-text-emphasis: #3e3a5b;
+    --tblr-secondary-text-emphasis: #666479;
     /* Darker purple for emphasis */
-    --tblr-secondary-bg-subtle: #ede9ff;
+    --tblr-secondary-bg-subtle: #aaa4c7;
     /* Light purple for background emphasis */
-    --tblr-secondary-border-subtle: #cbc6f7;
+    --tblr-secondary-border-subtle: #aca8cf;
     /* Subtle purple borders */
 
     /* Accent Color: Orange */
@@ -127,7 +127,7 @@
     /* Dark Mode Primary and Secondary Colors */
     --tblr-primary: #3498db;
     /* Blue for primary actions */
-    --tblr-secondary: #6c5ce7;
+    --tblr-secondary: #8a82c4;
     /* Purple for secondary actions */
 
     /* Links and Text */
@@ -143,4 +143,8 @@
     /* Green for success */
     --tblr-danger: #e74c3c;
     /* Red for danger */
+}
+
+.text-secondary {
+    color: #ecf0f1 !important;
 }

@@ -156,8 +156,6 @@ class ChildCrudController extends CrudController
         $this->crud->setHeading('Tworzenie profil dziecka','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');
         //CRUD::setFromDb(); // set fields from db columns.
-        Widget::add()->type('script')->content('js/end_date.js');
-
         CRUD::field([
             'name' => 'first_name',
             'label' => 'Imię dziecka',
@@ -408,12 +406,6 @@ class ChildCrudController extends CrudController
             'type' => 'date'
         ])->tab('Dane dziecka');
 
-        CRUD::field([
-            'name' => 'adoption_start_date',
-            'label' => 'Data adopcji',
-            'type' => 'date'
-        ])->tab('Dane dziecka');
-
         CRUD::field([ 
             'name' => 'length_of_adoption',
             'label' => 'Czas adopcji',
@@ -433,18 +425,14 @@ class ChildCrudController extends CrudController
                  : null,  
         ])->tab('Dane dziecka');
 
-       /*  CRUD::field([
-            'name' => 'remaining_days_of_adoption',
-            'label' => 'Data zakończenia szkoły',
-            'type' => 'date',
-
-        ])->tab('Dane dziecka'); */
 
         CRUD::field([
             'name' => 'adoption_end_date',
             'label' => 'Data zakończenia adopcji',
             'type' => 'date',
-
+            'attributes' => [
+                'disabled'    => 'disabled',
+            ],
         ])->tab('Dane dziecka');
 
         CRUD::field([
@@ -454,7 +442,6 @@ class ChildCrudController extends CrudController
         ])->withFiles([
         'disk' => 'public', // the disk where file will be stored
         'path' => 'photos',
-
         ])->tab('Dane dziecka');
         
         CRUD::field([
