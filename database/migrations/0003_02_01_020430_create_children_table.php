@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('sex')->nullable();
             $table->string('others')->nullable();
+            $table->string('address')->nullable();
             $table->string('coordinator_first_name')->nullable();
             $table->string('coordinator_last_name')->nullable();
             $table->date('adoption_start_date')->nullable();
