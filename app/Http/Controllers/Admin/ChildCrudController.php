@@ -677,6 +677,8 @@ class ChildCrudController extends CrudController
 
     // Create CSV
     $filename = 'baza_adopcja-Dzieci-' . now()->format('d-m-Y_H-i-s') . '.csv';
+    // Start output buffering
+    ob_start();
     $handle = fopen('php://output', 'w');
 
     // Add UTF-8 BOM to handle special characters
@@ -686,7 +688,8 @@ class ChildCrudController extends CrudController
         fputcsv($handle, $row);
     }
     fclose($handle);
-
+    // Get output content
+    $csvOutput = ob_get_clean();
     // Return CSV download
     return Response::make('', 200, [
         'Content-Type' => 'text/csv',
