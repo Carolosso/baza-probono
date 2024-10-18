@@ -39,6 +39,17 @@ use App\Models\Child;
 		'header' =>'Uwaga!',
 		'body' => 'Proszę o sprawdzenie okresu adopcji ostatnio edytowanych dzieci. Występował błąd, który mógł nieoczekiwanie zmieniać okres adopcji na 1 rok.',
 	]]);
+	Widget::add([
+    'type'        => 'card',
+    'class'       => 'card text-white bg-dark mb-2',
+    'content' => [
+		'header' =>'Zmiany 18.10.2024',
+		'body' => '
+			<ul>Dodano:
+				<li>Podstawowe filtrowanie</li>
+				<li>Eksport danych do pliku w formacie CSV</li>
+			</ul> ',
+	]]);
 
 @endphp
 

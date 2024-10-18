@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\app\Library\Widget;
+use Illuminate\Support\Facades\Response;
 
 
 /**
@@ -51,6 +52,19 @@ class ChildCrudController extends CrudController
         // Add your custom button
         $this->crud->addButtonFromView('top', 'custom_create', 'custom_create', 'beginning');
 
+
+        //CRUD::column('group_find');
+        //CRUD::column('flag');
+
+        if (request()->has('group') && request()->input('group') != '') {
+            $this->crud->addClause('where', 'group', request()->input('group'));
+        } 
+        if (request()->has('flag_comandory') && request()->input('flag_comandory') != '') {
+            $this->crud->addClause('where', 'flag_comandory', request()->input('flag_comandory'));
+        } 
+        if (request()->has('sex') && request()->input('sex') != '') {
+            $this->crud->addClause('where', 'sex', request()->input('sex'));
+        }
 
         CRUD::column([
             'name' => 'image_url',
@@ -551,7 +565,6 @@ class ChildCrudController extends CrudController
                 'wrocławska' => 'wrocławska',
                 'zamojsko-lubaczowska' => 'zamojsko-lubaczowska',
                 'zielonogórsko-gorzowska' => 'zielonogórsko-gorzowska',
-
             ]
         ])->tab('Dane opiekuna');
     
@@ -612,4 +625,74 @@ class ChildCrudController extends CrudController
         // Alternatively, if you are not doing much more than defining fields in your create operation:
         // $this->setupCreateOperation();
     }
+    public function exportToCsv()
+{
+    // Log request data to see what values are being passed
+    // \Log::info('Request Data: ' . json_encode(request()->all()));
+
+    // Build the query to match the filtered records
+    $query = $this->crud->query;
+
+    // Apply filters based on the request inputs
+    if ($group = request()->input('group')) {
+        $query->where('group', '=', $group);
+    }
+
+    if ($flag_comandory = request()->input('flag_comandory')) {
+        $query->where('flag_comandory', '=', $flag_comandory);
+    }
+
+    if ($sex = request()->input('sex')) {
+        $query->where('sex', '=', $sex);
+    }
+
+    // Debug: Log the query with applied filters
+    // \Log::info('Filtered Query SQL: ' . $query->toSql());
+    // \Log::info('Query Bindings: ' . json_encode($query->getBindings()));
+
+    // Get the filtered data
+    $records = $query->get();
+
+    // Prepare CSV data
+    $csvData = [];
+    $csvData[] = ['Imię', 'Nazwisko', 'Wiek', 'Płeć', 'Miejscowość', 'Kraj', 'Zgromadzenie','Komandoria','Uwagi','Koordynator','Data adopcji','Data zakończenia','Czas trwania (lat)']; // CSV header
+
+    foreach ($records as $record) {
+        $csvData[] = [
+            $record->first_name,
+            $record->last_name,
+            $record->age,
+            $record->sex,
+            $record->birth_place,
+            $record->country,
+            $record->group,
+            $record->flag_comandory,
+            $record->others,
+            $record->coordinator_first_name.' '.$record->coordinator_last_name,
+            $record->adoption_start_date,
+            $record->adoption_end_date,
+            intval($record->length_of_adoption/365),
+        ];
+    }
+
+    // Create CSV
+    $filename = 'baza_adopcja-Dzieci-' . now()->format('d-m-Y_H-i-s') . '.csv';
+    $handle = fopen('php://output', 'w');
+
+    // Add UTF-8 BOM to handle special characters
+    fputs($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+    foreach ($csvData as $row) {
+        fputcsv($handle, $row);
+    }
+    fclose($handle);
+
+    // Return CSV download
+    return Response::make('', 200, [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+    ]);
+}
+
+
 }
