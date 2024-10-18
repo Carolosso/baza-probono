@@ -689,7 +689,7 @@ class ChildCrudController extends CrudController
 
     // Return CSV download
     return Response::make('', 200, [
-        'Content-Type' => 'application/octet-stream',
+        'Content-Type' => 'text/csv',
         'Content-Disposition' => 'attachment; filename="' . $filename . '"',
     ]);
 }
