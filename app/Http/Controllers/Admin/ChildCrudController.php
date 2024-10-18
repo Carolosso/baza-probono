@@ -688,13 +688,14 @@ class ChildCrudController extends CrudController
         fputcsv($handle, $row);
     }
     fclose($handle);
-    // Get output content
-    $csvOutput = ob_get_clean();
+    
     // Return CSV download
     return Response::make('', 200, [
         'Content-Type' => 'text/csv',
         'Content-Disposition' => 'attachment; filename="' . $filename . '"',
     ]);
+    // Get output content
+    $csvOutput = ob_get_clean();
 }
 
 
