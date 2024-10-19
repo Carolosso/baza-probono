@@ -25,6 +25,7 @@ class Child extends Model
     protected $fillable = [
         'first_name', //C
         'last_name', //C
+        'evidence_number', //C
         'age',  //C
         'birth_place', //C
         'country',  //C
@@ -41,10 +42,11 @@ class Child extends Model
         'adopter_last_name', //C
         'adopter_city', 
         'adopter_type', //C
+        'adopter_type_name', //C
         'adopter_email', //C
         'adopter_phone', //C
         'flag_comandory', //C
-        'address', //C
+        'adopter_address', //C
         'image_url', //C
         'one_time_pay', //C
         'first_pay', //C
@@ -75,6 +77,7 @@ class Child extends Model
  
         return $remainingDays+1;
     }
+    
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

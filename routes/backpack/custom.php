@@ -18,7 +18,9 @@ Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     Route::crud('child', 'ChildCrudController');
-    Route::get('child/export-csv', [ChildCrudController::class, 'exportToCsv'])->name('child.export-csv');
+    Route::get('child/export-csvAll', [ChildCrudController::class, 'exportToCsvAll'])->name('child.export-csvAll');
+    Route::get('child/export-csvChild', [ChildCrudController::class, 'exportToCsvChild'])->name('child.export-csvChild');
+    Route::get('child/export-csvAdopter', [ChildCrudController::class, 'exportToCsvAdopter'])->name('child.export-csvAdopter');
 }); // this should be the absolute last line of this file
 
 /**

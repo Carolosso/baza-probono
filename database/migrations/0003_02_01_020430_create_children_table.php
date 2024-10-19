@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->string('evidence_number')->nullable();
             $table->integer('age')->nullable();
             $table->string('birth_place')->nullable();
             $table->string('country')->nullable();
@@ -32,6 +33,7 @@ return new class extends Migration
             $table->string('adopter_last_name')->nullable();
             $table->string('adopter_city')->nullable();
             $table->string('adopter_type')->nullable();
+            $table->string('adopter_type_name')->nullable();
             $table->string('adopter_email')->nullable();
             $table->string('adopter_phone')->nullable();
             $table->string('flag_comandory')->nullable();

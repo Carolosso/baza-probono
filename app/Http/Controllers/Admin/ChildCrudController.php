@@ -165,7 +165,12 @@ class ChildCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        Widget::add()->type('script')->content('js/fields.js');
+        Widget::add()->type('script')->content('js/age_diff.js');
+        Widget::add()->type('script')->content('js/end_date.js');
+
         CRUD::setValidation(ChildRequest::class);
+
         $this->crud->setTitle('Dodaj','create');
         $this->crud->setHeading('Tworzenie profil dziecka','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');
@@ -179,6 +184,12 @@ class ChildCrudController extends CrudController
         CRUD::field([
             'name' => 'last_name',
             'label' => 'Nazwisko dziecka',
+            'type' => 'text'
+        ])->tab('Dane dziecka');
+
+        CRUD::field([
+            'name' => 'evidence_number',
+            'label' => 'Numer ewidencji',
             'type' => 'text'
         ])->tab('Dane dziecka');
 
@@ -445,7 +456,7 @@ class ChildCrudController extends CrudController
             'label' => 'Data zakończenia adopcji',
             'type' => 'date',
             'attributes' => [
-                'disabled'    => 'disabled',
+                'readonly'    => 'readonly',
             ],
         ])->tab('Dane dziecka');
 
@@ -466,13 +477,13 @@ class ChildCrudController extends CrudController
         
         CRUD::field([
             'name' => 'coordinator_first_name',
-            'label' => 'Imię koordynatora',
+            'label' => 'Imię asystenta',
             'type' => 'text'
         ])->tab('Dane opiekuna');
 
         CRUD::field([
             'name' => 'coordinator_last_name',
-            'label' => 'Nazwisko koordynatora',
+            'label' => 'Nazwisko asystenta',
             'type' => 'text'
         ])->tab('Dane opiekuna');
 
@@ -486,7 +497,20 @@ class ChildCrudController extends CrudController
                 'Schola' => 'Schola',
                 'Rada Rodziców' => 'Rada Rodziców',
                 'Osoba świecka' => 'Osoba świecka',
+                'Ksiądz' => 'Ksiądz',
+                'Siostra zakonna' => 'Siostra zakonna',
+                'Ojciec zakonny' => 'Ojciec zakonny',
+                'Wspólnota parafialna' => 'Wspólnota parafialna',
+                'Szkoła' => 'Szkoła',
+                'Urząd' => 'Urząd',
             ]
+        ])->tab('Dane opiekuna');
+       
+        CRUD::field([
+            'name' => 'adopter_type_name',
+            'label' => 'Nazwa',
+            'type' => 'text',
+
         ])->tab('Dane opiekuna');
 
         CRUD::field([
@@ -514,7 +538,7 @@ class ChildCrudController extends CrudController
         ])->tab('Dane opiekuna');
 
         CRUD::field([
-            'name' => 'address',
+            'name' => 'adopter_address',
             'label' => 'Adres',
             'type' => 'text'
         ])->tab('Dane opiekuna');
@@ -544,8 +568,8 @@ class ChildCrudController extends CrudController
                 'łomżyńska' => 'łomżyńska',
                 'łowicka' => 'łowicka',
                 'łódzka' => 'łódzka',
-                'warmińska' => 'warmińska',
                 'opolska' => 'opolska',
+                'paryska' => 'paryska',
                 'pelplińska' => 'pelplińska',
                 'płocka' => 'płocka',
                 'poznańska' => 'poznańska',
@@ -559,6 +583,7 @@ class ChildCrudController extends CrudController
                 'świdnicka' => 'świdnicka',
                 'tarnowska' => 'tarnowska',
                 'toruńska' => 'toruńska',
+                'warmińska' => 'warmińska',
                 'warszawska' => 'warszawska',
                 'warszawsko-praska' => 'warszawsko-praska',
                 'włocławska' => 'włocławska',
@@ -625,78 +650,226 @@ class ChildCrudController extends CrudController
         // Alternatively, if you are not doing much more than defining fields in your create operation:
         // $this->setupCreateOperation();
     }
-    public function exportToCsv()
-{
-    // Log request data to see what values are being passed
-    // \Log::info('Request Data: ' . json_encode(request()->all()));
-
-    // Build the query to match the filtered records
-    $query = $this->crud->query;
-
-    // Apply filters based on the request inputs
-    if ($group = request()->input('group')) {
-        $query->where('group', '=', $group);
-    }
-
-    if ($flag_comandory = request()->input('flag_comandory')) {
-        $query->where('flag_comandory', '=', $flag_comandory);
-    }
-
-    if ($sex = request()->input('sex')) {
-        $query->where('sex', '=', $sex);
-    }
-
-    // Debug: Log the query with applied filters
-    // \Log::info('Filtered Query SQL: ' . $query->toSql());
-    // \Log::info('Query Bindings: ' . json_encode($query->getBindings()));
-
-    // Get the filtered data
-    $records = $query->get();
-
-    // Prepare CSV data
-    $csvData = [];
-    $csvData[] = ['Imię', 'Nazwisko', 'Wiek', 'Płeć', 'Miejscowość', 'Kraj', 'Zgromadzenie','Komandoria','Uwagi','Koordynator','Data adopcji','Data zakończenia','Czas trwania (lat)']; // CSV header
-
-    foreach ($records as $record) {
-        $csvData[] = [
-            $record->first_name,
-            $record->last_name,
-            $record->age,
-            $record->sex,
-            $record->birth_place,
-            $record->country,
-            $record->group,
-            $record->flag_comandory,
-            $record->others,
-            $record->coordinator_first_name.' '.$record->coordinator_last_name,
-            $record->adoption_start_date,
-            $record->adoption_end_date,
-            intval($record->length_of_adoption/365),
-        ];
-    }
-
-    // Create CSV
-    $filename = 'baza_adopcja-Dzieci-' . now()->format('d-m-Y_H-i-s') . '.csv';
-    // Start output buffering
-    ob_start();
-    $handle = fopen('php://output', 'w');
-
-    // Add UTF-8 BOM to handle special characters
-    fputs($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
-
-    foreach ($csvData as $row) {
-        fputcsv($handle, $row);
-    }
-    fclose($handle);
     
-    // Return CSV download
-    return Response::make('', 200, [
-        'Content-Type' => 'text/csv',
-        'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-    ]);
-    // Get output content
-    $csvOutput = ob_get_clean();
-}
 
+
+    // EXPORT TO CHANGE IN FUTURE CUZ OF LONG CODE!
+
+    public function exportToCsvAll()
+    {
+        // Log request data to see what values are being passed
+        // \Log::info('Request Data: ' . json_encode(request()->all()));
+
+        // Build the query to match the filtered records
+        $query = $this->crud->query;
+
+        // Apply filters based on the request inputs
+        if ($group = request()->input('group')) {
+            $query->where('group', '=', $group);
+        }
+
+        if ($flag_comandory = request()->input('flag_comandory')) {
+            $query->where('flag_comandory', '=', $flag_comandory);
+        }
+
+        if ($sex = request()->input('sex')) {
+            $query->where('sex', '=', $sex);
+        }
+
+        // Debug: Log the query with applied filters
+        // \Log::info('Filtered Query SQL: ' . $query->toSql());
+        // \Log::info('Query Bindings: ' . json_encode($query->getBindings()));
+
+        // Get the filtered data
+        $records = $query->get();
+
+        // Prepare CSV data
+        $csvData = [];
+        $csvData[] = ['Imię', 'Nazwisko','Numer ewidencji', 'Wiek', 'Płeć', 'Miejscowość', 'Kraj', 'Zgromadzenie','Komandoria','Uwagi','Asystent','Data adopcji','Data zakończenia','Czas trwania (lat)','Rodzaj opiekuna','Nazwa','Imię i nazwisko','Email','Telefon','Adres']; // CSV header
+
+        foreach ($records as $record) {
+            $csvData[] = [
+                $record->first_name,
+                $record->last_name,
+                $record->evidence_number,
+                $record->age,
+                $record->sex,
+                $record->birth_place,
+                $record->country,
+                $record->group,
+                $record->flag_comandory,
+                $record->others,
+                $record->coordinator_first_name.' '.$record->coordinator_last_name,
+                $record->adoption_start_date,
+                $record->adoption_end_date,
+                intval($record->length_of_adoption/365),
+                $record->adopter_type,
+                $record->adopter_type_name,
+                $record->adopter_first_name.' '.$record->adopter_last_name,
+                $record->adopter_email,
+                $record->adopter_phone,
+                $record->adopter_address,
+            ];
+        }
+
+        // Create CSV
+        $filename = 'baza-HeartsOMSIPII-Wszystko-' . now()->format('d-m-Y_H-i-s') . '.csv';
+        // Start output buffering
+        ob_start();
+        $handle = fopen('php://output', 'w');
+
+        // Add UTF-8 BOM to handle special characters
+        fputs($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+        fclose($handle);
+        
+        // Return CSV download
+        return Response::make('', 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
+        // Get output content
+        $csvOutput = ob_get_clean();
+    }
+
+    public function exportToCsvChild()
+    {
+        // Log request data to see what values are being passed
+        // \Log::info('Request Data: ' . json_encode(request()->all()));
+
+        // Build the query to match the filtered records
+        $query = $this->crud->query;
+
+        // Apply filters based on the request inputs
+        if ($group = request()->input('group')) {
+            $query->where('group', '=', $group);
+        }
+
+        if ($flag_comandory = request()->input('flag_comandory')) {
+            $query->where('flag_comandory', '=', $flag_comandory);
+        }
+
+        if ($sex = request()->input('sex')) {
+            $query->where('sex', '=', $sex);
+        }
+
+        // Debug: Log the query with applied filters
+        // \Log::info('Filtered Query SQL: ' . $query->toSql());
+        // \Log::info('Query Bindings: ' . json_encode($query->getBindings()));
+
+        // Get the filtered data
+        $records = $query->get();
+
+        // Prepare CSV data
+        $csvData = [];
+        $csvData[] = ['Imię', 'Nazwisko','Numer ewidencji', 'Wiek', 'Płeć', 'Miejscowość', 'Kraj', 'Zgromadzenie','Uwagi','Data adopcji','Czas trwania','Data zakończenia']; // CSV header
+
+        foreach ($records as $record) {
+            $csvData[] = [
+                $record->first_name,
+                $record->last_name,
+                $record->evidence_number,
+                $record->age,
+                $record->sex,
+                $record->birth_place,
+                $record->country,
+                $record->group,
+                $record->others,            
+                $record->adoption_start_date,
+                intval($record->length_of_adoption/365),
+                $record->adoption_end_date,             
+            ];
+        }
+
+        // Create CSV
+        $filename = 'baza-HeartsOMSIPII-Dzieci-' . now()->format('d-m-Y_H-i-s') . '.csv';
+        // Start output buffering
+        ob_start();
+        $handle = fopen('php://output', 'w');
+
+        // Add UTF-8 BOM to handle special characters
+        fputs($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+        fclose($handle);
+        
+        // Return CSV download
+        return Response::make('', 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
+        // Get output content
+        $csvOutput = ob_get_clean();
+    }
+    public function exportToCsvAdopter()
+    {
+        // Log request data to see what values are being passed
+        // \Log::info('Request Data: ' . json_encode(request()->all()));
+
+        // Build the query to match the filtered records
+        $query = $this->crud->query;
+
+        // Apply filters based on the request inputs
+        if ($group = request()->input('group')) {
+            $query->where('group', '=', $group);
+        }
+
+        if ($flag_comandory = request()->input('flag_comandory')) {
+            $query->where('flag_comandory', '=', $flag_comandory);
+        }
+
+        if ($sex = request()->input('sex')) {
+            $query->where('sex', '=', $sex);
+        }
+
+        // Debug: Log the query with applied filters
+        // \Log::info('Filtered Query SQL: ' . $query->toSql());
+        // \Log::info('Query Bindings: ' . json_encode($query->getBindings()));
+
+        // Get the filtered data
+        $records = $query->get();
+
+        // Prepare CSV data
+        $csvData = [];
+        $csvData[] = ['Rodzaj opiekuna','Nazwa','Imię i nazwisko','Email','Telefon','Adres']; // CSV header
+
+        foreach ($records as $record) {
+            $csvData[] = [      
+                $record->adopter_type,
+                $record->adopter_type_name,
+                $record->adopter_first_name.' '.$record->adopter_last_name,
+                $record->adopter_email,
+                $record->adopter_phone,
+                $record->adopter_address,
+            ];
+        }
+
+        // Create CSV
+        $filename = 'baza-HeartsOMSIPII-Opiekunowie-' . now()->format('d-m-Y_H-i-s') . '.csv';
+        // Start output buffering
+        ob_start();
+        $handle = fopen('php://output', 'w');
+
+        // Add UTF-8 BOM to handle special characters
+        fputs($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
+        foreach ($csvData as $row) {
+            fputcsv($handle, $row);
+        }
+        fclose($handle);
+        
+        // Return CSV download
+        return Response::make('', 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
+        // Get output content
+        $csvOutput = ob_get_clean();
+    }
 
 }

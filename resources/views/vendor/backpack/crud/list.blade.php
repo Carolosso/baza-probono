@@ -91,8 +91,8 @@
                 <option value="łomżyńska" {{ request()->input('flag_comandory') == 'łomżyńska' ? 'selected' : '' }}>łomżyńska</option>
                 <option value="łowicka" {{ request()->input('flag_comandory') == 'łowicka' ? 'selected' : '' }}>łowicka</option>
                 <option value="łódzka" {{ request()->input('flag_comandory') == 'łódzka' ? 'selected' : '' }}>łódzka</option>
-                <option value="warmińska" {{ request()->input('flag_comandory') == 'warmińska' ? 'selected' : '' }}>warmińska</option>
                 <option value="opolska" {{ request()->input('flag_comandory') == 'opolska' ? 'selected' : '' }}>opolska</option>
+                <option value="paryska" {{ request()->input('flag_comandory') == 'paryska' ? 'selected' : '' }}>paryska</option>
                 <option value="pelplińska" {{ request()->input('flag_comandory') == 'pelplińska' ? 'selected' : '' }}>pelplińska</option>
                 <option value="płocka" {{ request()->input('flag_comandory') == 'płocka' ? 'selected' : '' }}>płocka</option>
                 <option value="poznańska" {{ request()->input('flag_comandory') == 'poznańska' ? 'selected' : '' }}>poznańska</option>
@@ -106,6 +106,7 @@
                 <option value="świdnicka" {{ request()->input('flag_comandory') == 'świdnicka' ? 'selected' : '' }}>świdnicka</option>
                 <option value="tarnowska" {{ request()->input('flag_comandory') == 'tarnowska' ? 'selected' : '' }}>tarnowska</option>
                 <option value="toruńska" {{ request()->input('flag_comandory') == 'toruńska' ? 'selected' : '' }}>toruńska</option>
+                <option value="warmińska" {{ request()->input('flag_comandory') == 'warmińska' ? 'selected' : '' }}>warmińska</option>
                 <option value="warszawska" {{ request()->input('flag_comandory') == 'warszawska' ? 'selected' : '' }}>warszawska</option>
                 <option value="warszawsko-praska" {{ request()->input('flag_comandory') == 'warszawsko-praska' ? 'selected' : '' }}>warszawsko-praska</option>
                 <option value="włocławska" {{ request()->input('flag_comandory') == 'włocławska' ? 'selected' : '' }}>włocławska</option>
@@ -133,8 +134,15 @@
     </div>
     <!-- CSV export button -->
     <div class="row">
-      <div class="col-md-4">
-        <button type="submit" class="btn btn-secondary" formaction="{{ route('child.export-csv') }}"><i class="las la-save"></i>&nbsp;Eksportuj do CSV</button>
+      <div class="col-md-2 btn-group dropend">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title="Eksportuj pola na podstawie wybranych filtrów">
+          <i class="las la-save"></i>&nbsp;Eksportuj do CSV
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><button type="submit" class="btn dropdown-item" formaction="{{ route('child.export-csvAll') }}">Wszystko</button></li>
+          <li><button type="submit" class="btn dropdown-item" formaction="{{ route('child.export-csvChild') }}">Dane dzieci</button></li>
+          <li><button type="submit" class="btn dropdown-item" formaction="{{ route('child.export-csvAdopter') }}">Dane opiekunów</button></li>
+        </ul>
       </div>
     </div>
 </form>

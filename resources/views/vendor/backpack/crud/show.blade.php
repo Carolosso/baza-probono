@@ -32,7 +32,7 @@
               <h3 class="mb-2 mt-3"><span class="text-primary d-flex justify-content-center">Szczegóły adopcji</span></h3>
               <ul class="list-group list-group-flush rounded-3">
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                  <p class="mb-0 fw-bolder">Koordynator:</p>
+                  <p class="mb-0 fw-bolder">Asystent:</p>
                   <p class="mb-0">{{$entry->coordinator_first_name .' '. $entry->coordinator_last_name}}</p>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
@@ -41,7 +41,7 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0 fw-bolder">Data zakończenia:</p>
-                  <p class="mb-0">w budowie</p>
+                  <p class="mb-0">{{$entry->adoption_end_date}}</p>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0 fw-bolder">Czas trwania:</p>
@@ -92,6 +92,15 @@
                 </div>
                 <div class="col-sm-9">
                   <p class="mb-0"> {{ $entry->last_name }}</p>
+                </div>
+              </div>
+              <hr style="margin: 1rem 0;">
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0 fw-bolder">Numer ewidencji:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0"> {{ $entry->evidence_number }}</p>
                 </div>
               </div>
               <hr style="margin: 1rem 0;">
@@ -161,6 +170,10 @@
                       <p class="mb-0">{{$entry->adopter_type}}</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <p class="mb-0 fw-bolder">Nazwa:</p>
+                      <p class="mb-0">{{$entry->adopter_type_name}}</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Imię:</p>
                       <p class="mb-0">{{$entry->adopter_first_name}}</p>
                     </li>
@@ -178,7 +191,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Adres:</p>
-                      <p class="mb-0"> {{$entry->address}}</p>
+                      <p class="mb-0"> {{$entry->adopter_address}}</p>
                     </li>   
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Komandoria:</p>
@@ -194,29 +207,40 @@
                   <h3 class="mb-2 mt-3"><span class="text-primary d-flex justify-content-center">Wpłaty</span></h3>
                   <ul class="list-group list-group-flush rounded-3">
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Data wpłaty jednorazowej:</p>
                       @if ($entry->one_time_pay == null)
-                      <p class="mb-0">-</p>
                       @else
+                      <p class="mb-0 fw-bolder">Data wpłaty jednorazowej:</p>
                       <p class="mb-0">{{$entry->one_time_pay}}</p>
                       @endif
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      @if ($entry->first_pay == null)
+                      @else
                       <p class="mb-0 fw-bolder">Data wpłaty I raty:</p>
                       <p class="mb-0">{{$entry->first_pay}}</p>
+                      @endif
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      @if ($entry->second_pay == null)
+                      @else
                       <p class="mb-0 fw-bolder">Data wpłaty II raty:</p>
                       <p class="mb-0">{{$entry->second_pay}}</p>
+                      @endif
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      @if ($entry->third_pay == null)
+                      @else
                       <p class="mb-0 fw-bolder">Data wpłaty III raty:</p>
                       <p class="mb-0">{{$entry->third_pay}}</p>
+                      @endif
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      @if ($entry->forth_pay == null)
+                      @else
                       <p class="mb-0 fw-bolder">Data wpłaty IV raty:</p>
                       <p class="mb-0">{{$entry->forth_pay}}</p>
-                    </li>   
+                      @endif
+                    </li>              
                   </ul>
                 </div>
               </div>
