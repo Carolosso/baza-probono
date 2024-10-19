@@ -43,6 +43,23 @@ use App\Models\Child;
     'type'        => 'card',
     'class'       => 'card text-white bg-dark mb-2',
     'content' => [
+		'header' =>'Zmiany 19.10.2024',
+		'body' => '
+			<ul>
+				<li>3 tryby eksportu danych</li>
+				<li>Uzupełnienie listy "Rodzaje opiekunów" (Ksiądz, Siostra Zakonna, Ojciec Zakonny, Wspólnota parafialna, Szkoła, Urząd)</li>
+				<li>Uzupełnienie listy komandorii (paryska)</li>
+				<li>Dodano nowe dynamiczne pole "Nazwa" w zakładce Dane opiekuna</li>
+				<li>Dodano nowe statyczne pole "Numer ewidencji" w zakładce Dane dziecka</li>
+				<li>Dodano generowanie Daty zakończenia adopcji</li>
+				<li>Drobne poprawki i optymalizacje</li>
+			</ul> ',
+	]]);
+
+	Widget::add([
+    'type'        => 'card',
+    'class'       => 'card text-white bg-dark mb-2',
+    'content' => [
 		'header' =>'Zmiany 18.10.2024',
 		'body' => '
 			<ul>Dodano:
