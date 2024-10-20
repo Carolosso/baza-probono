@@ -494,6 +494,8 @@ class ChildCrudController extends CrudController
             'options' => [
                 'Chorągiew' => 'Chorągiew',
                 'Komandoria' => 'Komandoria',
+                'Rycerz' => 'Rycerz',
+                'Firma' => 'Firma',
                 'Schola' => 'Schola',
                 'Rada Rodziców' => 'Rada Rodziców',
                 'Osoba świecka' => 'Osoba świecka',
