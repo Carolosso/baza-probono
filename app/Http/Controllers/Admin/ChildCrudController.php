@@ -178,26 +178,39 @@ class ChildCrudController extends CrudController
         CRUD::field([
             'name' => 'first_name',
             'label' => 'Imię dziecka',
-            'type' => 'text'
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([
             'name' => 'last_name',
             'label' => 'Nazwisko dziecka',
-            'type' => 'text'
-        ])->tab('Dane dziecka');
-
-        CRUD::field([
-            'name' => 'evidence_number',
-            'label' => 'Numer ewidencji',
-            'type' => 'text'
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([
             'name' => 'age',
             'label' => 'Wiek',
-            'type' => 'number'
+            'type' => 'number',
+            'wrapper' => [
+                'class' => 'col-md-2'
+            ],  
         ])->suffix("lat")->tab('Dane dziecka');
+
+        CRUD::field([
+            'name' => 'evidence_number',
+            'label' => 'Numer ewidencji',
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-2'
+            ],  
+        ])->tab('Dane dziecka');
+
 
         CRUD::field([
             'name' => 'sex',
@@ -208,12 +221,18 @@ class ChildCrudController extends CrudController
                 'mężczyzna' => "Mężczyzna",
             ],
             'inline' => true,
+            'wrapper' => [
+                'class' => 'col-md-12'
+            ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([
             'name' => 'birth_place',
             'label' => 'Miejscowość pochodzenia',
-            'type' => 'text'
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([
@@ -408,7 +427,10 @@ class ChildCrudController extends CrudController
                 'Zimbabwe' => 'Zimbabwe',
                 'Zjednoczone Emiraty Arabskie' => 'Zjednoczone Emiraty Arabskie',
 
-            ]
+            ],
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([
@@ -422,13 +444,19 @@ class ChildCrudController extends CrudController
                 'opatrzności bożej' => 'opatrzności bożej',
                 'urszulanki' => 'urszulanki',
                 'franciszkanie' => 'franciszkanie',
-            ]
+            ],
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([
             'name' => 'adoption_start_date',
             'label' => 'Data adopcji',
-            'type' => 'date'
+            'type' => 'date',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([ 
@@ -447,7 +475,10 @@ class ChildCrudController extends CrudController
                 ? ($this->crud->getCurrentEntry()->length_of_adoption > (365 * 3) 
                 ? 'to_be_calculated'                  // If length_of_adoption > 3 years, select 'to_be_calculated'
                 : $this->crud->getCurrentEntry()->length_of_adoption) 
-                 : null,  
+                 : null,
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->tab('Dane dziecka');
 
 
@@ -458,93 +489,50 @@ class ChildCrudController extends CrudController
             'attributes' => [
                 'readonly'    => 'readonly',
             ],
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([
             'name' => 'image_url',
             'type' => 'upload',
             'label' => 'Zdjęcie',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ],  
         ])->withFiles([
         'disk' => 'public', // the disk where file will be stored
-        'path' => 'photos',
+        'path' => 'photos'
         ])->tab('Dane dziecka');
         
         CRUD::field([
             'name' => 'others',
             'label' => 'Uwagi',
-            'type' => 'textarea'
+            'type' => 'textarea',
+            'wrapper' => [
+                'class' => 'col-md-12'
+            ],  
         ])->tab('Dane dziecka');
         
         CRUD::field([
             'name' => 'coordinator_first_name',
             'label' => 'Imię asystenta',
-            'type' => 'text'
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
         ])->tab('Dane opiekuna');
 
         CRUD::field([
             'name' => 'coordinator_last_name',
             'label' => 'Nazwisko asystenta',
-            'type' => 'text'
-        ])->tab('Dane opiekuna');
-
-        CRUD::field([
-            'name' => 'adopter_type',
-            'label' => 'Rodzaj opiekuna',
-            'type' => 'select_from_array',
-            'options' => [
-                'Chorągiew' => 'Chorągiew',
-                'Komandoria' => 'Komandoria',
-                'Rycerz' => 'Rycerz',
-                'Firma' => 'Firma',
-                'Schola' => 'Schola',
-                'Rada Rodziców' => 'Rada Rodziców',
-                'Osoba świecka' => 'Osoba świecka',
-                'Ksiądz' => 'Ksiądz',
-                'Siostra zakonna' => 'Siostra zakonna',
-                'Ojciec zakonny' => 'Ojciec zakonny',
-                'Wspólnota parafialna' => 'Wspólnota parafialna',
-                'Szkoła' => 'Szkoła',
-                'Urząd' => 'Urząd',
-            ]
-        ])->tab('Dane opiekuna');
-       
-        CRUD::field([
-            'name' => 'adopter_type_name',
-            'label' => 'Nazwa',
             'type' => 'text',
-
-        ])->tab('Dane opiekuna');
-
-        CRUD::field([
-            'name' => 'adopter_first_name',
-            'label' => 'Imię opiekuna',
-            'type' => 'text'
-        ])->tab('Dane opiekuna');
-
-        CRUD::field([
-            'name' => 'adopter_last_name',
-            'label' => 'Nazwisko opiekuna',
-            'type' => 'text'
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
         ])->tab('Dane opiekuna');
         
-        CRUD::field([
-            'name' => 'adopter_email',
-            'label' => 'Adres Email opiekuna',
-            'type' => 'email'
-        ])->tab('Dane opiekuna');
-
-        CRUD::field([
-            'name' => 'adopter_phone',
-            'label' => 'Numer telefonu opiekuna',
-            'type' => 'text'
-        ])->tab('Dane opiekuna');
-
-        CRUD::field([
-            'name' => 'adopter_address',
-            'label' => 'Adres',
-            'type' => 'text'
-        ])->tab('Dane opiekuna');
-
         CRUD::field([
             'name' => 'flag_comandory',
             'label' => 'Komandoria',
@@ -592,8 +580,90 @@ class ChildCrudController extends CrudController
                 'wrocławska' => 'wrocławska',
                 'zamojsko-lubaczowska' => 'zamojsko-lubaczowska',
                 'zielonogórsko-gorzowska' => 'zielonogórsko-gorzowska',
-            ]
+            ],
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
         ])->tab('Dane opiekuna');
+        CRUD::field([
+            'name' => 'adopter_type',
+            'label' => 'Rodzaj opiekuna',
+            'type' => 'select_from_array',
+            'options' => [
+                'Chorągiew' => 'Chorągiew',
+                'Komandoria' => 'Komandoria',
+                'Rycerz' => 'Rycerz',
+                'Firma' => 'Firma',
+                'Schola' => 'Schola',
+                'Rada Rodziców' => 'Rada Rodziców',
+                'Osoba świecka' => 'Osoba świecka',
+                'Ksiądz' => 'Ksiądz',
+                'Siostra zakonna' => 'Siostra zakonna',
+                'Ojciec zakonny' => 'Ojciec zakonny',
+                'Wspólnota parafialna' => 'Wspólnota parafialna',
+                'Szkoła' => 'Szkoła',
+                'Urząd' => 'Urząd',
+            ],
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
+            'name' => 'adopter_first_name',
+            'label' => 'Imię opiekuna',
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
+            'name' => 'adopter_last_name',
+            'label' => 'Nazwisko opiekuna',
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
+        ])->tab('Dane opiekuna');
+        
+        CRUD::field([
+            'name' => 'adopter_type_name',
+            'label' => 'Nazwa',
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
+            'name' => 'adopter_email',
+            'label' => 'Adres email opiekuna',
+            'type' => 'email',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
+            'name' => 'adopter_phone',
+            'label' => 'Numer telefonu opiekuna',
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
+        ])->tab('Dane opiekuna');
+
+        CRUD::field([
+            'name' => 'adopter_address',
+            'label' => 'Adres opiekuna',
+            'type' => 'text',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
+        ])->tab('Dane opiekuna');
+
+        
     
         CRUD::field([
             'name' => 'one_time_pay',
