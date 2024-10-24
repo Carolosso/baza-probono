@@ -19,11 +19,11 @@ use Illuminate\Support\Facades\Response;
 class ChildCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation; //{ show as traitShow; }
+
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -664,35 +664,11 @@ class ChildCrudController extends CrudController
         ])->tab('Dane opiekuna');
 
         
-    
+        // Define a field to display existing payments (if any) and allow managing them
         CRUD::field([
-            'name' => 'one_time_pay',
-            'label' => 'Data wpłaty jednorazowej',
-            'type' => 'date'
-        ])->tab('Wpłaty');
-        
-        CRUD::field([
-            'name' => 'first_pay',
-            'label' => 'Data wpłaty I raty',
-            'type' => 'date'
-        ])->tab('Wpłaty');
-        
-        CRUD::field([
-            'name' => 'second_pay',
-            'label' => 'Data wpłaty II raty',
-            'type' => 'date'
-        ])->tab('Wpłaty');
-
-        CRUD::field([
-            'name' => 'third_pay',
-            'label' => 'Data wpłaty III raty',
-            'type' => 'date'
-        ])->tab('Wpłaty');
-        
-        CRUD::field([
-            'name' => 'forth_pay',
-            'label' => 'Data wpłaty IV raty',
-            'type' => 'date'
+            'name'  => 'payments_section',
+            'label' => 'Manage Payments',
+            'type'  => 'custom_payment_field', // You will create this as a custom field in Step 2
         ])->tab('Wpłaty');
     }
 
@@ -942,6 +918,52 @@ class ChildCrudController extends CrudController
         ]);
         // Get output content
         $csvOutput = ob_get_clean();
+    }
+    
+  /*   public function show($id)
+    {
+        $entry = $this->crud->getCurrentEntry();
+        $entry->load('payments'); // Eager load payments
+
+        return parent::show($id);
+    } */
+
+
+
+ // Optionally, you can customize how payments are stored by overriding the store and update methods
+    public function store()
+    {
+        $response = $this->traitStore();  // Save the child data first
+
+        // After saving the child, handle the related payments
+        $this->savePayments($this->crud->entry);
+
+        return $response;
+    }
+
+    public function update()
+    {
+        $response = $this->traitUpdate();  // Save the child data first
+
+        // After updating the child, handle the related payments
+        $this->savePayments($this->crud->entry);
+
+        return $response;
+    }
+    protected function savePayments($child)
+    {
+        // Clear existing payments if needed (optional)
+        $child->payments()->delete();
+
+        // Loop through the submitted payments
+        $payments = request()->input('payments', []);
+        foreach ($payments as $paymentData) {
+            $child->payments()->create([
+                'payment_amount' => $paymentData['payment_amount'],
+                'payment_date' => $paymentData['payment_date'],
+                'payment_description' => $paymentData['payment_description'],
+            ]);
+        }
     }
 
 }

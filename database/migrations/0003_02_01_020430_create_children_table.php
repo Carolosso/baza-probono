@@ -38,11 +38,6 @@ return new class extends Migration
             $table->string('adopter_phone')->nullable();
             $table->string('flag_comandory')->nullable();
             $table->string('image_url')->nullable();
-            $table->string('one_time_pay')->nullable();
-            $table->string('first_pay')->nullable();
-            $table->string('second_pay')->nullable();
-            $table->string('third_pay')->nullable();
-            $table->string('forth_pay')->nullable();
             $table->timestamps();
         });
     }

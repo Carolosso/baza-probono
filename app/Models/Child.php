@@ -48,11 +48,6 @@ class Child extends Model
         'flag_comandory', //C
         'adopter_address', //C
         'image_url', //C
-        'one_time_pay', //C
-        'first_pay', //C
-        'second_pay', //C
-        'third_pay', //C
-        'forth_pay' //C
     ];
     // protected $hidden = [];
 
@@ -83,6 +78,13 @@ class Child extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class); // A child can have multiple payments
+    }
+
+
 
     /*
     |--------------------------------------------------------------------------

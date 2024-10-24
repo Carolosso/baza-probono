@@ -157,6 +157,26 @@
                   <p class="mb-0">{{ $entry->others}}</p>
                 </div>
               </div>
+                <hr style="margin: 1rem 0;">   
+              <div class="row">
+                <div class="col">
+                  <div class="col-4">
+                    <p class="mb-0">Utworzono:</p>
+                  </div>
+                  <div class="col-8">
+                    <p class="mb-0">{{ $entry->created_at}}</p>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="col-sm-4">
+                    <p class="mb-0">Ostatnia modyfikacja:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="mb-0">{{ $entry->updated_at}}</p>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
           <div class="row">
@@ -201,47 +221,25 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 ">
               <div class="card mb-4 mb-md-0">
                 <div class="card-body p-0">
                   <h3 class="mb-2 mt-3"><span class="text-primary d-flex justify-content-center">Wpłaty</span></h3>
-                  <ul class="list-group list-group-flush rounded-3">
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      @if ($entry->one_time_pay == null)
+                   @if($entry->payments->isEmpty())
+                          <p class="p-3">Nie znaleziono wpłat.</p>
                       @else
-                      <p class="mb-0 fw-bolder">Data wpłaty jednorazowej:</p>
-                      <p class="mb-0">{{$entry->one_time_pay}}</p>
+                          <ul class="list-group">
+                              @foreach($entry->payments as $payment)
+                                  <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                      <div>
+                                          <strong>Kwota:</strong> {{ $payment->payment_amount }} zł<br>
+                                          <strong>Data:</strong> {{ $payment->payment_date}}<br>
+                                          <strong>Opis:</strong> {{ $payment->payment_description}}
+                                      </div>
+                                  </li>
+                              @endforeach
+                          </ul>
                       @endif
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      @if ($entry->first_pay == null)
-                      @else
-                      <p class="mb-0 fw-bolder">Data wpłaty I raty:</p>
-                      <p class="mb-0">{{$entry->first_pay}}</p>
-                      @endif
-                    </li>
-                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      @if ($entry->second_pay == null)
-                      @else
-                      <p class="mb-0 fw-bolder">Data wpłaty II raty:</p>
-                      <p class="mb-0">{{$entry->second_pay}}</p>
-                      @endif
-                    </li>
-                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      @if ($entry->third_pay == null)
-                      @else
-                      <p class="mb-0 fw-bolder">Data wpłaty III raty:</p>
-                      <p class="mb-0">{{$entry->third_pay}}</p>
-                      @endif
-                    </li>
-                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      @if ($entry->forth_pay == null)
-                      @else
-                      <p class="mb-0 fw-bolder">Data wpłaty IV raty:</p>
-                      <p class="mb-0">{{$entry->forth_pay}}</p>
-                      @endif
-                    </li>              
-                  </ul>
                 </div>
               </div>
             </div>
