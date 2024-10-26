@@ -42,10 +42,10 @@ return new class extends Migration
             $table->string('image_url')->nullable();
             $table->timestamps();
         }); */
-        Schema::table('children', function (Blueprint $table) {
-            $table->unsignedBigInteger('commandory_id')->nullable()->after('id');
-            $table->foreign('commandory_id')->references('id')->on('commandories')->onDelete('set null');
-        });
+        // Schema::table('children', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('commandory_id')->nullable()->after('id');
+        //     $table->foreign('commandory_id')->references('id')->on('commandories')->onDelete('set null');
+        // });
     }
 
     /**
