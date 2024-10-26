@@ -78,7 +78,7 @@ class ChildCrudController extends CrudController
             ],
             'wrapper' => [
                 //'class' => 'd-flex justify-content-center',
-                'style' => 'width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%;',
+                'style' => 'width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%; border:.5px',
             ],
             'value' =>   function ($entry) {
                 return $entry->image_url 
