@@ -38,6 +38,7 @@ class Child extends Model
         'adoption_end_date', //C
         'group', //C
         'length_of_adoption', //C
+        'type_of_adoption', //C
         'adopter_first_name', //C
         'adopter_last_name', //C
         'adopter_city', 
@@ -45,8 +46,9 @@ class Child extends Model
         'adopter_type_name', //C
         'adopter_email', //C
         'adopter_phone', //C
-        'flag_comandory', //C
+        //'flag_comandory', //C
         'adopter_address', //C
+        'commandory_id', //C
         'image_url', //C
     ];
     // protected $hidden = [];
@@ -84,6 +86,10 @@ class Child extends Model
         return $this->hasMany(Payment::class); // A child can have multiple payments
     }
 
+    public function commandory()
+    {
+        return $this->belongsTo(Commandory::class); //
+    }
 
 
     /*
@@ -97,7 +103,10 @@ class Child extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
+    public function getCommandoryNameAttribute()
+    {
+        return $this->commandory ? $this->commandory->commandory_name : 'brak';
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

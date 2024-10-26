@@ -23,10 +23,11 @@ $(document).ready(function () {
     }
 
     // Event listener for changes in adoption_start_date and length_of_adoption fields
-    $('[name="adoption_start_date"], [name="length_of_adoption"]').on('change keyup', function () {
+    $('[name="adoption_start_date"], [name="length_of_adoption_years"],[name="type_of_adoption"] ').on('change keyup', function () {
         calculateEndDate(); // Call the function to calculate and set the end date
     });
 
     // Trigger calculation on page load if fields are already filled
     calculateEndDate();
 });
+

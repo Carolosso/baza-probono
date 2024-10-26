@@ -50,7 +50,7 @@ class ChildCrudController extends CrudController
         $this->crud->removeButton('create');
     
         // Add your custom button
-        $this->crud->addButtonFromView('top', 'custom_create', 'custom_create', 'beginning');
+        $this->crud->addButtonFromView('top', 'custom_create_child', 'custom_create_child', 'beginning');
 
 
         //CRUD::column('group_find');
@@ -59,8 +59,8 @@ class ChildCrudController extends CrudController
         if (request()->has('group') && request()->input('group') != '') {
             $this->crud->addClause('where', 'group', request()->input('group'));
         } 
-        if (request()->has('flag_comandory') && request()->input('flag_comandory') != '') {
-            $this->crud->addClause('where', 'flag_comandory', request()->input('flag_comandory'));
+        if (request()->has('commandory_id') && request()->input('commandory_id') != '') {
+            $this->crud->addClause('where', 'commandory_id', request()->input('commandory_id'));
         } 
         if (request()->has('sex') && request()->input('sex') != '') {
             $this->crud->addClause('where', 'sex', request()->input('sex'));
@@ -103,7 +103,7 @@ class ChildCrudController extends CrudController
         ]);
 
         CRUD::column([
-            'name' => 'flag_comandory',
+            'name' => 'commandory_name',
             'label' => 'Komandoria',
             'type' => 'text',
             'wrapper' => [
@@ -121,7 +121,7 @@ class ChildCrudController extends CrudController
         ]);
         CRUD::column([
             'name' => 'length_of_adoption',
-            'label' => 'Okres adopcji',
+            'label' => 'Długość adopcji',
             'type' => 'text',
             'suffix' => ' lat',
             'value' => function($entry){
@@ -167,7 +167,7 @@ class ChildCrudController extends CrudController
     {
         Widget::add()->type('script')->content('js/fields.js');
         Widget::add()->type('script')->content('js/age_diff.js');
-        Widget::add()->type('script')->content('js/end_date.js');
+        //Widget::add()->type('script')->content('js/end_date.js');
 
         CRUD::setValidation(ChildRequest::class);
 
@@ -444,6 +444,10 @@ class ChildCrudController extends CrudController
                 'opatrzności bożej' => 'opatrzności bożej',
                 'urszulanki' => 'urszulanki',
                 'franciszkanie' => 'franciszkanie',
+                'salezjanie' => 'salezjanie',
+                'pallotyni' => 'pallotyni',
+                'franciszkanki od Cierpiących' => 'franciszkanki od Cierpiących',
+                'kanoniczki (duchaczki)' => 'kanoniczki (duchaczki)',
             ],
             'wrapper' => [
                 'class' => 'col-md-4'
@@ -455,32 +459,39 @@ class ChildCrudController extends CrudController
             'label' => 'Data adopcji',
             'type' => 'date',
             'wrapper' => [
-                'class' => 'col-md-4'
+                'class' => 'col-md-2'
             ],  
         ])->tab('Dane dziecka');
 
         CRUD::field([ 
-            'name' => 'length_of_adoption',
-            'label' => 'Czas adopcji',
+            'name' => 'type_of_adoption',
+            'label' => 'Okres adopcji',
             'type' => 'select_from_array',
             'options' => [
-                365 => '1 rok',
-                365*2 => '2 lata',
-                365*3 => '3 lata',
-                'to_be_calculated' => 'do uzyskania pełnoletności',
+                'niestandardowy' => 'niestandardowy',
+                'do uzyskania pełnoletności' => 'do uzyskania pełnoletności',
                 //'do ukończenia szkoły' => 'do ukończenia szkoły',
             ],
-            'allows_null' => false, 
-            'value' =>  $this->crud->getCurrentEntry() 
-                ? ($this->crud->getCurrentEntry()->length_of_adoption > (365 * 3) 
-                ? 'to_be_calculated'                  // If length_of_adoption > 3 years, select 'to_be_calculated'
-                : $this->crud->getCurrentEntry()->length_of_adoption) 
-                 : null,
+            'allows_null' => false,
             'wrapper' => [
-                'class' => 'col-md-4'
+                'class' => 'col-md-3'
             ],  
         ])->tab('Dane dziecka');
 
+        CRUD::field([
+            'name' => 'length_of_adoption',
+            'type' => 'hidden',
+        ]);
+        CRUD::field([
+            'name' => 'length_of_adoption_years',
+            'label' => 'Długość adopcji',
+            'type' => 'number',
+            'attributes' => ["step" => "1"],
+            'wrapper' => [
+                'class' => 'col-md-2'
+            ],   // allow decimals
+
+        ])->suffix("lat")->tab('Dane dziecka');
 
         CRUD::field([
             'name' => 'adoption_end_date',
@@ -490,7 +501,7 @@ class ChildCrudController extends CrudController
                 'readonly'    => 'readonly',
             ],
             'wrapper' => [
-                'class' => 'col-md-4'
+                'class' => 'col-md-2'
             ],  
         ])->tab('Dane dziecka');
 
@@ -533,7 +544,7 @@ class ChildCrudController extends CrudController
             ], 
         ])->tab('Dane opiekuna');
         
-        CRUD::field([
+        /* CRUD::field([
             'name' => 'flag_comandory',
             'label' => 'Komandoria',
             'type' => 'select_from_array',
@@ -575,6 +586,7 @@ class ChildCrudController extends CrudController
                 'toruńska' => 'toruńska',
                 'warmińska' => 'warmińska',
                 'warszawska' => 'warszawska',
+                'wileńska' => 'wileńska',
                 'warszawsko-praska' => 'warszawsko-praska',
                 'włocławska' => 'włocławska',
                 'wrocławska' => 'wrocławska',
@@ -584,7 +596,22 @@ class ChildCrudController extends CrudController
             'wrapper' => [
                 'class' => 'col-md-4'
             ], 
-        ])->tab('Dane opiekuna');
+        ])->tab('Dane opiekuna'); */
+        CRUD::field([
+            'name' => 'commandory_id',
+            'label' => 'Komandoria',
+            'type' => 'select',
+            'entity' => 'commandory',  // The relationship method in the model
+            'model' => 'App\Models\Commandory',  // The related model
+            'attribute' => 'commandory_name',  // The attribute to display (Commandory name)
+            'options'   => (function ($query) {
+                return $query->orderBy('commandory_name', 'ASC')->get();  // Sort by name, optional
+            }),
+            'wrapper' => [
+                'class' => 'col-md-4',
+            ]
+         ])->tab('Dane opiekuna');
+        
         CRUD::field([
             'name' => 'adopter_type',
             'label' => 'Rodzaj opiekuna',
@@ -716,8 +743,8 @@ class ChildCrudController extends CrudController
             $query->where('group', '=', $group);
         }
 
-        if ($flag_comandory = request()->input('flag_comandory')) {
-            $query->where('flag_comandory', '=', $flag_comandory);
+        if ($commandory_id = request()->input('commandory_id')) {
+            $query->where('commandory_id', '=', $commandory_id);
         }
 
         if ($sex = request()->input('sex')) {
@@ -745,7 +772,7 @@ class ChildCrudController extends CrudController
                 $record->birth_place,
                 $record->country,
                 $record->group,
-                $record->flag_comandory,
+                $record->commandory_name,
                 $record->others,
                 $record->coordinator_first_name.' '.$record->coordinator_last_name,
                 $record->adoption_start_date,
@@ -796,8 +823,8 @@ class ChildCrudController extends CrudController
             $query->where('group', '=', $group);
         }
 
-        if ($flag_comandory = request()->input('flag_comandory')) {
-            $query->where('flag_comandory', '=', $flag_comandory);
+        if ($commandory_id = request()->input('commandory_id')) {
+            $query->where('commandory_id', '=', $commandory_id);
         }
 
         if ($sex = request()->input('sex')) {
@@ -867,8 +894,8 @@ class ChildCrudController extends CrudController
             $query->where('group', '=', $group);
         }
 
-        if ($flag_comandory = request()->input('flag_comandory')) {
-            $query->where('flag_comandory', '=', $flag_comandory);
+        if ($commandory_id = request()->input('commandory_id')) {
+            $query->where('commandory_id', '=', $commandory_id);
         }
 
         if ($sex = request()->input('sex')) {

@@ -32,13 +32,31 @@ use App\Models\Child;
 		'header' =>'Dodanych dzieci',
 		'body' => $childrenCount,
 	]]);
-	Widget::add([
+
+/* 	Widget::add([
     'type'        => 'card',
     'class'       => 'card text-white bg-danger mb-2',
     'content' => [
 		'header' =>'Uwaga!',
 		'body' => 'Proszę o sprawdzenie okresu adopcji ostatnio edytowanych dzieci. Występował błąd, który mógł nieoczekiwanie zmieniać okres adopcji na 1 rok.',
+	]]); */
+
+	Widget::add([
+    'type'        => 'card',
+    'class'       => 'card text-white bg-dark mb-2',
+    'content' => [
+		'header' =>'Zmiany 26.10.2024!',
+		'body' => '
+			<ul>Przebudowanie części systemu, tj.
+				<li>Utworzenie odrębnego obiektu dla wpłat, co umożliwia dynamiczne dodawanie i przypisywanie wpłat do aktualnie wybranego dziecka</li>
+				<li>Utworzenie odrębnego obiektu dla komandorii, co umożliwia dodawanie nowych komandorii a następnie przypisywanie dziecka do danej komandorii</li>
+				<li>Uzupełnienie listy wspólnot (salezjanie,pallotyni,franciszkanki od Cierpiących,kanoniczki (duchaczki))</li>
+				<li>Przebudowa opcji "okresu adopcji", dająca możliwość wpisania dowolnej wartości</li>
+				<li>Zwiększenie liczby domyślnie wyświetlanych rekordów z 10 na 20</li>
+				<li>Drobne poprawki i optymalizacje</li>
+			</ul> ',
 	]]);
+
 	Widget::add([
     'type'        => 'card',
     'class'       => 'card text-white bg-dark mb-2',

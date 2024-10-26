@@ -44,6 +44,10 @@
                   <p class="mb-0">{{$entry->adoption_end_date}}</p>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                  <p class="mb-0 fw-bolder">Okres adopcji:</p>
+                  <p class="mb-0">{{$entry->type_of_adoption}}</p>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0 fw-bolder">Czas trwania:</p>
                   <p class="mb-0">{{intval($entry->length_of_adoption/365)}} lat</p>
                 </li>
@@ -157,25 +161,23 @@
                   <p class="mb-0">{{ $entry->others}}</p>
                 </div>
               </div>
-                <hr style="margin: 1rem 0;">   
+              <hr style="margin: 1rem 0;">   
               <div class="row">
-                <div class="col">
-                  <div class="col-4">
-                    <p class="mb-0">Utworzono:</p>
-                  </div>
-                  <div class="col-8">
-                    <p class="mb-0">{{ $entry->created_at}}</p>
-                  </div>
+                <div class="col-sm-3">
+                  <p class="mb-0">Utworzono:</p>
                 </div>
-                <div class="col">
-                  <div class="col-sm-4">
-                    <p class="mb-0">Ostatnia modyfikacja:</p>
-                  </div>
-                  <div class="col-sm-8">
-                    <p class="mb-0">{{ $entry->updated_at}}</p>
-                  </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{ $entry->created_at}}</p>
                 </div>
-
+              </div>
+              <hr style="margin: 1rem 0;">   
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Ostatnia modyfikacja:</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="mb-0">{{ $entry->updated_at}}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -215,7 +217,7 @@
                     </li>   
                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                       <p class="mb-0 fw-bolder">Komandoria:</p>
-                      <p class="mb-0">{{$entry->flag_comandory}}</p>
+                      <p class="mb-0">{{$entry->commandory_name}}</p>
                     </li>               
                   </ul>
                 </div>

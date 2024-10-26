@@ -9,6 +9,9 @@
 
   // if breadcrumbs aren't defined in the CrudController, use the default breadcrumbs
   $breadcrumbs = $breadcrumbs ?? $defaultBreadcrumbs;
+  use App\Models\Commandory;
+
+  $commandories = Commandory::orderBy('commandory_name', 'asc')->get();
 @endphp
 
 @section('header')
@@ -36,9 +39,8 @@
             @endif
           </div>
         </div>
-
+@if (Request::is('admin/child*'))
 <hr class="my-3 p-0">
-
 <form method="GET" action="{{ url($crud->route) }}">
     <div class="row mb-3">
         <div class="col-md-1 align-self-center">
@@ -63,57 +65,28 @@
                 <option value="opatrzności bożej" {{ request()->input('group') == 'opatrzności bożej' ? 'selected' : '' }}>opatrzności bożej</option>
                 <option value="urszulanki" {{ request()->input('group') == 'urszulanki' ? 'selected' : '' }}>urszulanki</option>
                 <option value="franciszkanie" {{ request()->input('group') == 'franciszkanie' ? 'selected' : '' }}>franciszkanie</option>
+                <option value="salezjanie" {{ request()->input('group') == 'salezjanie' ? 'selected' : '' }}>salezjanie</option>
+                <option value="pallotyni" {{ request()->input('group') == 'pallotyni' ? 'selected' : '' }}>pallotyni</option>
+                <option value="franciszkanki od Cierpiących" {{ request()->input('group') == 'franciszkanki od Cierpiących' ? 'selected' : '' }}>franciszkanki od Cierpiących</option>
+                <option value="kanoniczki (duchaczki)" {{ request()->input('group') == 'kanoniczki (duchaczki)' ? 'selected' : '' }}>kanoniczki (duchaczki)</option>
             </select>
         </div>
             <div class="col-md-1 align-self-center">
                 Komandoria:
             </div>
             <div class="col-md-2">
-            <select name="flag_comandory" class="form-control">
-                <option value="">wszystkie</option>
-                <option value="białostocka" {{ request()->input('flag_comandory') == 'białostocka' ? 'selected' : '' }}>białostocka</option>
-                <option value="bielsko-żywiecka" {{ request()->input('flag_comandory') == 'bielsko-żywiecka' ? 'selected' : '' }}>bielsko-żywiecka</option>
-                <option value="bydgoska" {{ request()->input('flag_comandory') == 'bydgoska' ? 'selected' : '' }}>bydgoska</option>
-                <option value="częstochowska" {{ request()->input('flag_comandory') == 'częstochowska' ? 'selected' : '' }}>częstochowska</option>
-                <option value="drohiczyńska" {{ request()->input('flag_comandory') == 'drohiczyńska' ? 'selected' : '' }}>drohiczyńska</option>
-                <option value="elbląska" {{ request()->input('flag_comandory') == 'elbląska' ? 'selected' : '' }}>elbląska</option>
-                <option value="ełcka" {{ request()->input('flag_comandory') == 'ełcka' ? 'selected' : '' }}>ełcka</option>
-                <option value="gdańska" {{ request()->input('flag_comandory') == 'gdańska' ? 'selected' : '' }}>gdańska</option>
-                <option value="gliwicka" {{ request()->input('flag_comandory') == 'gliwicka' ? 'selected' : '' }}>gliwicka</option>
-                <option value="gnieźnieńska" {{ request()->input('flag_comandory') == 'gnieźnieńska' ? 'selected' : '' }}>gnieźnieńska</option>
-                <option value="kaliska" {{ request()->input('flag_comandory') == 'kaliska' ? 'selected' : '' }}>kaliska</option>
-                <option value="katowicka" {{ request()->input('flag_comandory') == 'katowicka' ? 'selected' : '' }}>katowicka</option>
-                <option value="kielecka" {{ request()->input('flag_comandory') == 'kielecka' ? 'selected' : '' }}>kielecka</option>
-                <option value="koszalińsko-kołobrzeska" {{ request()->input('flag_comandory') == 'koszalińsko-kołobrzeska' ? 'selected' : '' }}>koszalińsko-kołobrzeska</option>
-                <option value="krakowska" {{ request()->input('flag_comandory') == 'krakowska' ? 'selected' : '' }}>krakowska</option>
-                <option value="legnicka" {{ request()->input('flag_comandory') == 'legnicka' ? 'selected' : '' }}>legnicka</option>
-                <option value="lubelska" {{ request()->input('flag_comandory') == 'lubelska' ? 'selected' : '' }}>lubelska</option>
-                <option value="łomżyńska" {{ request()->input('flag_comandory') == 'łomżyńska' ? 'selected' : '' }}>łomżyńska</option>
-                <option value="łowicka" {{ request()->input('flag_comandory') == 'łowicka' ? 'selected' : '' }}>łowicka</option>
-                <option value="łódzka" {{ request()->input('flag_comandory') == 'łódzka' ? 'selected' : '' }}>łódzka</option>
-                <option value="opolska" {{ request()->input('flag_comandory') == 'opolska' ? 'selected' : '' }}>opolska</option>
-                <option value="paryska" {{ request()->input('flag_comandory') == 'paryska' ? 'selected' : '' }}>paryska</option>
-                <option value="pelplińska" {{ request()->input('flag_comandory') == 'pelplińska' ? 'selected' : '' }}>pelplińska</option>
-                <option value="płocka" {{ request()->input('flag_comandory') == 'płocka' ? 'selected' : '' }}>płocka</option>
-                <option value="poznańska" {{ request()->input('flag_comandory') == 'poznańska' ? 'selected' : '' }}>poznańska</option>
-                <option value="przemyska" {{ request()->input('flag_comandory') == 'przemyska' ? 'selected' : '' }}>przemyska</option>
-                <option value="radomska" {{ request()->input('flag_comandory') == 'radomska' ? 'selected' : '' }}>radomska</option>
-                <option value="rzeszowska" {{ request()->input('flag_comandory') == 'rzeszowska' ? 'selected' : '' }}>rzeszowska</option>
-                <option value="sandomierska" {{ request()->input('flag_comandory') == 'sandomierska' ? 'selected' : '' }}>sandomierska</option>
-                <option value="siedlecka" {{ request()->input('flag_comandory') == 'siedlecka' ? 'selected' : '' }}>siedlecka</option>
-                <option value="sosnowiecka" {{ request()->input('flag_comandory') == 'sosnowiecka' ? 'selected' : '' }}>sosnowiecka</option>
-                <option value="szczecińsko-kamieńska" {{ request()->input('flag_comandory') == 'szczecińsko-kamieńska' ? 'selected' : '' }}>szczecińsko-kamieńska</option>
-                <option value="świdnicka" {{ request()->input('flag_comandory') == 'świdnicka' ? 'selected' : '' }}>świdnicka</option>
-                <option value="tarnowska" {{ request()->input('flag_comandory') == 'tarnowska' ? 'selected' : '' }}>tarnowska</option>
-                <option value="toruńska" {{ request()->input('flag_comandory') == 'toruńska' ? 'selected' : '' }}>toruńska</option>
-                <option value="warmińska" {{ request()->input('flag_comandory') == 'warmińska' ? 'selected' : '' }}>warmińska</option>
-                <option value="warszawska" {{ request()->input('flag_comandory') == 'warszawska' ? 'selected' : '' }}>warszawska</option>
-                <option value="warszawsko-praska" {{ request()->input('flag_comandory') == 'warszawsko-praska' ? 'selected' : '' }}>warszawsko-praska</option>
-                <option value="włocławska" {{ request()->input('flag_comandory') == 'włocławska' ? 'selected' : '' }}>włocławska</option>
-                <option value="wrocławska" {{ request()->input('flag_comandory') == 'wrocławska' ? 'selected' : '' }}>wrocławska</option>
-                <option value="zamojsko-lubaczowska" {{ request()->input('flag_comandory') == 'zamojsko-lubaczowska' ? 'selected' : '' }}>zamojsko-lubaczowska</option>
-                <option value="zielonogórsko-gorzowska" {{ request()->input('flag_comandory') == 'zielonogórsko-gorzowska' ? 'selected' : '' }}>zielonogórsko-gorzowska</option>
-            </select>
+              
+            <select name="commandory_id" class="form-control">
+              <option value="">wszystkie</option>  <!-- Default "all" option -->
+              
+              @foreach ($commandories as $commandory)
+                  <option value="{{ $commandory->id }}" 
+                      {{ request()->input('commandory_id') == $commandory->id ? 'selected' : '' }}>
+                      {{ $commandory->commandory_name }}
+                  </option>
+              @endforeach
+          </select>
+
         </div>
         <div class="col-md-1">
             <button type="submit" class="btn btn-primary"><i class="las la-filter"></i>&nbsp;Filtruj</button>
@@ -148,6 +121,7 @@
 </form>
 
 <hr class="my-3 p-0">
+@endif
 
         {{-- Backpack List Filters
         @if ($crud->filtersEnabled())

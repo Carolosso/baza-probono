@@ -1,49 +1,73 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Function to calculate and update the 'do uzyskania pełnoletności' option
-    function updateRemainingDays() {
-        // Get the child's age from the hidden field
-        var childAgeInput = document.querySelector('input[name="age"]');
-        var childAge = parseInt(childAgeInput.value);
-
-        // Calculate the remaining years until the child turns 18
+$(document).ready(function () {
+    // Function to calculate remaining days until the child turns 18
+    function calculateRemainingDays() {
+        var childAge = parseInt($('input[name="age"]').val());
         var remainingYears = 18 - childAge;
-        var remainingDays = remainingYears * 365;
+        var remainingDays = remainingYears > 0 ? remainingYears * 365 : 0;
+        return { remainingYears, remainingDays };
+    }
 
-        // Ensure the calculation does not result in a negative number
-        if (remainingDays < 0) {
-            remainingDays = 0;
-            remainingYears = 0;
-        }
+    // Function to update length_of_adoption display and store days in hidden field
+    function updateLengthOfAdoption() {
+        var typeOfAdoption = $('select[name="type_of_adoption"]').val();
+        var endDateOfAdoption = $('input[name="adoption_end_date"]');
+        var lengthField = $('input[name="length_of_adoption_years"]');
+        var lengthInDaysField = $('input[name="length_of_adoption"]');
 
-        // Find the 'select' field and update the fourth option
-        var selectField = document.querySelector('select[name="length_of_adoption"]');
-
-        // Select the fourth option (index 3 since it's zero-based)
-        var optionToUpdate = selectField.children[3]; // or use selectField.querySelectorAll('option')[3];
-
-        if (optionToUpdate) {
-            // Set the value as the remaining days
-            optionToUpdate.value = remainingDays;
-
-            // Update the label to show "do uzyskania pełnoletności (X lat)"
-            optionToUpdate.text = 'do uzyskania pełnoletności (' + remainingYears + ' lat)';
-
-            // Optionally, set it as selected if no other option is chosen
-            if (!selectField.value || selectField.value === optionToUpdate.value) {
-                selectField.value = remainingDays;
+        // Check if type is set to "till 18 years old"
+        if (typeOfAdoption === 'do uzyskania pełnoletności') {
+            var { remainingYears, remainingDays } = calculateRemainingDays();
+            lengthField.val(remainingYears).prop('readonly', true);  // Display in years
+            lengthInDaysField.val(remainingDays);                    // Store in days
+        } else {
+            // Custom adoption type: keep the length editable and load stored data
+            var lengthOfAdoptionInDays = lengthInDaysField.val();
+            if (lengthOfAdoptionInDays) {
+                lengthField.val(Math.floor(lengthOfAdoptionInDays / 365)); // Convert days to years for display
             }
+            lengthField.prop('readonly', false);
         }
     }
 
-    // Run the update function when the page loads
-    updateRemainingDays();
+    // Function to calculate the adoption end date
+    function calculateEndDate() {
+        var startDate = $('[name="adoption_start_date"]').val();
+        var lengthOfAdoptionDays = parseInt($('[name="length_of_adoption"]').val(), 10);
 
-    // Attach the event listener to the child_age input field
-    var childAgeInput = document.querySelector('input[name="age"]');
-    if (childAgeInput) {
-        childAgeInput.addEventListener('change', function () {
-            // Recalculate the remaining days when the age changes
-            updateRemainingDays();
-        });
+        if (startDate && !isNaN(lengthOfAdoptionDays)) {
+            var startDateObj = new Date(startDate);
+            startDateObj.setDate(startDateObj.getDate() + lengthOfAdoptionDays);
+            var endDate = startDateObj.toISOString().split('T')[0];
+            $('[name="adoption_end_date"]').val(endDate);
+        }
     }
+
+    // Event listeners for changes in type_of_adoption, age, adoption_start_date, and length_of_adoption fields
+    $('select[name="type_of_adoption"]').on('change', function () {
+        updateLengthOfAdoption();
+        calculateEndDate();
+    });
+
+    $('input[name="age"]').on('change', function () {
+        if ($('select[name="type_of_adoption"]').val() === 'do uzyskania pełnoletności') {
+            updateLengthOfAdoption();
+            calculateEndDate();
+        }
+    });
+
+    $('[name="adoption_start_date"], [name="length_of_adoption_years"]').on('change keyup', function () {
+        calculateEndDate();
+    });
+
+    // Convert custom years input to days on manual input in length_of_adoption_years
+    $('input[name="length_of_adoption_years"]').on('input', function () {
+        if ($('select[name="type_of_adoption"]').val() === 'niestandardowy') {
+            var customYears = parseInt($(this).val());
+            $('input[name="length_of_adoption"]').val(customYears * 365 || '');
+        }
+    });
+
+    // Initial setup on page load
+    updateLengthOfAdoption();
+    calculateEndDate();
 });
