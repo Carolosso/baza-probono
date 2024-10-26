@@ -166,7 +166,7 @@ class ChildCrudController extends CrudController
     protected function setupCreateOperation()
     {
         Widget::add()->type('script')->content('js/fields.js');
-        Widget::add()->type('script')->content('js/age_diff.js');
+        Widget::add()->type('script')->content('js/age_calculation.js');
         //Widget::add()->type('script')->content('js/end_date.js');
 
         CRUD::setValidation(ChildRequest::class);
