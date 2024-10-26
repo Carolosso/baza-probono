@@ -70,12 +70,21 @@ class ChildCrudController extends CrudController
             'name' => 'image_url',
             'label' => 'Zdjęcie',
             'type' => 'image',
-            'prefix' => '/storage/',
-            'height' => 'auto',
-            'width' => '5rem',  
+            //'prefix' => '/storage/',
+            //'height' => 'auto',
+            //'width' => '50px',
+            'attributes'=> [
+                'style' => 'width: 100%; height: 100%; object-fit: cover; max-height: 100%;', // Override default Backpack styles
+            ],
             'wrapper' => [
-                'class' => 'd-flex justify-content-center'
-            ],       
+                //'class' => 'd-flex justify-content-center',
+                'style' => 'width: 75px; height: 75px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 50%;',
+            ],
+            'value' =>   function ($entry) {
+                return $entry->image_url 
+                    ? asset('storage/' . $entry->image_url) 
+                    : asset('img/Blank-profile.png');
+            } 
         ]);
         CRUD::column([
             'name' => 'first_name',
