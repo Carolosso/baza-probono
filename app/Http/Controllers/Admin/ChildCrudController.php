@@ -46,6 +46,9 @@ class ChildCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+         Widget::add()->type('script')->content('js/select2.min.js');
+         Widget::add()->type('script')->content('js/select2_list_blade.js');
+         Widget::add()->type('style')->content('css/select2.css');
         // Add a custom button or override the existing button
         $this->crud->removeButton('create');
     
@@ -176,8 +179,10 @@ class ChildCrudController extends CrudController
     {
         Widget::add()->type('script')->content('js/fields.js');
         Widget::add()->type('script')->content('js/age_calculation.js');
-        //Widget::add()->type('script')->content('js/end_date.js');
-
+        Widget::add()->type('script')->content('js/end_date.js');
+        Widget::add()->type('script')->content('js/select2.min.js');
+        Widget::add()->type('script')->content('js/select2_create_blade.js');
+        Widget::add()->type('style')->content('css/select2.css');
         CRUD::setValidation(ChildRequest::class);
 
         $this->crud->setTitle('Dodaj','create');
@@ -439,7 +444,8 @@ class ChildCrudController extends CrudController
             ],
             'wrapper' => [
                 'class' => 'col-md-4'
-            ],  
+            ],
+            'attributes'=> ['id'=>'CountryNameSelect']  
         ])->tab('Dane dziecka');
 
         CRUD::field([
@@ -613,6 +619,7 @@ class ChildCrudController extends CrudController
             'entity' => 'commandory',  // The relationship method in the model
             'model' => 'App\Models\Commandory',  // The related model
             'attribute' => 'commandory_name',  // The attribute to display (Commandory name)
+            'attributes'=> ['id'=>'CommandoryNameSelect'],
             'options'   => (function ($query) {
                 return $query->orderBy('commandory_name', 'ASC')->get();  // Sort by name, optional
             }),

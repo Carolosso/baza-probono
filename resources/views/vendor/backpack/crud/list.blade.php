@@ -76,7 +76,7 @@
             </div>
             <div class="col-md-2">
               
-            <select name="commandory_id" class="form-control">
+            <select name="commandory_id" id="CommandoryNameSelect" class="form-control">
               <option value="">wszystkie</option>  <!-- Default "all" option -->
               
               @foreach ($commandories as $commandory)

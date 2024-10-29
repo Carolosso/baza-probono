@@ -13,7 +13,6 @@ use App\Models\Child;
 			}
 		}
 	} */
-        $childrenCount = Child::count();
 
 	Widget::add([
     'type'        => 'jumbotron',
@@ -30,8 +29,10 @@ use App\Models\Child;
     'class'       => 'card text-white bg-primary mb-2',
     'content' => [
 		'header' =>'Dodanych dzieci',
-		'body' => $childrenCount,
-	]]);
+		'body' => Child::count(),
+		],
+	'wrapper' => ['class'=>'col-md-2']
+]);
 
 /* 	Widget::add([
     'type'        => 'card',
@@ -43,9 +44,25 @@ use App\Models\Child;
 
 	Widget::add([
     'type'        => 'card',
+    'class'       => 'card text-white bg-warning mb-2',
+    'content' => [
+		'header' =>'Informacja',
+		'body' => '
+			<ul>Przywrócono z kopii zapasowej wpisy dzieci (bez zdjęć i wpłat):
+				<li>Cezar</li>
+				<li>Joel Suika Sangnyuy</li>
+				<li>Keith Delos Santos</li>
+				<li>Kristian</li>
+			</ul> ',
+		],
+	'wrapper' => ['class'=>'col-md-8']
+]);
+
+	Widget::add([
+    'type'        => 'card',
     'class'       => 'card text-white bg-dark mb-2',
     'content' => [
-		'header' =>'Zmiany 26.10.2024!',
+		'header' =>'Zmiany 26.10.2024',
 		'body' => '
 			<ul>Przebudowanie części systemu, tj.
 				<li>Utworzenie odrębnego obiektu dla wpłat, co umożliwia dynamiczne dodawanie i przypisywanie wpłat do aktualnie wybranego dziecka</li>
@@ -55,7 +72,9 @@ use App\Models\Child;
 				<li>Zwiększenie liczby domyślnie wyświetlanych rekordów z 10 na 20</li>
 				<li>Drobne poprawki i optymalizacje</li>
 			</ul> ',
-	]]);
+		],
+	'wrapper' => ['class'=>'col-md-8']
+]);
 
 	Widget::add([
     'type'        => 'card',
@@ -72,7 +91,9 @@ use App\Models\Child;
 				<li>Dodano generowanie Daty zakończenia adopcji</li>
 				<li>Drobne poprawki i optymalizacje</li>
 			</ul> ',
-	]]);
+		],
+		'wrapper' => ['class'=>'col-md-8']
+]);
 
 	Widget::add([
     'type'        => 'card',
@@ -84,7 +105,10 @@ use App\Models\Child;
 				<li>Podstawowe filtrowanie</li>
 				<li>Eksport danych do pliku w formacie CSV</li>
 			</ul> ',
-	]]);
+		],
+	'wrapper' => ['class'=>'col-md-8']
+
+	]);
 
 @endphp
 
