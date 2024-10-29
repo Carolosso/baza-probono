@@ -2,6 +2,7 @@
 
 @php
 use App\Models\Child;
+use App\Models\Commandory;
 
 	// Merge widgets that were fluently declared with widgets declared without the fluent syntax:
 	// - $data['widgets']['before_content']
@@ -13,57 +14,72 @@ use App\Models\Child;
 			}
 		}
 	} */
-
 	Widget::add([
     'type'        => 'jumbotron',
     'heading'     => 'Witaj w panelu bazy danych!',
-    //'content'     => 'My magnific headline! Lets build something awesome together.',
-    //'button_link' => backpack_url('child'),
-    //'button_text' => 'Lista dzieci',
-    // OPTIONAL:
     'heading_class' => 'display-4',
 	]);
 
 	Widget::add([
-    'type'        => 'card',
-    'class'       => 'card text-white bg-primary mb-2',
-    'content' => [
-		'header' =>'Dodanych dzieci',
-		'body' => Child::count(),
-		],
-	'wrapper' => ['class'=>'col-md-2']
-]);
-
-/* 	Widget::add([
-    'type'        => 'card',
-    'class'       => 'card text-white bg-danger mb-2',
-    'content' => [
-		'header' =>'Uwaga!',
-		'body' => 'Proszę o sprawdzenie okresu adopcji ostatnio edytowanych dzieci. Występował błąd, który mógł nieoczekiwanie zmieniać okres adopcji na 1 rok.',
-	]]); */
+		'type' => 'div',
+		'class' => 'row',
+		'content' => [
+			[
+				'type' => 'card',
+				'class'       => 'card text-white bg-primary mb-2',
+				'content' => [
+						'header' =>'<i class="la la-users"></i>&nbsp;Dodanych dzieci',
+						'body' => '<h2>'.Child::count().'</h2>',
+					],
+				'wrapper' => ['class'=>'col-md-3']
+			],
+			[
+				'type' => 'card',
+				'class' => 'card text-white bg-secondary mb-2',
+				'content' => [
+						'header' =>'<i class="la la-flag"></i>&nbsp;Liczba komandorii',
+						'body' => '<h2>'.Commandory::count().'</h2>',
+					],
+				'wrapper' => ['class'=>'col-md-3']
+			],
+		]
+	]);
 
 	Widget::add([
-    'type'        => 'card',
-    'class'       => 'card text-white bg-warning mb-2',
-    'content' => [
-		'header' =>'Informacja',
-		'body' => '
-			<ul>Przywrócono z kopii zapasowej wpisy dzieci (bez zdjęć i wpłat):
-				<li>Cezar</li>
-				<li>Joel Suika Sangnyuy</li>
-				<li>Keith Delos Santos</li>
-				<li>Kristian</li>
+		'type'        => 'card',
+		'class'       => 'card text-white bg-warning mb-2',
+		'content' => [
+			'header' =>'Informacja',
+			'body' => '
+				<ul>Przywrócono z kopii zapasowej wpisy dzieci (bez zdjęć i wpłat):
+					<li>Cezar</li>
+					<li>Joel Suika Sangnyuy</li>
+					<li>Keith Delos Santos</li>
+					<li>Kristian</li>
+				</ul> ',
+			],
+		'wrapper' => ['class'=>'col-md-6']
+	]);
+
+				
+	Widget::add([
+		'type'	=> 'custom_collapse_widget',
+		'class'	=> 'card text-white bg-dark mb-2',
+		'title' =>	'Zmiany 29.10.2024',
+		'content' => '
+			<ul>
+				<li>Dodano opcję szukania w rozwijanych listach (komandorie i państwa)</li>
+				<li>Drobne poprawki i zmiany</li>
 			</ul> ',
-		],
-	'wrapper' => ['class'=>'col-md-8']
-]);
+		'number' => '4',
+		'wrapper' => 'col-md-6'
+	]);
 
 	Widget::add([
-    'type'        => 'card',
-    'class'       => 'card text-white bg-dark mb-2',
-    'content' => [
-		'header' =>'Zmiany 26.10.2024',
-		'body' => '
+		'type'	=> 'custom_collapse_widget',
+		'class'	=> 'card text-white bg-dark mb-2',
+		'title' =>	'Zmiany 26.10.2024',
+		'content' => '
 			<ul>Przebudowanie części systemu, tj.
 				<li>Utworzenie odrębnego obiektu dla wpłat, co umożliwia dynamiczne dodawanie i przypisywanie wpłat do aktualnie wybranego dziecka</li>
 				<li>Utworzenie odrębnego obiektu dla komandorii, co umożliwia dodawanie nowych komandorii a następnie przypisywanie dziecka do danej komandorii</li>
@@ -72,16 +88,14 @@ use App\Models\Child;
 				<li>Zwiększenie liczby domyślnie wyświetlanych rekordów z 10 na 20</li>
 				<li>Drobne poprawki i optymalizacje</li>
 			</ul> ',
-		],
-	'wrapper' => ['class'=>'col-md-8']
-]);
-
+		'number' => '3',
+		'wrapper' => 'col-md-6'
+	]);
 	Widget::add([
-    'type'        => 'card',
-    'class'       => 'card text-white bg-dark mb-2',
-    'content' => [
-		'header' =>'Zmiany 19.10.2024',
-		'body' => '
+		'type'	=> 'custom_collapse_widget',
+		'class'	=> 'card text-white bg-dark mb-2',
+		'title' =>	'Zmiany 19.10.2024',
+		'content' => '
 			<ul>
 				<li>3 tryby eksportu danych</li>
 				<li>Uzupełnienie listy "Rodzaje opiekunów" (Ksiądz, Siostra Zakonna, Ojciec Zakonny, Wspólnota parafialna, Szkoła, Urząd)</li>
@@ -91,23 +105,20 @@ use App\Models\Child;
 				<li>Dodano generowanie Daty zakończenia adopcji</li>
 				<li>Drobne poprawki i optymalizacje</li>
 			</ul> ',
-		],
-		'wrapper' => ['class'=>'col-md-8']
-]);
-
+		'number' => '2',
+		'wrapper' => 'col-md-6'
+	]);
 	Widget::add([
-    'type'        => 'card',
-    'class'       => 'card text-white bg-dark mb-2',
-    'content' => [
-		'header' =>'Zmiany 18.10.2024',
-		'body' => '
+		'type'	=> 'custom_collapse_widget',
+		'class'	=> 'card text-white bg-dark mb-2',
+		'title' =>	'Zmiany 18.10.2024',
+		'content' => '
 			<ul>Dodano:
 				<li>Podstawowe filtrowanie</li>
 				<li>Eksport danych do pliku w formacie CSV</li>
 			</ul> ',
-		],
-	'wrapper' => ['class'=>'col-md-8']
-
+		'number' => '1',
+		'wrapper' => 'col-md-6'
 	]);
 
 @endphp

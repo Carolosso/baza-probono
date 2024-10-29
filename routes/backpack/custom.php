@@ -23,6 +23,7 @@ Route::group([
     Route::get('child/export-csvAdopter', [ChildCrudController::class, 'exportToCsvAdopter'])->name('child.export-csvAdopter');
     Route::crud('payment', 'PaymentCrudController');
     Route::crud('commandory', 'CommandoryCrudController');
+    Route::crud('adopter', 'AdopterCrudController');
 }); // this should be the absolute last line of this file
 
 /**
