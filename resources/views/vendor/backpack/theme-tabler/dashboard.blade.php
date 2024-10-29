@@ -31,7 +31,7 @@ use App\Models\Commandory;
 						'header' =>'<i class="la la-users"></i>&nbsp;Dodanych dzieci',
 						'body' => '<h2>'.Child::count().'</h2>',
 					],
-				'wrapper' => ['class'=>'col-md-3']
+				'wrapper' => ['class'=>'col-md-4']
 			],
 			[
 				'type' => 'card',
@@ -40,7 +40,7 @@ use App\Models\Commandory;
 						'header' =>'<i class="la la-flag"></i>&nbsp;Liczba komandorii',
 						'body' => '<h2>'.Commandory::count().'</h2>',
 					],
-				'wrapper' => ['class'=>'col-md-3']
+				'wrapper' => ['class'=>'col-md-4']
 			],
 		]
 	]);
@@ -58,21 +58,21 @@ use App\Models\Commandory;
 					<li>Kristian</li>
 				</ul> ',
 			],
-		'wrapper' => ['class'=>'col-md-6']
+		'wrapper' => ['class'=>'col-md-8']
 	]);
 
 				
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
 		'class'	=> 'card text-white bg-dark mb-2',
-		'title' =>	'Zmiany 29.10.2024',
+		'title' =>	'Zmiany 29.10.2024 <span class="mx-2 badge badge-secondary">Nowe</span>',
 		'content' => '
 			<ul>
 				<li>Dodano opcję szukania w rozwijanych listach (komandorie i państwa)</li>
 				<li>Drobne poprawki i zmiany</li>
 			</ul> ',
 		'number' => '4',
-		'wrapper' => 'col-md-6'
+		'wrapper' => 'col-md-8'
 	]);
 
 	Widget::add([
@@ -89,7 +89,7 @@ use App\Models\Commandory;
 				<li>Drobne poprawki i optymalizacje</li>
 			</ul> ',
 		'number' => '3',
-		'wrapper' => 'col-md-6'
+		'wrapper' => 'col-md-8'
 	]);
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
@@ -106,7 +106,7 @@ use App\Models\Commandory;
 				<li>Drobne poprawki i optymalizacje</li>
 			</ul> ',
 		'number' => '2',
-		'wrapper' => 'col-md-6'
+		'wrapper' => 'col-md-8'
 	]);
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
@@ -118,7 +118,7 @@ use App\Models\Commandory;
 				<li>Eksport danych do pliku w formacie CSV</li>
 			</ul> ',
 		'number' => '1',
-		'wrapper' => 'col-md-6'
+		'wrapper' => 'col-md-8'
 	]);
 
 @endphp
