@@ -1,12 +1,12 @@
 <div class="{{ $widget['wrapper'] }}"> 
     <div class="card {{ $widget['class'] ?? 'custom_collapse_widget' }}">
         <div class="row">
-            <div class="col-4">
+            <div class="col-md-6">
                 <h3 class="card-header">
                     {!! $widget['title'] !!}
                 </h3>
             </div>
-            <div class="col-4 align-self-center">
+            <div class="mr-2 col-md-5 align-self-center text-end">
                 <button class="btn btn-primary" 
                         data-bs-toggle="collapse" 
                         data-bs-target="#collapse-{!! $widget['number'] !!}" 
