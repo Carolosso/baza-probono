@@ -65,7 +65,8 @@ use App\Models\Commandory;
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
 		'class'	=> 'card text-white bg-dark mb-2',
-		'title' =>	'Zmiany 29.10.2024 <span class="mx-2 badge badge-secondary">Nowe</span>',
+		'title' =>	'Zmiany 29.10.2024 ',
+		 //<span class="mx-2 badge badge-secondary">Nowe</span>
 		'content' => '
 			<ul>
 				<li>Dodano opcję szukania w rozwijanych listach (komandorie i państwa)</li>
