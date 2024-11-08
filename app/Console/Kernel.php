@@ -30,6 +30,6 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__.'/Commands');
 
         // Include custom routes/console.php file for any additional commands defined there
-        require base_path('routes/console.php');
+       // require base_path('routes/console.php');
     }
 }
