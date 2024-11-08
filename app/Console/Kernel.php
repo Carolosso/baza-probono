@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Schedule the child remaining days update to run daily at midnight
-        $schedule->command('children:update-remaining-days')->dailyAt('14:00');
+        $schedule->command('children:update-remaining-days')->dailyAt('14:05');
     }
 
     /**
