@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Child;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log; // Add logging
 
 class UpdateRemainingDays extends Command
 {
@@ -13,6 +14,7 @@ class UpdateRemainingDays extends Command
 
     public function handle()
     {
+        Log::info('UpdateRemainingDays command starting...');
         $children = Child::all();
         $currentDate = Carbon::now();
 

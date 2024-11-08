@@ -18,7 +18,7 @@ class Kernel extends ConsoleKernel
     {
         // Schedule the child remaining days update to run daily at midnight
         $schedule->command('children:update-remaining-days')->dailyAt('14:05')->withoutOverlapping();
-        Log::info('UpdateRemainingDays command started.');
+        Log::info('UpdateRemainingDays command executed.');
 
     }
 
