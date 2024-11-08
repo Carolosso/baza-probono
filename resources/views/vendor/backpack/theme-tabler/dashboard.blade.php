@@ -4,6 +4,7 @@
 use App\Models\Child;
 use App\Models\Commandory;
 use App\Models\User;
+use Backpack\CRUD\app\Library\Auth\backpack_auth;
 
 	// Merge widgets that were fluently declared with widgets declared without the fluent syntax:
 	// - $data['widgets']['before_content']
@@ -17,7 +18,7 @@ use App\Models\User;
 	} */
 	Widget::add([
     'type'        => 'jumbotron',
-    'heading'     => 'Witaj w panelu bazy danych!',
+    'heading'     => 'Witaj ' .backpack_auth()->user()->name. '!',
     'heading_class' => 'display-4',
 	]);
 

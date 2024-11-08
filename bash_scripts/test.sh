@@ -1,0 +1,1 @@
+cd /baza-adopcja && php artisan children:update-remaining-days
