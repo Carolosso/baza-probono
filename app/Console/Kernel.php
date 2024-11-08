@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Schedule the child remaining days update to run daily at midnight
-        $schedule->command('children:update-remaining-days')->dailyAt('14:05')->withoutOverlapping();
+        $schedule->command('children:update-remaining-days')->everyTenMinutes();	//->dailyAt('14:05')->withoutOverlapping();
         Log::info('UpdateRemainingDays command executed.');
 
     }
