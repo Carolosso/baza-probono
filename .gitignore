@@ -6,6 +6,7 @@
 /storage/*.key
 /vendor
 /config/database.php
+composer.lock
 .env
 .env.backup
 .env.production
