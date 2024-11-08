@@ -2,7 +2,7 @@
 
 @php
   $breadcrumbs = [
-      'Admin' => backpack_url('dashboard'),
+      'Panel główny' => backpack_url('dashboard'),
       'Dzieci' => backpack_url('child'),
        $entry->first_name.' '.$entry->last_name => false,
   ];
@@ -54,13 +54,13 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <p class="mb-0 fw-bolder">Pozostało:</p>
                   <p class="mb-0">
-                    @if($entry->getRemainingTime()<1)
+                    @if($entry->remaining_days_of_adoption<1)
                       <span class="badge bg-red text-red-fg">Wygasło</span>
-                    @elseif ($entry->getRemainingTime()>= 1 && $entry->getRemainingTime() < 30)
-                      <span class="badge bg-orange text-orange-fg"> {{$entry->getRemainingTime()}} dni</span>
-                    @elseif ($entry->getRemainingTime()>= 30 && $entry->getRemainingTime() <= 90)
-                      <span class="badge bg-yellow text-yellow-fg"> {{$entry->getRemainingTime()}} dni</span>
-                    @else <span class="badge bg-green text-green-fg ">{{$entry->getRemainingTime()}} dni</span>
+                    @elseif ($entry->remaining_days_of_adoption>= 1 && $entry->remaining_days_of_adoption< 30)
+                      <span class="badge bg-orange text-orange-fg"> {{$entry->remaining_days_of_adoption}} dni</span>
+                    @elseif ($entry->remaining_days_of_adoption>= 30 && $entry->remaining_days_of_adoption <= 90)
+                      <span class="badge bg-yellow text-yellow-fg"> {{$entry->remaining_days_of_adoption}} dni</span>
+                    @else <span class="badge bg-green text-green-fg ">{{$entry->remaining_days_of_adoption}} dni</span>
                     @endif                  
                   </p>
                 </li>

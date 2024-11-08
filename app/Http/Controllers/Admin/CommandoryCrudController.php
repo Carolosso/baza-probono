@@ -16,8 +16,8 @@ class CommandoryCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
-   // use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    //use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
+   // use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -39,6 +39,8 @@ class CommandoryCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->checkPermissions();
+        
         // Add a custom button or override the existing button
         $this->crud->removeButton('create');
     
@@ -71,12 +73,16 @@ class CommandoryCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        $this->checkPermissions();
+        
         $this->crud->setTitle('Dodaj','create');
         $this->crud->setHeading('Tworzenie komandorii','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');
 
-        CRUD::setValidation(); //CommandoryRequest::class
-        //CRUD::setFromDb(); // set fields from db columns.
+        $this->crud->setValidation([
+            'commandory_name' => 'required|unique:commandories,commandory_name',
+        ]);
+        
         CRUD::field([
             'name' => 'commandory_name',
             'label' => 'Nazwa nowej komandorii',
@@ -98,7 +104,30 @@ class CommandoryCrudController extends CrudController
      * @return void
      */
     protected function setupUpdateOperation()
-    {
+    {   
+        $this->checkPermissions();
+
         $this->setupCreateOperation();
+    }
+
+    protected function checkPermissions(){
+        // Define the CRUD operations and their corresponding permissions
+        $permissions = [
+            'list'   => 'Listowanie komandorii', // 'view child' permission
+            'create' => 'Dodawanie komandorii',   // 'create child' permission
+            'update' => 'Edytowanie komandorii', // 'update child' permission
+            'delete' => 'Usuwanie komandorii',     // 'delete child' permission
+        ];
+
+        // Check permissions for each operation
+        foreach ($permissions as $operation => $permission) {
+            if (!backpack_user()->can($permission)) {
+                // Deny access to the operation if the user doesn't have the permission
+                $this->crud->denyAccess($operation);
+            } else {
+                // Allow access to the operation if the user has the permission
+                $this->crud->allowAccess($operation);
+            }
+        }
     }
 }

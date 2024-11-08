@@ -3,11 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
-class CheckIfAdmin
-{
-    
-    /**
+use Illuminate\Support\Facades\Route;
+/**
      * Checked that the logged in user is an administrator.
      *
      * --------------
@@ -26,41 +23,39 @@ class CheckIfAdmin
      * @param  \Illuminate\Contracts\Auth\Authenticatable|null  $user
      * @return bool
      */
+    
+class CheckIfAdmin
+{
     private function checkIfUserIsAdmin($user)
     {
-        // return ($user->is_admin == 1);
-        return true;
+        return ($user->is_admin == 1);
     }
 
-    /**
-     * Answer to unauthorized access request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
     private function respondToUnauthorizedRequest($request)
     {
         if ($request->ajax() || $request->wantsJson()) {
             return response(trans('backpack::base.unauthorized'), 401);
         } else {
-            return redirect()->guest(backpack_url('login'));
+            return redirect()->guest(backpack_url('login'))
+                ->withErrors(['unauthorized' => 'Konto niezatwierdzone. Zaczekaj na zatwierdzenie przez administratora.']);
         }
     }
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     public function handle($request, Closure $next)
     {
+        // Allow guests to access the login and register pages
+        if (Route::is('backpack.auth.login') || Route::is('backpack.auth.register')) {
+            return $next($request);
+        }
+
+        // Redirect guests to login page if they try to access any other page
         if (backpack_auth()->guest()) {
             return $this->respondToUnauthorizedRequest($request);
         }
 
+        // Restrict access if user is not an admin
         if (! $this->checkIfUserIsAdmin(backpack_user())) {
+            backpack_auth()->logout();  // Logout non-admin users immediately
             return $this->respondToUnauthorizedRequest($request);
         }
 

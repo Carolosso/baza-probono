@@ -1,6 +1,16 @@
 {{-- This file is used for menu items by any Backpack v6 theme --}}
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('dashboard') }}"><i class="la la-home nav-icon"></i> {{ trans('backpack::base.dashboard') }}</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('child') }}"><i class="la la-users nav-icon"></i>Lista dzieci</a></li>
 {{-- <x-backpack::menu-item title="Payments" icon="la la-question" :link="backpack_url('payment')" /> --}}
- <x-backpack::menu-item title="Komandorie" icon="la la-flag" :link="backpack_url('commandory')" />
+<x-backpack::menu-item title="{{ trans('backpack::base.dashboard') }}" icon="la la-home nav-icon" :link="backpack_url('dashboard')" />
+<x-backpack::menu-item title="Lista dzieci" icon="la la-user-friends nav-icon" :link="backpack_url('child')" />
+<x-backpack::menu-item title="Komandorie" icon="la la-flag" :link="backpack_url('commandory')" />
 {{--<x-backpack::menu-item title="Adopters" icon="la la-question" :link="backpack_url('adopter')" /> --}}
+
+{{-- Only show this dropdown if the user has the Admin role --}}
+@if (backpack_user() && backpack_user()->hasRole('Administrator'))
+    <x-backpack::menu-dropdown title="Dostęp" icon="la la-shield">
+        {{-- <x-backpack::menu-dropdown-header title="Authentication" /> --}}
+        <x-backpack::menu-dropdown-item title="Użytkownicy" icon="la la-user" :link="backpack_url('user')" />
+        <x-backpack::menu-dropdown-item title="Role" icon="la la-group" :link="backpack_url('role')" />
+        <x-backpack::menu-dropdown-item title="Uprawnienia" icon="la la-key" :link="backpack_url('permission')" />
+    </x-backpack::menu-dropdown>
+@endif

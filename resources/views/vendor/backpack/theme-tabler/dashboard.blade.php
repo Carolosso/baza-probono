@@ -3,6 +3,7 @@
 @php
 use App\Models\Child;
 use App\Models\Commandory;
+use App\Models\User;
 
 	// Merge widgets that were fluently declared with widgets declared without the fluent syntax:
 	// - $data['widgets']['before_content']
@@ -24,28 +25,31 @@ use App\Models\Commandory;
 		'type' => 'div',
 		'class' => 'row',
 		'content' => [
-			[
-				'type' => 'card',
-				'class'       => 'card text-white bg-primary mb-2',
-				'content' => [
-						'header' =>'<i class="la la-users"></i>&nbsp;Dodanych dzieci',
-						'body' => '<h2>'.Child::count().'</h2>',
-					],
-				'wrapper' => ['class'=>'col-md-4']
-			],
-			[
-				'type' => 'card',
-				'class' => 'card text-white bg-secondary mb-2',
-				'content' => [
-						'header' =>'<i class="la la-flag"></i>&nbsp;Liczba komandorii',
-						'body' => '<h2>'.Commandory::count().'</h2>',
-					],
-				'wrapper' => ['class'=>'col-md-4']
-			],
+				[
+					'type' => 'custom_card_ribbon_widget',
+					'title' => 'Dzieci',
+					'icon_class' => 'la la-user-friends',
+					'bg_class' => 'bg-success',
+					'value' => Child::count()
+				],
+				[
+					'type' => 'custom_card_ribbon_widget',
+					'title' => 'Komandorie',
+					'icon_class' => 'la la-flag',
+					'bg_class' => 'bg-danger',
+					'value' => Commandory::count()
+				],
+				[
+					'type' => 'custom_card_ribbon_widget',
+					'title' => 'Użytkownicy',
+					'icon_class' => 'la la-user-friends',
+					'bg_class' => 'bg-info',
+					'value' => User::count()
+				],
 		]
 	]);
 
-	Widget::add([
+/* 	Widget::add([
 		'type'        => 'card',
 		'class'       => 'card text-white bg-warning mb-2',
 		'content' => [
@@ -59,8 +63,24 @@ use App\Models\Commandory;
 				</ul> ',
 			],
 		'wrapper' => ['class'=>'col-md-8']
+	]); */
+	Widget::add([
+		'type'	=> 'custom_collapse_widget',
+		'class'	=> 'card text-white bg-dark mb-2',
+		'title' =>	'Zmiany 08.11.2024 <span class="mx-2 badge badge-secondary">Nowe</span>',
+		'content' => '
+			<ul>Usprawniono bezpieczeństwo bazy danych:
+				<li>Dodano role i uprawnienia dostępu</li>
+				<li>Dodano zatwierdzanie nowych użytkowników</li>
+			</ul> 
+			<ul>Dodatkowo:
+				<li>Przebudowano pole "Pozostało dni". Możliwe jest teraz sortowanie na jego podstawie.</li>
+				<li>Poprawki, zmiany, optymalizacje</li>
+			</ul> 
+			',
+		'number' => '5',
+		'wrapper' => 'col-md-8'
 	]);
-
 				
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',

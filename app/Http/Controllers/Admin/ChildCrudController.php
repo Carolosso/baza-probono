@@ -9,7 +9,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\app\Library\Widget;
 use Illuminate\Support\Facades\Response;
-
+use Spatie\Permission\Exceptions\UnauthorizedException;
+//use Illuminate\Support\Facades\Log; // Add logging
 
 /**
  * Class ChildCrudController
@@ -30,12 +31,12 @@ class ChildCrudController extends CrudController
      * 
      * @return void
      */
+    
     public function setup()
     {
         CRUD::setModel(\App\Models\Child::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/child');
         CRUD::setEntityNameStrings('child', 'Dzieci');
-
     }
 
     /**
@@ -46,6 +47,8 @@ class ChildCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->checkPermissions();
+
          Widget::add()->type('script')->content('js/select2.min.js');
          Widget::add()->type('script')->content('js/select2_list_blade.js');
          Widget::add()->type('style')->content('css/select2.css');
@@ -55,9 +58,6 @@ class ChildCrudController extends CrudController
         // Add your custom button
         $this->crud->addButtonFromView('top', 'custom_create_child', 'custom_create_child', 'beginning');
 
-
-        //CRUD::column('group_find');
-        //CRUD::column('flag');
 
         if (request()->has('group') && request()->input('group') != '') {
             $this->crud->addClause('where', 'group', request()->input('group'));
@@ -73,9 +73,6 @@ class ChildCrudController extends CrudController
             'name' => 'image_url',
             'label' => 'Zdjęcie',
             'type' => 'image',
-            //'prefix' => '/storage/',
-            //'height' => 'auto',
-            //'width' => '50px',
             'attributes'=> [
                 'style' => 'width: 100%; height: 100%; object-fit: cover; max-height: 100%;', // Override default Backpack styles
             ],
@@ -131,6 +128,7 @@ class ChildCrudController extends CrudController
                 //'class' => 'fs-3'
             ],
         ]);
+
         CRUD::column([
             'name' => 'length_of_adoption',
             'label' => 'Długość adopcji',
@@ -144,8 +142,18 @@ class ChildCrudController extends CrudController
                 //'class' => 'fs-3'
             ],
         ]);
-    
-        CRUD::Column([
+
+        CRUD::addColumn([
+            'name' => 'remaining_days_of_adoption',
+            'label' => 'Pozostało',
+            'type' => 'view',
+            'view' => 'vendor.backpack.crud.columns.remaining_days',
+        ]);
+
+
+
+
+     /*    CRUD::Column([
             'name' => 'remaining_time',
             'label' => 'Pozostało',
             'type' => 'custom_html',
@@ -166,7 +174,7 @@ class ChildCrudController extends CrudController
                     return '<div class="d-flex justify-content-center"><span class="badge bg-green text-green-fg">'.$remainingDays.' dni</span></div>';
                 }
             }
-        ]);
+        ]); */
     }
 
     /**
@@ -177,6 +185,9 @@ class ChildCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        //$this->authorize('Admin', Model::class);
+        $this->checkPermissions();
+
         Widget::add()->type('script')->content('js/fields.js');
         Widget::add()->type('script')->content('js/age_calculation.js');
         Widget::add()->type('script')->content('js/end_date.js');
@@ -497,6 +508,7 @@ class ChildCrudController extends CrudController
             'name' => 'length_of_adoption',
             'type' => 'hidden',
         ]);
+
         CRUD::field([
             'name' => 'length_of_adoption_years',
             'label' => 'Długość adopcji',
@@ -504,7 +516,7 @@ class ChildCrudController extends CrudController
             'attributes' => ["step" => "1"],
             'wrapper' => [
                 'class' => 'col-md-2'
-            ],   // allow decimals
+            ],
 
         ])->suffix("lat")->tab('Dane dziecka');
 
@@ -722,7 +734,9 @@ class ChildCrudController extends CrudController
      * @return void
      */
     protected function setupUpdateOperation()
-    {
+    {   
+        $this->checkPermissions();
+
         $child = $this->crud->getCurrentEntry();
         $this->crud->setTitle('Edycja '. $child->first_name,'edit');
         $this->crud->setHeading('Edycja profilu '. $child->first_name . ' ' . $child->last_name,'edit');
@@ -731,20 +745,19 @@ class ChildCrudController extends CrudController
     }
 
     protected function setupShowOperation(){
-
+        $this->checkPermissions();
     }
 
     protected function setupDeleteOperation()
-    {
+    {   
+        $this->checkPermissions();
         CRUD::field('image_url')->type('upload')->withFiles();
 
         // Alternatively, if you are not doing much more than defining fields in your create operation:
         // $this->setupCreateOperation();
     }
-    
 
-
-    // EXPORT TO CHANGE IN FUTURE CUZ OF LONG CODE!
+    // EXPORT - TO CHANGE IN FUTURE CUZ OF LONG CODE!
 
     public function exportToCsvAll()
     {
@@ -980,7 +993,7 @@ class ChildCrudController extends CrudController
 
         // After saving the child, handle the related payments
         $this->savePayments($this->crud->entry);
-
+        //$this->calculateRemainingDays($this->crud->entry);
         return $response;
     }
 
@@ -990,6 +1003,8 @@ class ChildCrudController extends CrudController
 
         // After updating the child, handle the related payments
         $this->savePayments($this->crud->entry);
+        $this->calculateRemainingDays($this->crud->entry);
+
 
         return $response;
     }
@@ -1008,5 +1023,46 @@ class ChildCrudController extends CrudController
             ]);
         }
     }
+
+    protected function checkPermissions(){
+                // Define the CRUD operations and their corresponding permissions
+        $permissions = [
+            'list'   => 'Listowanie dzieci', // 'view child' permission
+            'create' => 'Dodawanie dzieci',   // 'create child' permission
+            'update' => 'Edytowanie dzieci', // 'update child' permission
+            'delete' => 'Usuwanie dzieci',     // 'delete child' permission
+            'show' => 'Przeglądanie dzieci',     // 'delete child' permission
+        ];
+
+        // Check permissions for each operation
+        foreach ($permissions as $operation => $permission) {
+            if (!backpack_user()->can($permission)) {
+                // Deny access to the operation if the user doesn't have the permission
+                $this->crud->denyAccess($operation);
+            } else {
+                // Allow access to the operation if the user has the permission
+                $this->crud->allowAccess($operation);
+            }
+        }
+    } 
+
+    public function calculateRemainingDays($child)
+    {
+        $currentDate = Carbon::now();
+        $adoptionStartDate = Carbon::parse($child->adoption_start_date);
+        $lengthOfAdoption = (int)$child->length_of_adoption;
+        //Log::info('lengthOfAdoption: ' . $lengthOfAdoption);
+
+        // Calculate the adoption end date
+        $adoptionEndDate = $adoptionStartDate->addDays($lengthOfAdoption);
+
+        // Calculate remaining days
+        $remainingDays = intval($currentDate->diffInDays($adoptionEndDate, false))+1;
+
+        $child->update([
+            'remaining_days_of_adoption'=> $remainingDays,
+        ]);
+    }
+
 
 }

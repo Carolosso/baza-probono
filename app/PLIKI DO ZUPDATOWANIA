@@ -1,0 +1,3 @@
+vendor\backpack\permissionmanager\src\app\Http\Controllers\UserCrudController.php
+vendor\backpack\permissionmanager\src\app\Http\Controllers\PermissionCrudController.php
+vendor\backpack\permissionmanager\src\app\Http\Controllers\RoleCrudController.php

@@ -6,11 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
-
+    
+    use HasFactory, Notifiable, CrudTrait, HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -20,8 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-    ];
-
+        'is_admin'
+    ];    
     /**
      * The attributes that should be hidden for serialization.
      *

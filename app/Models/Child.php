@@ -58,7 +58,9 @@ class Child extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    // Add the remaining time calculation function
+    
+
+ /*    // Add the remaining time calculation function
     public function getRemainingTime()
     {
         $currentDate = Carbon::now();
@@ -73,7 +75,7 @@ class Child extends Model
 
  
         return $remainingDays+1;
-    }
+    } */
     
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +109,7 @@ class Child extends Model
     {
         return $this->commandory ? $this->commandory->commandory_name : 'brak';
     }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

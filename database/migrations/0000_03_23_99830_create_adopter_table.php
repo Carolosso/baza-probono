@@ -25,10 +25,10 @@ return new class extends Migration
             //$table->foreign('commandory_id')->references('id')->on('commandories')->onDelete('set null');
             $table->timestamps();
         }); */
-        Schema::table('adopter', function (Blueprint $table) {
+        /* Schema::table('adopter', function (Blueprint $table) {
             $table->unsignedBigInteger('commandory_id')->nullable()->after('id');
             $table->foreign('commandory_id')->references('id')->on('commandories')->onDelete('set null');
-        });
+        }); */
     }
 
     /**
