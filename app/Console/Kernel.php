@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log; // Add logging
 
 class Kernel extends ConsoleKernel
 {
@@ -16,7 +17,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Schedule the child remaining days update to run daily at midnight
-        $schedule->command('children:update-remaining-days')->dailyAt('14:05');
+        $schedule->command('children:update-remaining-days')->dailyAt('14:05')->withoutOverlapping();
+        Log::info('UpdateRemainingDays command started.');
+
     }
 
     /**
