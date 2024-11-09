@@ -25,7 +25,7 @@ class UpdateRemainingDays extends Command
 
             // Update remaining days in the database
             $child->remaining_days_of_adoption = max($remainingDays, 0); // Ensure it's not negative
-            $child->save();
+            $child->saveQuietly();
         }
 
         $this->info('Remaining days updated successfully.');
