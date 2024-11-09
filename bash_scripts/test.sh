@@ -3,4 +3,4 @@
 cd /home/parafia-nd/ftp/baza-adopcja
 
 # Run Laravel scheduler
-/usr/local/bin/php artisan schedule:run
+/usr/bin/php artisan schedule:run
