@@ -51,6 +51,21 @@ class CommandoryCrudController extends CrudController
             'name' => 'commandory_name',
             'label' => 'Nazwa komandorii'
         ]);
+
+        // Eager load the children count for the list view
+        $this->crud->query->withCount('child'); // This will add the count of 'child' to each Commandory record
+        // Add a column for displaying the number of children
+        
+        CRUD::Column([
+            'name' => 'child_count',  // Custom name for the column
+            'label' => 'Dzieci', // Column title
+            'type' => 'number', // Column type
+            'function' => function ($entry) {
+                // Return the count of children for this Commandory entry
+                return $entry->child_count; // Access the 'child_count' loaded by withCount()
+            },
+        ]);
+
         CRUD::column([
             'name' => 'created_at',
             'label' => 'Utworzono'
@@ -79,13 +94,11 @@ class CommandoryCrudController extends CrudController
         $this->crud->setHeading('Tworzenie komandorii','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');
 
-        $this->crud->setValidation([
-            'commandory_name' => 'required|unique:commandories,commandory_name',
-        ]);
+        $this->crud->setValidation(CommandoryRequest::class);
         
         CRUD::field([
             'name' => 'commandory_name',
-            'label' => 'Nazwa nowej komandorii',
+            'label' => 'Nazwa komandorii',
             'type' => 'text',
             'wrapper' => [
                 'class' => 'col-md-4'

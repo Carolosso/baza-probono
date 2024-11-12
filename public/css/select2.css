@@ -178,6 +178,7 @@
 
 .select2-container--default .select2-selection--single .select2-selection__clear {
   cursor: pointer;
+  color: black;
   float: right;
   font-weight: bold;
   background-color: rgb(195, 184, 184);

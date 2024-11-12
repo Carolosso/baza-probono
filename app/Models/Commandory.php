@@ -31,7 +31,7 @@ class Commandory extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
+     
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -39,7 +39,7 @@ class Commandory extends Model
     */
     public function child()
     {
-        return $this->hasMany(Child::class); // A komandoria belongs to one child
+        return $this->hasMany(Child::class); 
     }
     /*
     |--------------------------------------------------------------------------

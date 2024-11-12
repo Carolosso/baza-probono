@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommandoryRequest extends FormRequest
+class AdopterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class CommandoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'commandory_name' => 'required|unique:commandories,commandory_name',
+            //'adopter_email' => 'email:unique:adopters,adopter_email',
+            //'adopter_phone' => 'unique:adopters,adopter_phone',
         ];
     }
 
@@ -49,7 +50,8 @@ class CommandoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'commandory_name.unique' => "Komandoria o podanej nazwie już istnieje!"
+            //'adopter_email.unique'=>"Opiekun o podanym adresie email już istnieje!",
+            //'adopter_phone.unique'=>"Opiekun o podanym numerze telefonu już istnieje!",
         ];
     }
 }

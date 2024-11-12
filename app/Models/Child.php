@@ -39,16 +39,16 @@ class Child extends Model
         'group', //C
         'length_of_adoption', //C
         'type_of_adoption', //C
-        'adopter_first_name', //C
+        /* 'adopter_first_name', //C
         'adopter_last_name', //C
         'adopter_city', 
         'adopter_type', //C
         'adopter_type_name', //C
         'adopter_email', //C
         'adopter_phone', //C
-        //'flag_comandory', //C
-        'adopter_address', //C
+        'adopter_address', //C */
         'commandory_id', //C
+        'adopter_id',
         'image_url', //C
     ];
     // protected $hidden = [];
@@ -58,25 +58,7 @@ class Child extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    
 
- /*    // Add the remaining time calculation function
-    public function getRemainingTime()
-    {
-        $currentDate = Carbon::now();
-        $adoptionStartDate = Carbon::parse($this->adoption_start_date);
-        $lengthOfAdoption = $this->length_of_adoption;
-
-        // Calculate the adoption end date
-        $adoptionEndDate = $adoptionStartDate->addDays($lengthOfAdoption);
-
-        // Calculate remaining days
-        $remainingDays = intval($currentDate->diffInDays($adoptionEndDate, false)); // false includes negative values
-
- 
-        return $remainingDays+1;
-    } */
-    
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -85,14 +67,18 @@ class Child extends Model
 
     public function payments()
     {
-        return $this->hasMany(Payment::class); // A child can have multiple payments
+        return $this->hasMany(Payment::class);
     }
 
     public function commandory()
     {
-        return $this->belongsTo(Commandory::class); //
+        return $this->belongsTo(Commandory::class);
     }
 
+    public function adopter()
+    {
+        return $this->belongsTo(Adopter::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -107,8 +93,39 @@ class Child extends Model
     */
     public function getCommandoryNameAttribute()
     {
-        return $this->commandory ? $this->commandory->commandory_name : 'brak';
+        return $this->commandory ? $this->commandory->commandory_name : '-';
     }
+
+    public function getAdopterFirstNameAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_first_name : '-';
+    }
+    public function getAdopterLastNameAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_last_name : '-';
+    }
+    public function getAdopterTypeAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_type : '-';
+    }
+    public function getAdopterTypeNameAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_type_name : '-';
+    }
+    public function getAdopterEmailAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_email : '-';
+    }
+    public function getAdopterPhoneAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_phone : '-';
+    }
+    public function getAdopterAddressAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_address : '-';
+    }
+ 
+
 
     /*
     |--------------------------------------------------------------------------

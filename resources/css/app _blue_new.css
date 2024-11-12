@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+:root,
+[data-bs-theme=light],
+[data-menu-theme=light] {
+    --tblr-body-color: #2c3e50;
+    /* Dark gray for primary text */
+    --tblr-body-bg: #f8f9fa;
+    /* Light gray background */
+
+    /* Grays for subtle elements and backgrounds */
+    --tblr-gray: #7f8c8d;
+    /* Medium gray */
+    --tblr-gray-dark: #2c3e50;
+    /* Dark gray for emphasis */
+    --tblr-gray-100: #f8f9fa;
+    /* Very light gray for main background */
+    --tblr-gray-200: #ecf0f1;
+    /* Light gray for secondary backgrounds */
+    --tblr-gray-300: #dfe6e9;
+    /* Lighter gray for borders */
+    --tblr-gray-400: #bdc3c7;
+    /* Softer gray for borders and dividers */
+    --tblr-gray-500: #95a5a6;
+    /* Medium gray for muted text */
+    --tblr-gray-600: #7f8c8d;
+    /* Dark gray for secondary text */
+
+    /* Primary Color: Blue */
+    --tblr-primary: #3498db;
+    /* Blue for primary actions */
+    --tblr-primary-rgb: 52, 152, 219;
+    --tblr-primary-text-emphasis: #2c3e50;
+    /* Darker blue for text emphasis */
+    --tblr-primary-bg-subtle: #eaf4fc;
+    /* Very light blue for background emphasis */
+    --tblr-primary-border-subtle: #b9d9f2;
+    /* Subtle blue for borders */
+
+    /* Secondary Color: Purple */
+    --tblr-secondary: #cdcbdb;
+    /* Deep purple for secondary actions */
+    --tblr-secondary-rgb: 108, 92, 231;
+    --tblr-secondary-text-emphasis: #666479;
+    /* Darker purple for emphasis */
+    --tblr-secondary-bg-subtle: #aaa4c7;
+    /* Light purple for background emphasis */
+    --tblr-secondary-border-subtle: #aca8cf;
+    /* Subtle purple borders */
+
+    /* Accent Color: Orange */
+    --tblr-accent: #e67e22;
+    /* Orange for accents or attention-grabbing elements */
+    --tblr-accent-rgb: 230, 126, 34;
+    --tblr-accent-bg-subtle: #fdf2e6;
+    /* Light orange for background */
+    --tblr-accent-border-subtle: #fac7a2;
+    /* Subtle orange borders */
+
+    /* Success Color: Green */
+    --tblr-success: #27ae60;
+    /* Green for success messages */
+    --tblr-success-rgb: 39, 174, 96;
+    --tblr-success-text-emphasis: #145530;
+    /* Dark green for emphasis */
+    --tblr-success-bg-subtle: #e3f8ed;
+    /* Light green for success background */
+    --tblr-success-border-subtle: #a8e1bf;
+    /* Subtle green borders */
+
+    /* Danger Color: Red */
+    --tblr-danger: #e74c3c;
+    /* Red for error or danger messages */
+    --tblr-danger-rgb: 231, 76, 60;
+    --tblr-danger-text-emphasis: #80251f;
+    /* Dark red for emphasis */
+    --tblr-danger-bg-subtle: #fdecea;
+    /* Light red for background */
+    --tblr-danger-border-subtle: #f7b5ae;
+    /* Subtle red borders */
+
+    /* Links and Text Emphasis */
+    --tblr-link-color: #3498db;
+    /* Blue for links */
+    --tblr-link-hover-color: #2980b9;
+    /* Darker blue for hover */
+    --tblr-muted: #7f8c8d;
+    /* Muted text */
+
+    /* Borders and Forms */
+    --tblr-border-color: #dfe6e9;
+    /* Light gray borders */
+    --tblr-border-color-translucent: rgba(47, 53, 66, 0.16);
+    --tblr-form-valid-color: #27ae60;
+    /* Green for valid form fields */
+    --tblr-form-invalid-color: #e74c3c;
+    /* Red for invalid form fields */
+    --tblr-focus-ring-color: rgba(52, 152, 219, 0.25);
+    /* Light blue focus ring */
+
+    /* Navbar and Backgrounds */
+    --tblr-navbar-bg: #ecf0f1;
+    /* Light background for navigation */
+    --tblr-navbar-border-color: transparent;
+    /* No border */
+}
+
+[data-bs-theme=dark],
+[data-menu-theme=dark] {
+    --tblr-body-color: #ecf0f1;
+    /* Light gray text */
+    --tblr-body-bg: #2c3e50;
+    /* Dark gray background */
+
+    /* Dark Mode Grays */
+    --tblr-gray-100: #2c3e50;
+    /* Dark background */
+    --tblr-gray-200: #34495e;
+    /* Slightly lighter dark gray */
+    --tblr-gray-300: #3e536e;
+    /* Softer gray for borders */
+    --tblr-gray-400: #596f84;
+    /* Muted gray for secondary text */
+    --tblr-gray-500: #7f8c8d;
+    /* Muted gray */
+
+    /* Dark Mode Primary and Secondary Colors */
+    --tblr-primary: #3498db;
+    /* Blue for primary actions */
+    --tblr-secondary: #8a82c4;
+    /* Purple for secondary actions */
+
+    /* Links and Text */
+    --tblr-link-color: #ecf0f1;
+    /* Light gray links */
+    --tblr-link-hover-color: #dfe6e9;
+    /* Light gray hover */
+    --tblr-muted: #95a5a6;
+    /* Muted text */
+
+    /* Success, Warning, Danger */
+    --tblr-success: #27ae60;
+    /* Green for success */
+    --tblr-danger: #e74c3c;
+    /* Red for danger */
+}
+
+.text-secondary {
+    color: #ecf0f1 !important;
+}
