@@ -21,11 +21,23 @@ class UpdateRemainingDays extends Command
         foreach ($children as $child) {
             $adoptionStartDate = Carbon::parse($child->adoption_start_date);
             $adoptionEndDate = $adoptionStartDate->copy()->addDays($child->length_of_adoption);
+            $remainingDays = $currentDate->diffInDays($adoptionEndDate, false) + 1;
+
+            // Disable timestamps temporarily to prevent updating `updated_at`
+            $child->timestamps = false;
+
+            // Update the `remaining_days_of_adoption` field quietly
+            $child->updateQuietly(['remaining_days_of_adoption' => max($remainingDays, 0)]);
+
+            // Re-enable timestamps for any other updates
+            $child->timestamps = true;
+            /* $adoptionStartDate = Carbon::parse($child->adoption_start_date);
+            $adoptionEndDate = $adoptionStartDate->copy()->addDays($child->length_of_adoption);
             $remainingDays = $currentDate->diffInDays($adoptionEndDate, false)+1;
 
             // Update remaining days in the database
             $child->remaining_days_of_adoption = max($remainingDays, 0); // Ensure it's not negative
-            $child->saveQuietly();
+            $child->saveQuietly(); */
         }
 
         $this->info('Remaining days updated successfully.');
