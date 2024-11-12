@@ -41,7 +41,6 @@ class Child extends Model
         'type_of_adoption', //C
         'adopter_first_name', //C
         'adopter_last_name', //C
-        'adopter_city', 
         'adopter_type', //C
         'adopter_type_name', //C
         'adopter_email', //C

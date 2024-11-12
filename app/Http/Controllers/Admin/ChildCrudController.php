@@ -150,6 +150,35 @@ class ChildCrudController extends CrudController
             'view' => 'vendor.backpack.crud.columns.remaining_days',
         ]);
 
+        CRUD::column([
+            'name' => 'evidence_number',
+            'label' => 'Numer ewidencji',
+        ]);
+
+        CRUD::column([
+            'name' => 'coordinator_first_name',
+            'label' => 'Imię asystenta',
+        ]);
+
+        CRUD::column([
+            'name' => 'coordinator_last_name',
+            'label' => 'Nazwisko asystenta',
+        ]);
+
+        CRUD::column([
+            'name' => 'adopter_type_name',
+            'label' => 'Nazwa opiekuna',
+        ]);
+
+        CRUD::column([
+            'name' => 'adopter_first_name',
+            'label' => 'Imię opiekuna',
+        ]);
+
+        CRUD::column([
+            'name' => 'adopter_last_name',
+            'label' => 'Nazwisko opiekuna',
+        ]);
 
 
 
