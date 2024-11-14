@@ -15,3 +15,5 @@
         <x-backpack::menu-dropdown-item title="Uprawnienia" icon="la la-key" :link="backpack_url('permission')" />
     </x-backpack::menu-dropdown>
 @endif
+
+{{-- <x-backpack::menu-item title="Adopter types" icon="la la-question" :link="backpack_url('adopter-type')" /> --}}

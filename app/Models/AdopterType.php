@@ -6,7 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Adopter extends Model
+class AdopterType extends Model
 {
     use CrudTrait;
     use HasFactory;
@@ -17,18 +17,12 @@ class Adopter extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'adopters';
+    protected $table = 'adopter_types';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
     protected $fillable = [
-        'adopter_type_id',
-        'adopter_type_name',
-        'adopter_first_name',
-        'adopter_last_name',
-        'adopter_email', 
-        'adopter_phone',
-        'adopter_address', 
+        'type_name'
     ];
     // protected $hidden = [];
 
@@ -43,14 +37,11 @@ class Adopter extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function child()
+    public function adopter()
     {
-        return $this->hasMany(Child::class);
+        return $this->hasMany(Adopter::class);
     }
-    public function adopterType()
-    {
-        return $this->belongsTo(AdopterType::class);
-    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -62,18 +53,6 @@ class Adopter extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
-    public function getAdopterFullNameAttribute()
-    {
-        //$adopterTypeName = $this->adopterType->type_name ? "{$this->adopterType->type_name} - " : "";
-
-        return "{$this->adopter_type_name}{$this->adopter_first_name} {$this->adopter_last_name}";
-    }
-
-    public function getAdopterTypeTypeNameAttribute()
-    {
-        return $this->adopterType ? $this->adopterType->type_name : '-';
-    }
 
     /*
     |--------------------------------------------------------------------------

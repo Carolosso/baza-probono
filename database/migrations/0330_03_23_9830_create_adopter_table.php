@@ -11,17 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('adopters', function (Blueprint $table) {
+        /* Schema::create('adopters', function (Blueprint $table) {
             $table->id();
             $table->string('adopter_first_name')->nullable();
             $table->string('adopter_last_name')->nullable();
             $table->string('adopter_address')->nullable();
-            $table->string('adopter_type')->nullable();
+            //$table->string('adopter_type')->nullable();
             $table->string('adopter_type_name')->nullable();
             $table->string('adopter_email')->nullable();
             $table->string('adopter_phone')->nullable();
             $table->timestamps();
-        }); 
+        });  */
+
+        Schema::table('adopters', function (Blueprint $table) {
+            $table->unsignedBigInteger('adopter_type_id')->nullable()->after('id');
+            $table->foreign('adopter_type_id')->references('id')->on('adopter_types')->onDelete('cascade');
+        });
     }
 
     /**

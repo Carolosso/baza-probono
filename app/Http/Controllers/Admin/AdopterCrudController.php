@@ -42,12 +42,11 @@ class AdopterCrudController extends CrudController
     protected function setupListOperation()
     {
          $this->crud->removeButton('create');
-    
         // Add your custom button
         $this->crud->addButtonFromView('top', 'custom_create_adopter', 'custom_create_adopter', 'beginning');
         
         CRUD::column([
-            'name' => 'adopter_type',
+            'name' => 'adopterType_type_name',
             'label' => 'Rodzaj',
         ]);
         CRUD::column([
@@ -76,6 +75,45 @@ class AdopterCrudController extends CrudController
         ]);
     }
 
+    protected function setupShowOperation()
+    {
+        CRUD::column([
+            'name' => 'adopterType_type_name',
+            'label' => 'Rodzaj',
+        ]);
+        CRUD::column([
+            'name' => 'adopter_type_name',
+            'label' => 'Nazwa',
+        ]);
+        CRUD::column([
+            'name' => 'adopter_first_name',
+            'label' => 'Imię',
+        ]);
+        CRUD::column([
+            'name' => 'adopter_last_name',
+            'label' => 'Nazwisko',
+        ]);
+        CRUD::column([
+            'name' => 'adopter_email',
+            'label' => 'Email',
+        ]);
+        CRUD::column([
+            'name' => 'adopter_phone',
+            'label' => 'Telefon',
+        ]);
+        CRUD::column([
+            'name' => 'adopter_address',
+            'label' => 'Adres',
+        ]);
+        CRUD::column([
+            'name' => 'updated_at',
+            'label' => 'Zaktualizowano',
+        ]);
+        CRUD::column([
+            'name' => 'created_at',
+            'label' => 'Utworzono',
+        ]);
+    }
     /**
      * Define what happens when the Create operation is loaded.
      * 
@@ -86,6 +124,9 @@ class AdopterCrudController extends CrudController
     {
         CRUD::setValidation(AdopterRequest::class);
         Widget::add()->type('script')->content('js/fields.js');
+        // Widget::add()->type('script')->content('js/select2.min.js');
+        // Widget::add()->type('script')->content('js/select2_createAdopter_blade.js');
+        // Widget::add()->type('style')->content('css/select2.css');
 
          CRUD::field([
             'name' => 'adopter_first_name',
@@ -106,27 +147,19 @@ class AdopterCrudController extends CrudController
         ]);
 
         CRUD::field([
-            'name' => 'adopter_type',
+            'name' => 'adopter_type_id',
             'label' => 'Rodzaj opiekuna',
-            'type' => 'select_from_array',
-            'options' => [
-                'Chorągiew' => 'Chorągiew',
-                'Komandoria' => 'Komandoria',
-                'Rycerz' => 'Rycerz',
-                'Firma' => 'Firma',
-                'Schola' => 'Schola',
-                'Rada Rodziców' => 'Rada Rodziców',
-                'Osoba świecka' => 'Osoba świecka',
-                'Ksiądz' => 'Ksiądz',
-                'Siostra zakonna' => 'Siostra zakonna',
-                'Ojciec zakonny' => 'Ojciec zakonny',
-                'Wspólnota parafialna' => 'Wspólnota parafialna',
-                'Szkoła' => 'Szkoła',
-                'Urząd' => 'Urząd',
-            ],
+            'type' => 'select',
+            'entity' => 'adopterType',  // The relationship method in the model
+            'model' => 'App\Models\AdopterType',  // The related model
+            'attribute' => 'type_name',  // The attribute to display (Commandory name)
+            'attributes'=> ['id'=>'AdopterTypeSelect'],
+            'options'   => (function ($query) {
+                return $query->orderBy('type_name', 'ASC')->get();  // Sort by name, optional
+            }),
             'wrapper' => [
-                'class' => 'col-md-4'
-            ], 
+                'class' => 'col-md-4',
+            ]
         ]);
 
         CRUD::field([
@@ -189,46 +222,6 @@ class AdopterCrudController extends CrudController
         CRUD::setValidation();
     }
 
-    protected function setupShowOperation()
-    {
-        //$this->checkPermissions();
-
-        $adopter = $this->crud->getCurrentEntry();
-        $this->crud->setTitle('Podgląd '. $adopter->adopter_first_name,'show');
-        $this->crud->setHeading($adopter->adopter_first_name . ' ' . $adopter->adopter_last_name,'show');
-        $this->crud->setSubHeading('Pogląd informacji','show'); 
-
-        //CRUD::setFromDb();
-        CRUD::column([
-            'name' => 'adopter_type',
-            'label' => 'Rodzaj',
-        ]);
-        CRUD::column([
-            'name' => 'adopter_type_name',
-            'label' => 'Pełna nazwa',
-        ]);
-        CRUD::column([
-            'name' => 'adopter_first_name',
-            'label' => 'Imię',
-        ]);
-        CRUD::column([
-            'name' => 'adopter_last_name',
-            'label' => 'Nazwisko',
-        ]);
-        CRUD::column([
-            'name' => 'adopter_email',
-            'label' => 'Email',
-        ]);
-        CRUD::column([
-            'name' => 'adopter_phone',
-            'label' => 'Telefon',
-        ]);
-        CRUD::column([
-            'name' => 'adopter_address',
-            'label' => 'Adres',
-        ]);
-
-    }
 
    /*  protected function checkPermissions(){
             // Define the CRUD operations and their corresponding permissions
