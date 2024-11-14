@@ -65,9 +65,9 @@ class Adopter extends Model
 
     public function getAdopterFullNameAttribute()
     {
-        //$adopterTypeName = $this->adopterType->type_name ? "{$this->adopterType->type_name} - " : "";
-
-        return "{$this->adopter_type_name}{$this->adopter_first_name} {$this->adopter_last_name}";
+        $adopterTypeTypeName = $this->adopterType->type_name ? "{$this->adopterType->type_name} - " : "";
+        $adopterTypeName = $this->adopter_type_name ? "{$this->adopter_type_name} - " : "";
+        return "$adopterTypeTypeName $adopterTypeName {$this->adopter_first_name} {$this->adopter_last_name}";
     }
 
     public function getAdopterTypeTypeNameAttribute()

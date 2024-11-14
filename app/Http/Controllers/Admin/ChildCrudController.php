@@ -606,18 +606,23 @@ class ChildCrudController extends CrudController
 
         CRUD::field([
             'name' => 'adopter_id',                // Field in the database for the selected Adopter
-            'label' => 'Opiekun',                  // Label for the field
+            'label' => '<strong>Opiekun</strong>',                  // Label for the field
             'type' => 'select_grouped',            // Field type
             'entity' => 'adopter',                 // Relationship method in the Child model
             'model' => 'App\Models\Adopter',       // Model for the select options
             'attribute' => 'adopter_full_name',         // Attribute to display as the option label
-            'attributes'=> ['id'=>'AdopterSelect'],
+            'attributes'=> [
+                'id'=>'AdopterSelect',
+            ],
             'group_by' => 'adopterType',           // Group by the `adopterType` relationship on the Adopter model
             'group_by_attribute' => 'type_name',        // Display attribute in the AdopterType model
             'group_by_relationship_back' => 'adopter',        // Display attribute in the AdopterType model
             'options' => (function ($query) {
                 return $query->orderBy('type_name')->get(); // Sort adopters within each group
             }),
+            'wrapper' => [
+                'class' => 'col-md-8 my-5',
+            ]
         ])->tab('Dane opiekuna');
 
         /*  CRUD::field([
