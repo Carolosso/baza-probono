@@ -43,7 +43,7 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 				[
 					'type' => 'custom_card_ribbon_widget',
 					'title' => 'Użytkownicy',
-					'icon_class' => 'la la-user-friends',
+					'icon_class' => 'la la-user',
 					'bg_class' => 'bg-info',
 					'value' => User::count()
 				],
