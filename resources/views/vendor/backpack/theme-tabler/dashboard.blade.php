@@ -67,8 +67,8 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 	]); */
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
-		'class'	=> 'card text-white bg-dark mb-2',
-		'title' =>	'Zmiany 08.11.2024 <span class="mx-2 badge badge-secondary">Nowe</span>',
+		'class'	=> 'card text-white bg-dark mb-2', // <span class="mx-2 badge badge-secondary">Nowe</span>
+		'title' =>	'Zmiany 08.11.2024',
 		'content' => '
 			<ul>Usprawniono bezpieczeństwo bazy danych:
 				<li>Dodano role i uprawnienia dostępu</li>
