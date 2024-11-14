@@ -617,9 +617,9 @@ class ChildCrudController extends CrudController
             'group_by' => 'adopterType',           // Group by the `adopterType` relationship on the Adopter model
             'group_by_attribute' => 'type_name',        // Display attribute in the AdopterType model
             'group_by_relationship_back' => 'adopter',        // Display attribute in the AdopterType model
-            'options' => (function ($query) {
+            /* 'options' => (function ($query) {
                 return $query->orderBy('type_name')->get(); // Sort adopters within each group
-            }),
+            }), */
             'wrapper' => [
                 'class' => 'col-md-8 my-5',
             ]
