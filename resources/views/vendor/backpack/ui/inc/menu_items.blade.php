@@ -9,7 +9,7 @@
 @if (backpack_user() && backpack_user()->hasRole('Administrator'))
     <x-backpack::menu-dropdown title="Dostęp" icon="la la-shield">
         {{-- <x-backpack::menu-dropdown-header title="Authentication" /> --}}
-        <x-backpack::menu-dropdown-item title="Użytkownicy" icon="la la-user" :link="backpack_url('user')" />
+        <x-backpack::menu-dropdown-item title="Użytkownicy" icon="la la-user-shield" :link="backpack_url('user')" />
         <x-backpack::menu-dropdown-item title="Role" icon="la la-group" :link="backpack_url('role')" />
         <x-backpack::menu-dropdown-item title="Uprawnienia" icon="la la-key" :link="backpack_url('permission')" />
     </x-backpack::menu-dropdown>
