@@ -104,10 +104,10 @@ class Child extends Model
     {
         return $this->adopter ? $this->adopter->adopter_last_name : '-';
     }
-    /* public function getAdopterTypeAttribute()
+    public function getAdopterTypeAttribute()
     {
-        return $this->adopter ? $this->adopter->adopter_type : '-';
-    } */
+        return $this->adopter && $this->adopter->adopterType ? $this->adopter->adopterType->type_name : '';
+    }
     public function getAdopterTypeNameAttribute()
     {
         return $this->adopter ? $this->adopter->adopter_type_name : '-';
