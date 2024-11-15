@@ -944,7 +944,7 @@ class ChildCrudController extends CrudController
         foreach ($uniqueAdopters as $adopter) {
             if ($adopter) {  // Check if adopter exists
                 $csvData[] = [
-                    $adopter->adopter_type,
+                    $adopter->adopter_type_type_name,
                     $adopter->adopter_type_name,
                     $adopter->adopter_first_name . ' ' . $adopter->adopter_last_name,
                     $adopter->adopter_email,
