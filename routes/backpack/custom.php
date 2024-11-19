@@ -25,6 +25,7 @@ Route::group([
     Route::crud('commandory', 'CommandoryCrudController');
     Route::crud('adopter', 'AdopterCrudController');
     //Route::crud('adopter-type', 'AdopterTypeCrudController');
+    Route::crud('assistant', 'AssistantCrudController');
 }); // this should be the absolute last line of this file
 
 /**

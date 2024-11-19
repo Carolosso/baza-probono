@@ -17,3 +17,4 @@
 @endif
 
 {{-- <x-backpack::menu-item title="Adopter types" icon="la la-question" :link="backpack_url('adopter-type')" /> --}}
+<x-backpack::menu-item title="Assistants" icon="la la-question" :link="backpack_url('assistant')" />
