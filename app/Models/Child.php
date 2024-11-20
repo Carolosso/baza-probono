@@ -109,59 +109,59 @@ class Child extends Model
     {
         return $this->commandory ? $this->commandory->commandory_name : 'brak';
     }
-    // public function getAdopterFirstNameAttribute($value)
-    // {
-    //     return Crypt::decryptString($value);
-    // }
+    public function getAdopterFirstNameAttribute($value)
+    {
+        return Crypt::decryptString($value);
+    }
 
-    // public function getAdopterLastNameAttribute($value)
-    // {
-    //     return Crypt::decryptString($value);
-    // }
+    public function getAdopterLastNameAttribute($value)
+    {
+        return Crypt::decryptString($value);
+    }
 
-    // public function getAdopterPhoneAttribute($value)
-    // {
-    //     return Crypt::decryptString($value);
-    // }
+    public function getAdopterPhoneAttribute($value)
+    {
+        return Crypt::decryptString($value);
+    }
 
-    // public function getAdopterEmailAttribute($value)
-    // {
-    //     return Crypt::decryptString($value);
-    // }
+    public function getAdopterEmailAttribute($value)
+    {
+        return Crypt::decryptString($value);
+    }
 
-    // public function getAdopterAddressAttribute($value)
-    // {
-    //     return Crypt::decryptString($value);
-    // }
+    public function getAdopterAddressAttribute($value)
+    {
+        return Crypt::decryptString($value);
+    }
 
-    // /*
-    // |--------------------------------------------------------------------------
-    // | MUTATORS
-    // |--------------------------------------------------------------------------
-    // */
-    //     // Mutators to encrypt each field before saving
-    // public function setAdopterFirstNameAttribute($value)
-    // {
-    //     $this->attributes['adopter_first_name'] = Crypt::encryptString($value);
-    // }
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
+        // Mutators to encrypt each field before saving
+    public function setAdopterFirstNameAttribute($value)
+    {
+        $this->attributes['adopter_first_name'] = Crypt::encryptString($value);
+    }
 
-    // public function setAdopterLastNameAttribute($value)
-    // {
-    //     $this->attributes['adopter_last_name'] = Crypt::encryptString($value);
-    // }
+    public function setAdopterLastNameAttribute($value)
+    {
+        $this->attributes['adopter_last_name'] = Crypt::encryptString($value);
+    }
 
-    // public function setAdopterPhoneAttribute($value)
-    // {
-    //     $this->attributes['adopter_phone'] = Crypt::encryptString($value);
-    // }
+    public function setAdopterPhoneAttribute($value)
+    {
+        $this->attributes['adopter_phone'] = Crypt::encryptString($value);
+    }
 
-    // public function setAdopterEmailAttribute($value)
-    // {
-    //     $this->attributes['adopter_email'] = Crypt::encryptString($value);
-    // }
+    public function setAdopterEmailAttribute($value)
+    {
+        $this->attributes['adopter_email'] = Crypt::encryptString($value);
+    }
 
-    // public function setAdopterAddressAttribute($value)
-    // {
-    //     $this->attributes['adopter_address'] = Crypt::encryptString($value);
-    // }
+    public function setAdopterAddressAttribute($value)
+    {
+        $this->attributes['adopter_address'] = Crypt::encryptString($value);
+    }
 }
