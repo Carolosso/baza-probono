@@ -29,6 +29,7 @@ class Adopter extends Model
         'adopter_email', 
         'adopter_phone',
         'adopter_address', 
+        'others'
     ];
     // protected $hidden = [];
 
@@ -43,9 +44,9 @@ class Adopter extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function child()
+    public function declaration()
     {
-        return $this->hasMany(Child::class);
+        return $this->belongsTo(Declaration::class);
     }
     public function adopterType()
     {

@@ -21,34 +21,15 @@ class Child extends Model
     protected $table = 'children';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id',];
+    protected $guarded = ['id','group_id'];
     protected $fillable = [
         'first_name', //C
-        'last_name', //C
-        'evidence_number', //C
+        'last_name', //C       
         'age',  //C
         'birth_place', //C
         'country',  //C
         'sex',  //C
         'others', //C
-        'coordinator_first_name', //C
-        'coordinator_last_name', //C
-        'remaining_days_of_adoption', //C
-        'adoption_start_date', //C
-        'adoption_end_date', //C
-        'group', //C
-        'length_of_adoption', //C
-        'type_of_adoption', //C
-        /* 'adopter_first_name', //C
-        'adopter_last_name', //C
-        'adopter_city', 
-        'adopter_type', //C
-        'adopter_type_name', //C
-        'adopter_email', //C
-        'adopter_phone', //C
-        'adopter_address', //C */
-        'commandory_id', //C
-        'adopter_id',
         'image_url', //C
     ];
     // protected $hidden = [];
@@ -65,19 +46,13 @@ class Child extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function payments()
+    public function declaration()
     {
-        return $this->hasMany(Payment::class);
+        return $this->belongsTo(Declaration::class);
     }
-
-    public function commandory()
+    public function group()
     {
-        return $this->belongsTo(Commandory::class);
-    }
-
-    public function adopter()
-    {
-        return $this->belongsTo(Adopter::class);
+        return $this->belongsTo(Group::class);
     }
 
     /*

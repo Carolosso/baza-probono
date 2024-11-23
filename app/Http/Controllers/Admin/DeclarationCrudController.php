@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\AssistantRequest;
+use App\Http\Requests\DeclarationRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class AssistantCrudController
+ * Class DeclarationCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class AssistantCrudController extends CrudController
+class DeclarationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class AssistantCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Assistant::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/assistant');
-        CRUD::setEntityNameStrings('assistant', 'Asystenci');
+        CRUD::setModel(\App\Models\Declaration::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/declaration');
+        CRUD::setEntityNameStrings('declaration', 'Deklaracje');
     }
 
     /**
@@ -55,7 +55,7 @@ class AssistantCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(AssistantRequest::class);
+        CRUD::setValidation(DeclarationRequest::class);
         CRUD::setFromDb(); // set fields from db columns.
 
         /**

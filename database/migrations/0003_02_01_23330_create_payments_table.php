@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('payment_description')->nullable();
             $table->timestamps();
         }); */
+        Schema::table('payments', function (Blueprint $table) {
+            $table->unsignedBigInteger('declaration_id')->nullable()->after('id');
+            $table->foreign('declaration_id')->references('id')->on('declarations')->onDelete('set null');
+        });
     }
 
     /**

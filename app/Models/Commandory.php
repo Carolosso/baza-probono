@@ -37,9 +37,9 @@ class Commandory extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function child()
+    public function assistant()
     {
-        return $this->hasMany(Child::class); 
+        return $this->hasOne(Assistant::class); 
     }
     /*
     |--------------------------------------------------------------------------
