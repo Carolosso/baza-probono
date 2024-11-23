@@ -25,7 +25,8 @@ class ChildRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'age' => 'required|min:1|max:50'
+             //'age' => 'numeric|min:1|max:50',
+             'image_url' => 'file|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 
@@ -49,7 +50,8 @@ class ChildRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            //'age'=> 'Zła wartość pola "Wiek"',
+            'image_url' => 'Obsługiwane są pliki w formacie jpg, jpeg, png o rozmiarze max 2MB.'
         ];
     }
 }

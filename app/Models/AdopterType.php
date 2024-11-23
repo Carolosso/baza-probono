@@ -6,7 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class AdopterType extends Model
 {
     use CrudTrait;
     use HasFactory;
@@ -17,14 +17,12 @@ class Payment extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'payments';
+    protected $table = 'adopter_types';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id','declaration_id'];
+    protected $guarded = ['id'];
     protected $fillable = [
-        'payment_date',
-        'payment_amount',
-        'payment_description'
+        'type_name'
     ];
     // protected $hidden = [];
 
@@ -39,10 +37,11 @@ class Payment extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function declaration()
+    public function adopter()
     {
-        return $this->belongsTo(Declaration::class); // A payment belongs to one child
+        return $this->hasMany(Adopter::class);
     }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

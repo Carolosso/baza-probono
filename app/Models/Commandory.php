@@ -31,15 +31,15 @@ class Commandory extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-
+     
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function child()
+    public function assistant()
     {
-        return $this->hasMany(Child::class); // A komandoria belongs to one child
+        return $this->hasOne(Assistant::class); 
     }
     /*
     |--------------------------------------------------------------------------

@@ -22,33 +22,15 @@ class Child extends Model
     protected $table = 'children';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id',];
+    protected $guarded = ['id','group_id'];
     protected $fillable = [
         'first_name', //C
-        'last_name', //C
-        'evidence_number', //C
+        'last_name', //C       
         'age',  //C
         'birth_place', //C
         'country',  //C
         'sex',  //C
         'others', //C
-        'coordinator_first_name', //C
-        'coordinator_last_name', //C
-        'remaining_days_of_adoption', //C
-        'adoption_start_date', //C
-        'adoption_end_date', //C
-        'group', //C
-        'length_of_adoption', //C
-        'type_of_adoption', //C
-        'adopter_first_name', //C
-        'adopter_last_name', //C
-        'adopter_type', //C
-        'adopter_type_name', //C
-        'adopter_email', //C
-        'adopter_phone', //C
-        //'flag_comandory', //C
-        'adopter_address', //C
-        'commandory_id', //C
         'image_url', //C
     ];
     // protected $hidden = [];
@@ -58,41 +40,21 @@ class Child extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    
 
- /*    // Add the remaining time calculation function
-    public function getRemainingTime()
-    {
-        $currentDate = Carbon::now();
-        $adoptionStartDate = Carbon::parse($this->adoption_start_date);
-        $lengthOfAdoption = $this->length_of_adoption;
-
-        // Calculate the adoption end date
-        $adoptionEndDate = $adoptionStartDate->addDays($lengthOfAdoption);
-
-        // Calculate remaining days
-        $remainingDays = intval($currentDate->diffInDays($adoptionEndDate, false)); // false includes negative values
-
- 
-        return $remainingDays+1;
-    } */
-    
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
 
-    public function payments()
+    public function declaration()
     {
-        return $this->hasMany(Payment::class); // A child can have multiple payments
+        return $this->belongsTo(Declaration::class);
     }
-
-    public function commandory()
+    public function group()
     {
-        return $this->belongsTo(Commandory::class); //
+        return $this->belongsTo(Group::class);
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -107,7 +69,7 @@ class Child extends Model
     */
     public function getCommandoryNameAttribute()
     {
-        return $this->commandory ? $this->commandory->commandory_name : 'brak';
+        return $this->commandory ? $this->commandory->commandory_name : '-';
     }
     public function getAdopterFirstNameAttribute($value)
     {
@@ -133,6 +95,37 @@ class Child extends Model
     {
         return Crypt::decryptString($value);
     }
+
+    public function getAdopterFirstNameAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_first_name : '-';
+    }
+    public function getAdopterLastNameAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_last_name : '-';
+    }
+    public function getAdopterTypeAttribute()
+    {
+        return $this->adopter && $this->adopter->adopterType ? $this->adopter->adopterType->type_name : '';
+    }
+    public function getAdopterTypeNameAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_type_name : '-';
+    }
+    public function getAdopterEmailAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_email : '-';
+    }
+    public function getAdopterPhoneAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_phone : '-';
+    }
+    public function getAdopterAddressAttribute()
+    {
+        return $this->adopter ? $this->adopter->adopter_address : '-';
+    }
+ 
+
 
     /*
     |--------------------------------------------------------------------------

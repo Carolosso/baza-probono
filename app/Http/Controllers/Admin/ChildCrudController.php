@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ChildRequest;
+use App\Models\Child;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 use Carbon\Carbon;
@@ -102,6 +103,15 @@ class ChildCrudController extends CrudController
                 //'class' => 'fs-3'
             ],
         ]);
+
+        CRUD::column([
+            'name' => 'evidence_number',
+            'label' => 'Numer ewidencji',
+            'wrapper' => [
+                //'class' => 'fs-3'
+            ],
+        ]);
+
        CRUD::column([
             'name' => 'group',
             'label' => 'Zgromadzenie',
@@ -150,34 +160,12 @@ class ChildCrudController extends CrudController
             'view' => 'vendor.backpack.crud.columns.remaining_days',
         ]);
 
-        CRUD::column([
-            'name' => 'evidence_number',
-            'label' => 'Numer ewidencji',
-        ]);
-
-        CRUD::column([
-            'name' => 'coordinator_first_name',
-            'label' => 'Imię asystenta',
-        ]);
-
-        CRUD::column([
-            'name' => 'coordinator_last_name',
-            'label' => 'Nazwisko asystenta',
-        ]);
-
-        CRUD::column([
-            'name' => 'adopter_type_name',
-            'label' => 'Nazwa opiekuna',
-        ]);
-
-        CRUD::column([
-            'name' => 'adopter_first_name',
-            'label' => 'Imię opiekuna',
-        ]);
-
-        CRUD::column([
-            'name' => 'adopter_last_name',
-            'label' => 'Nazwisko opiekuna',
+         CRUD::column([
+            'name' => 'created_at',
+            'label' => 'Data utworzenia',
+            'wrapper' => [
+                //'class' => 'fs-3'
+            ],
         ]);
 
 
@@ -216,14 +204,14 @@ class ChildCrudController extends CrudController
     {
         //$this->authorize('Admin', Model::class);
         $this->checkPermissions();
-
-        Widget::add()->type('script')->content('js/fields.js');
-        Widget::add()->type('script')->content('js/age_calculation.js');
-        Widget::add()->type('script')->content('js/end_date.js');
-        Widget::add()->type('script')->content('js/select2.min.js');
-        Widget::add()->type('script')->content('js/select2_create_blade.js');
-        Widget::add()->type('style')->content('css/select2.css');
         CRUD::setValidation(ChildRequest::class);
+
+       // Widget::add()->type('script')->content('js/fields.js');
+        Widget::add()->type('script')->content('js/age_calculation.js');
+        //Widget::add()->type('script')->content('js/end_date.js');
+        Widget::add()->type('script')->content('js/select2.min.js');
+        Widget::add()->type('script')->content('js/select2_createChild_blade.js');
+        Widget::add()->type('style')->content('css/select2.css');
 
         $this->crud->setTitle('Dodaj','create');
         $this->crud->setHeading('Tworzenie profil dziecka','create');
@@ -600,59 +588,6 @@ class ChildCrudController extends CrudController
             ], 
         ])->tab('Dane opiekuna');
         
-        /* CRUD::field([
-            'name' => 'flag_comandory',
-            'label' => 'Komandoria',
-            'type' => 'select_from_array',
-            'options' => [
-                'białostocka' => 'białostocka',
-                'bielsko-żywiecka' => 'bielsko-żywiecka',
-                'bydgoska' => 'bydgoska',
-                'częstochowska' => 'częstochowska',
-                'drohiczyńska' => 'drohiczyńska',
-                'elbląska' => 'elbląska',
-                'ełcka' => 'ełcka',
-                'gdańska' => 'gdańska',
-                'gliwicka' => 'gliwicka',
-                'gnieźnieńska' => 'gnieźnieńska',
-                'kaliska' => 'kaliska',
-                'katowicka' => 'katowicka',
-                'kielecka' => 'kielecka',
-                'koszalińsko-kołobrzeska' => 'koszalińsko-kołobrzeska',
-                'krakowska' => 'krakowska',
-                'legnicka' => 'legnicka',
-                'lubelska' => 'lubelska',
-                'łomżyńska' => 'łomżyńska',
-                'łowicka' => 'łowicka',
-                'łódzka' => 'łódzka',
-                'opolska' => 'opolska',
-                'paryska' => 'paryska',
-                'pelplińska' => 'pelplińska',
-                'płocka' => 'płocka',
-                'poznańska' => 'poznańska',
-                'przemyska' => 'przemyska',
-                'radomska' => 'radomska',
-                'rzeszowska' => 'rzeszowska',
-                'sandomierska' => 'sandomierska',
-                'siedlecka' => 'siedlecka',
-                'sosnowiecka' => 'sosnowiecka',
-                'szczecińsko-kamieńska' => 'szczecińsko-kamieńska',
-                'świdnicka' => 'świdnicka',
-                'tarnowska' => 'tarnowska',
-                'toruńska' => 'toruńska',
-                'warmińska' => 'warmińska',
-                'warszawska' => 'warszawska',
-                'wileńska' => 'wileńska',
-                'warszawsko-praska' => 'warszawsko-praska',
-                'włocławska' => 'włocławska',
-                'wrocławska' => 'wrocławska',
-                'zamojsko-lubaczowska' => 'zamojsko-lubaczowska',
-                'zielonogórsko-gorzowska' => 'zielonogórsko-gorzowska',
-            ],
-            'wrapper' => [
-                'class' => 'col-md-4'
-            ], 
-        ])->tab('Dane opiekuna'); */
         CRUD::field([
             'name' => 'commandory_id',
             'label' => 'Komandoria',
@@ -668,8 +603,47 @@ class ChildCrudController extends CrudController
                 'class' => 'col-md-4',
             ]
          ])->tab('Dane opiekuna');
-        
+
         CRUD::field([
+            'name' => 'adopter_id',                // Field in the database for the selected Adopter
+            'label' => '<strong>Opiekun</strong>',                  // Label for the field
+            'type' => 'select_grouped',            // Field type
+            'entity' => 'adopter',                 // Relationship method in the Child model
+            'model' => 'App\Models\Adopter',       // Model for the select options
+            'attribute' => 'adopter_full_name',         // Attribute to display as the option label
+            'attributes'=> [
+                'id'=>'AdopterSelect',
+            ],
+            'group_by' => 'adopterType',           // Group by the `adopterType` relationship on the Adopter model
+            'group_by_attribute' => 'type_name',        // Display attribute in the AdopterType model
+            'group_by_relationship_back' => 'adopter',        // Display attribute in the AdopterType model
+            /* 'options' => (function ($query) {
+                return $query->orderBy('type_name')->get(); // Sort adopters within each group
+            }), */
+            'wrapper' => [
+                'class' => 'col-md-8 my-5',
+            ]
+        ])->tab('Dane opiekuna');
+
+        /*  CRUD::field([
+            'name' => 'adopter_id',
+            'label' => 'Opiekun',
+            'type' => 'select_grouped',
+            'group_by' => 'adopterType',
+            'group_by_attribute' => 'type_name',
+            'entity' => 'adopterType.adopter',  // The relationship method in the model
+            'model' => 'App\Models\Adopter',  // The related model
+            'attribute' => 'adopter_full_name',  // The attribute to display (Adopter name)
+            'attributes'=> ['id'=>'AdopterNameSelect'],
+            'options'   => (function ($query) {
+                return $query->orderBy('adopter_type', 'ASC')->get();  // Sort by name, optional
+            }),
+            'wrapper' => [
+                'class' => 'col-md-8',
+            ]
+         ])->tab('Dane opiekuna'); */
+        
+        /* CRUD::field([
             'name' => 'adopter_type',
             'label' => 'Rodzaj opiekuna',
             'type' => 'select_from_array',
@@ -745,7 +719,7 @@ class ChildCrudController extends CrudController
             'wrapper' => [
                 'class' => 'col-md-4'
             ], 
-        ])->tab('Dane opiekuna');
+        ])->tab('Dane opiekuna'); */
 
         
         // Define a field to display existing payments (if any) and allow managing them
@@ -939,51 +913,50 @@ class ChildCrudController extends CrudController
         // Get output content
         $csvOutput = ob_get_clean();
     }
+
     public function exportToCsvAdopter()
     {
-        // Log request data to see what values are being passed
-        // \Log::info('Request Data: ' . json_encode(request()->all()));
+        // Filter children based on the input filters
+        $childQuery = Child::query();
 
-        // Build the query to match the filtered records
-        $query = $this->crud->query;
-
-        // Apply filters based on the request inputs
         if ($group = request()->input('group')) {
-            $query->where('group', '=', $group);
+            $childQuery->where('group', '=', $group);
         }
 
         if ($commandory_id = request()->input('commandory_id')) {
-            $query->where('commandory_id', '=', $commandory_id);
+            $childQuery->where('commandory_id', '=', $commandory_id);
         }
 
         if ($sex = request()->input('sex')) {
-            $query->where('sex', '=', $sex);
+            $childQuery->where('sex', '=', $sex);
         }
 
-        // Debug: Log the query with applied filters
-        // \Log::info('Filtered Query SQL: ' . $query->toSql());
-        // \Log::info('Query Bindings: ' . json_encode($query->getBindings()));
+        // Get filtered children with their adopters, then retrieve unique adopters
+        $children = $childQuery->with('adopter')->get();
 
-        // Get the filtered data
-        $records = $query->get();
+        // Extract unique adopters from the filtered children
+        $uniqueAdopters = $children->pluck('adopter')->unique('id');
 
         // Prepare CSV data
         $csvData = [];
-        $csvData[] = ['Rodzaj opiekuna','Nazwa','Imię i nazwisko','Email','Telefon','Adres']; // CSV header
+        $csvData[] = ['Rodzaj opiekuna', 'Nazwa', 'Imię i nazwisko', 'Email', 'Telefon', 'Adres']; // CSV header
 
-        foreach ($records as $record) {
-            $csvData[] = [      
-                $record->adopter_type,
-                $record->adopter_type_name,
-                $record->adopter_first_name.' '.$record->adopter_last_name,
-                $record->adopter_email,
-                $record->adopter_phone,
-                $record->adopter_address,
-            ];
+        foreach ($uniqueAdopters as $adopter) {
+            if ($adopter) {  // Check if adopter exists
+                $csvData[] = [
+                    $adopter->adopter_type_type_name,
+                    $adopter->adopter_type_name,
+                    $adopter->adopter_first_name . ' ' . $adopter->adopter_last_name,
+                    $adopter->adopter_email,
+                    $adopter->adopter_phone,
+                    $adopter->adopter_address,
+                ];
+            }
         }
 
         // Create CSV
-        $filename = 'baza-HeartsOMSIPII-Opiekunowie-' . now()->format('d-m-Y_H-i-s') . '.csv';
+        $filename = 'baza-HeartsOMSIPII-Opiekunowie-'. now()->format('d-m-Y_H-i-s') . '.csv';
+
         // Start output buffering
         ob_start();
         $handle = fopen('php://output', 'w');
@@ -995,15 +968,17 @@ class ChildCrudController extends CrudController
             fputcsv($handle, $row);
         }
         fclose($handle);
-        
+
+        // Get output content and clear buffer
+        $csvOutput = ob_get_clean();
+
         // Return CSV download
-        return Response::make('', 200, [
+        return Response::make($csvOutput, 200, [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ]);
-        // Get output content
-        $csvOutput = ob_get_clean();
     }
+
     
   /*   public function show($id)
     {

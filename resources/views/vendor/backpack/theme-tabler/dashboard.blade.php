@@ -67,7 +67,21 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 	]); */
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
-		'class'	=> 'card text-white bg-dark mb-2', // <span class="mx-2 badge badge-secondary">Nowe</span>
+		'class'	=> 'card text-white bg-dark mb-2',
+		'title' =>	'Zmiany XX.XX.2024 <span class="mx-2 badge badge-secondary">Nowe</span>',
+		'content' => '
+			<ul>Przebudowanie części systemu, tj.
+				<li>Utworzenie odrębnego obiektu dla opiekunów, co umożliwia dodawanie/edytowanie/usuwanie opiekunów oraz przypisywanie ich do danego dziecka</li>
+				<li>Dodano kolumnę z ilością dzieci przypisanych do poszczególnej komandorii</li>
+				<li>Drobne poprawki</li>
+			</ul> ',
+		'number' => '6',
+		'wrapper' => 'col-md-8'
+	]);
+
+	Widget::add([
+		'type'	=> 'custom_collapse_widget',
+		'class'	=> 'card text-white bg-dark mb-2',
 		'title' =>	'Zmiany 08.11.2024',
 		'content' => '
 			<ul>Usprawniono bezpieczeństwo bazy danych:

@@ -21,7 +21,16 @@ class Adopter extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = [
+        'adopter_type_id',
+        'adopter_type_name',
+        'adopter_first_name',
+        'adopter_last_name',
+        'adopter_email', 
+        'adopter_phone',
+        'adopter_address', 
+        'others'
+    ];
     // protected $hidden = [];
 
     /*
@@ -35,7 +44,14 @@ class Adopter extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function declaration()
+    {
+        return $this->belongsTo(Declaration::class);
+    }
+    public function adopterType()
+    {
+        return $this->belongsTo(AdopterType::class);
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -47,6 +63,18 @@ class Adopter extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+
+    public function getAdopterFullNameAttribute()
+    {
+        $adopterTypeTypeName = $this->adopterType->type_name ? "{$this->adopterType->type_name} - " : "";
+        $adopterTypeName = $this->adopter_type_name ? "{$this->adopter_type_name} - " : "";
+        return "$adopterTypeTypeName $adopterTypeName {$this->adopter_first_name} {$this->adopter_last_name}";
+    }
+
+    public function getAdopterTypeTypeNameAttribute()
+    {
+        return $this->adopterType ? $this->adopterType->type_name : '-';
+    }
 
     /*
     |--------------------------------------------------------------------------
