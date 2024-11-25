@@ -53,18 +53,18 @@ class CommandoryCrudController extends CrudController
         ]);
 
         // Eager load the children count for the list view
-        $this->crud->query->withCount('child'); // This will add the count of 'child' to each Commandory record
+        //$this->crud->query->withCount('child'); // This will add the count of 'child' to each Commandory record
         // Add a column for displaying the number of children
         
-        CRUD::Column([
-            'name' => 'child_count',  // Custom name for the column
-            'label' => 'Dzieci', // Column title
-            'type' => 'number', // Column type
-            'function' => function ($entry) {
-                // Return the count of children for this Commandory entry
-                return $entry->child_count; // Access the 'child_count' loaded by withCount()
-            },
-        ]);
+        // CRUD::Column([
+        //     'name' => 'child_count',  // Custom name for the column
+        //     'label' => 'Dzieci', // Column title
+        //     'type' => 'number', // Column type
+        //     'function' => function ($entry) {
+        //         // Return the count of children for this Commandory entry
+        //         return $entry->child_count; // Access the 'child_count' loaded by withCount()
+        //     },
+        // ]);
 
         CRUD::column([
             'name' => 'created_at',

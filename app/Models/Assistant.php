@@ -22,8 +22,8 @@ class Assistant extends Model
     // public $timestamps = false;
     protected $guarded = ['id','commandory_id'];
     protected $fillable = [
-        'assistants_first_name',
-        'assistants_last_name',
+        'assistant_first_name',
+        'assistant_last_name',
         'others'
     ];
     // protected $hidden = [];
@@ -41,11 +41,11 @@ class Assistant extends Model
     */
     public function declaration()
     {
-        return $this->belongsTo(Declaration::class);
+        return $this->hasMany(Declaration::class,'id');
     }
     public function commandory()
     {
-        return $this->belongsTo(Commandory::class);
+        return $this->belongsTo(Commandory::class,'id');
     }
     /*
     |--------------------------------------------------------------------------

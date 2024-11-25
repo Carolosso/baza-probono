@@ -41,7 +41,7 @@ class Payment extends Model
     */
     public function declaration()
     {
-        return $this->belongsTo(Declaration::class); // A payment belongs to one child
+        return $this->belongsTo(Declaration::class,'id'); // A payment belongs to one child
     }
     /*
     |--------------------------------------------------------------------------

@@ -49,11 +49,11 @@ class Child extends Model
 
     public function declaration()
     {
-        return $this->belongsTo(Declaration::class);
+        return $this->hasOne(Declaration::class,'id');
     }
     public function group()
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Group::class,'id');
     }
 
     /*
@@ -71,6 +71,7 @@ class Child extends Model
     {
         return $this->commandory ? $this->commandory->commandory_name : '-';
     }
+    
     public function getAdopterFirstNameAttribute($value)
     {
         return Crypt::decryptString($value);
@@ -96,35 +97,6 @@ class Child extends Model
         return Crypt::decryptString($value);
     }
 
-    public function getAdopterFirstNameAttribute()
-    {
-        return $this->adopter ? $this->adopter->adopter_first_name : '-';
-    }
-    public function getAdopterLastNameAttribute()
-    {
-        return $this->adopter ? $this->adopter->adopter_last_name : '-';
-    }
-    public function getAdopterTypeAttribute()
-    {
-        return $this->adopter && $this->adopter->adopterType ? $this->adopter->adopterType->type_name : '';
-    }
-    public function getAdopterTypeNameAttribute()
-    {
-        return $this->adopter ? $this->adopter->adopter_type_name : '-';
-    }
-    public function getAdopterEmailAttribute()
-    {
-        return $this->adopter ? $this->adopter->adopter_email : '-';
-    }
-    public function getAdopterPhoneAttribute()
-    {
-        return $this->adopter ? $this->adopter->adopter_phone : '-';
-    }
-    public function getAdopterAddressAttribute()
-    {
-        return $this->adopter ? $this->adopter->adopter_address : '-';
-    }
- 
 
 
     /*

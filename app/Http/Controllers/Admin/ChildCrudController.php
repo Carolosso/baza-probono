@@ -50,9 +50,7 @@ class ChildCrudController extends CrudController
     {
         $this->checkPermissions();
 
-         Widget::add()->type('script')->content('js/select2.min.js');
-         Widget::add()->type('script')->content('js/select2_list_blade.js');
-         Widget::add()->type('style')->content('css/select2.css');
+        
         // Add a custom button or override the existing button
         $this->crud->removeButton('create');
     
@@ -103,15 +101,6 @@ class ChildCrudController extends CrudController
                 //'class' => 'fs-3'
             ],
         ]);
-
-        CRUD::column([
-            'name' => 'evidence_number',
-            'label' => 'Numer ewidencji',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
        CRUD::column([
             'name' => 'group',
             'label' => 'Zgromadzenie',
@@ -119,45 +108,6 @@ class ChildCrudController extends CrudController
             'wrapper' => [
                 //'class' => 'fs-3'
             ],
-        ]);
-
-        CRUD::column([
-            'name' => 'commandory_name',
-            'label' => 'Komandoria',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
-        CRUD::column([
-            'name' => 'adoption_start_date',
-            'label' => 'Data adopcji',
-            'type' => 'date',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
-        CRUD::column([
-            'name' => 'length_of_adoption',
-            'label' => 'Długość adopcji',
-            'type' => 'text',
-            'suffix' => ' lat',
-            'value' => function($entry){
-                $days = $entry ->length_of_adoption;
-                return intval($days/365);
-            },
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
-        ]);
-
-        CRUD::addColumn([
-            'name' => 'remaining_days_of_adoption',
-            'label' => 'Pozostało',
-            'type' => 'view',
-            'view' => 'vendor.backpack.crud.columns.remaining_days',
         ]);
 
          CRUD::column([
@@ -206,13 +156,6 @@ class ChildCrudController extends CrudController
         $this->checkPermissions();
         CRUD::setValidation(ChildRequest::class);
 
-       // Widget::add()->type('script')->content('js/fields.js');
-        Widget::add()->type('script')->content('js/age_calculation.js');
-        //Widget::add()->type('script')->content('js/end_date.js');
-        Widget::add()->type('script')->content('js/select2.min.js');
-        Widget::add()->type('script')->content('js/select2_createChild_blade.js');
-        Widget::add()->type('style')->content('css/select2.css');
-
         $this->crud->setTitle('Dodaj','create');
         $this->crud->setHeading('Tworzenie profil dziecka','create');
         $this->crud->setSubHeading('Wprowadź informacje','create');
@@ -243,16 +186,6 @@ class ChildCrudController extends CrudController
                 'class' => 'col-md-2'
             ],  
         ])->suffix("lat")->tab('Dane dziecka');
-
-        CRUD::field([
-            'name' => 'evidence_number',
-            'label' => 'Numer ewidencji',
-            'type' => 'text',
-            'wrapper' => [
-                'class' => 'col-md-2'
-            ],  
-        ])->tab('Dane dziecka');
-
 
         CRUD::field([
             'name' => 'sex',
@@ -477,25 +410,20 @@ class ChildCrudController extends CrudController
         ])->tab('Dane dziecka');
 
         CRUD::field([
-            'name' => 'group',
+            'name' => 'group_id',
             'label' => 'Zgromadzenie',
-            'type' => 'select_from_array',
-            'options' => [
-                'michalitki' => 'michalitki',
-                'pasjonistki' => 'pasjonistki',
-                'klawerianki' => 'klawerianki',
-                'opatrzności bożej' => 'opatrzności bożej',
-                'urszulanki' => 'urszulanki',
-                'franciszkanie' => 'franciszkanie',
-                'salezjanie' => 'salezjanie',
-                'pallotyni' => 'pallotyni',
-                'franciszkanki od Cierpiących' => 'franciszkanki od Cierpiących',
-                'kanoniczki (duchaczki)' => 'kanoniczki (duchaczki)',
-            ],
+            'type' => 'select',
+            'entity' => 'group',  // The relationship method in the model
+            'model' => 'App\Models\Group',  // The related model
+            'attribute' => 'GroupName',  // The attribute to display (Commandory name)
+            'attributes'=> ['id'=>'GroupNameSelect'],
+            'options'   => (function ($query) {
+                return $query->orderBy('group_name', 'ASC')->get();  // Sort by name, optional
+            }),
             'wrapper' => [
-                'class' => 'col-md-4'
-            ],  
-        ])->tab('Dane dziecka');
+                'class' => 'col-md-4',
+            ]
+        ])->tab('Dane');
 
         CRUD::field([
             'name' => 'adoption_start_date',
@@ -506,48 +434,6 @@ class ChildCrudController extends CrudController
             ],  
         ])->tab('Dane dziecka');
 
-        CRUD::field([ 
-            'name' => 'type_of_adoption',
-            'label' => 'Okres adopcji',
-            'type' => 'select_from_array',
-            'options' => [
-                'niestandardowy' => 'niestandardowy',
-                'do uzyskania pełnoletności' => 'do uzyskania pełnoletności',
-                //'do ukończenia szkoły' => 'do ukończenia szkoły',
-            ],
-            'allows_null' => false,
-            'wrapper' => [
-                'class' => 'col-md-3'
-            ],  
-        ])->tab('Dane dziecka');
-
-        CRUD::field([
-            'name' => 'length_of_adoption',
-            'type' => 'hidden',
-        ]);
-
-        CRUD::field([
-            'name' => 'length_of_adoption_years',
-            'label' => 'Długość adopcji',
-            'type' => 'number',
-            'attributes' => ["step" => "1"],
-            'wrapper' => [
-                'class' => 'col-md-2'
-            ],
-
-        ])->suffix("lat")->tab('Dane dziecka');
-
-        CRUD::field([
-            'name' => 'adoption_end_date',
-            'label' => 'Data zakończenia adopcji',
-            'type' => 'date',
-            'attributes' => [
-                'readonly'    => 'readonly',
-            ],
-            'wrapper' => [
-                'class' => 'col-md-2'
-            ],  
-        ])->tab('Dane dziecka');
 
         CRUD::field([
             'name' => 'image_url',
@@ -723,11 +609,11 @@ class ChildCrudController extends CrudController
 
         
         // Define a field to display existing payments (if any) and allow managing them
-        CRUD::field([
+/*         CRUD::field([
             'name'  => 'payments_section',
             'label' => 'Manage Payments',
             'type'  => 'custom_payment_field', // You will create this as a custom field in Step 2
-        ])->tab('Wpłaty');
+        ])->tab('Wpłaty'); */
     }
 
     /**

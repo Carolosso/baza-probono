@@ -46,11 +46,11 @@ class Adopter extends Model
     */
     public function declaration()
     {
-        return $this->belongsTo(Declaration::class);
+        return $this->hasMany(Declaration::class,'id');
     }
     public function adopterType()
     {
-        return $this->belongsTo(AdopterType::class);
+        return $this->belongsTo(AdopterType::class,'id');
     }
     /*
     |--------------------------------------------------------------------------

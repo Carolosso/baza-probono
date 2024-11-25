@@ -253,7 +253,7 @@
 </section>
 
 @endsection
-@elseif (Request::is('admin/adopter*'))
+@elseif (Request::is('admin/adopter*') or Request::is('admin/declaration*'))
 @php
     $defaultBreadcrumbs = [
       'Start' => url(config('backpack.base.route_prefix'), 'dashboard'),
@@ -313,7 +313,6 @@
 	</div>
 </div>
 @endsection
-
 @endif
 
 

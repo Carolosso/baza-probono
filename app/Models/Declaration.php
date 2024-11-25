@@ -49,19 +49,19 @@ class Declaration extends Model
     */
     public function child()
     {
-        return $this->hasOne(Child::class);
+        return $this->belongsTo(Child::class,'id');
     }
     public function adopter()
     {
-        return $this->hasOne(Adopter::class);
+        return $this->belongsTo(Adopter::class,'id');
     }
     public function assistant()
     {
-        return $this->hasOne(Assistant::class);
+        return $this->belongsTo(Assistant::class,'id');
     }
     public function payments()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class,'id');
     }
     /*
     |--------------------------------------------------------------------------
@@ -74,7 +74,14 @@ class Declaration extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
+    public function getChildFullNameAttribute()
+    {
+        return $this->child ? $this->child->first_name : '-';
+    }
+    public function getAssistantFullNameAttribute()
+    {
+        return $this->assistant ? $this->assistant->assistant_first_name : '-';
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
