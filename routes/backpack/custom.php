@@ -17,13 +17,13 @@ Route::group([
     ),
     'namespace' => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-    Route::crud('child', 'ChildCrudController');
+/*     Route::crud('child', 'ChildCrudController');
     Route::get('child/export-csvAll', [ChildCrudController::class, 'exportToCsvAll'])->name('child.export-csvAll');
     Route::get('child/export-csvChild', [ChildCrudController::class, 'exportToCsvChild'])->name('child.export-csvChild');
     Route::get('child/export-csvAdopter', [ChildCrudController::class, 'exportToCsvAdopter'])->name('child.export-csvAdopter');
     Route::crud('payment', 'PaymentCrudController');
     Route::crud('commandory', 'CommandoryCrudController');
-    Route::crud('adopter', 'AdopterCrudController');
+    Route::crud('adopter', 'AdopterCrudController'); */
 }); // this should be the absolute last line of this file
 
 /**

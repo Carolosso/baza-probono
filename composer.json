@@ -10,8 +10,10 @@
         "backpack/permissionmanager": "^7.2",
         "backpack/theme-tabler": "^1.2",
         "backpack/translation-manager": "^1.0",
+        "endroid/qr-code": "^6.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "pragmarx/google2fa": "^8.0",
         "spatie/laravel-translation-loader": "^2.8"
     },
     "require-dev": {

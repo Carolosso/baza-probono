@@ -4,58 +4,62 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Route;
-/**
-     * Checked that the logged in user is an administrator.
-     *
-     * --------------
-     * VERY IMPORTANT
-     * --------------
-     * If you have both regular users and admins inside the same table, change
-     * the contents of this method to check that the logged in user
-     * is an admin, and not a regular user.
-     *
-     * Additionally, in Laravel 7+, you should change app/Providers/RouteServiceProvider::HOME
-     * which defines the route where a logged in user (but not admin) gets redirected
-     * when trying to access an admin route. By default it's '/home' but Backpack
-     * does not have a '/home' route, use something you've built for your users
-     * (again - users, not admins).
+
+class CheckIfAdmin
+{
+    /**
+     * Check if the logged-in user is an admin.
      *
      * @param  \Illuminate\Contracts\Auth\Authenticatable|null  $user
      * @return bool
      */
-    
-class CheckIfAdmin
-{
     private function checkIfUserIsAdmin($user)
     {
-        return ($user->is_admin == 1);
+        return $user && $user->is_admin;
     }
 
+    /**
+     * Handle unauthorized requests.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
     private function respondToUnauthorizedRequest($request)
     {
         if ($request->ajax() || $request->wantsJson()) {
-            return response(trans('backpack::base.unauthorized'), 401);
-        } else {
-            return redirect()->guest(backpack_url('login'))
-                ->withErrors(['unauthorized' => 'Konto niezatwierdzone. Zaczekaj na zatwierdzenie przez administratora.']);
+            return response(['error' => trans('backpack::base.unauthorized')], 401);
         }
+        else{
+                return redirect()->guest(backpack_url('login'))->withErrors(['unauthorized' => 'Odmowa dostępu. Odśwież stronę i spróbuj ponownie.  
+                W przeciwnym wypadku konto może być niezatwierdzone. Zaczekaj na zatwierdzenie przez administratora.']);
+        }
+        
     }
 
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
     public function handle($request, Closure $next)
     {
-        // Allow guests to access the login and register pages
+        // Allow guests to access login and register pages
         if (Route::is('backpack.auth.login') || Route::is('backpack.auth.register')) {
             return $next($request);
         }
 
-        // Redirect guests to login page if they try to access any other page
+        // Check if the user is authenticated
         if (backpack_auth()->guest()) {
             return $this->respondToUnauthorizedRequest($request);
         }
 
-        // Restrict access if user is not an admin
-        if (! $this->checkIfUserIsAdmin(backpack_user())) {
-            backpack_auth()->logout();  // Logout non-admin users immediately
+        $user = backpack_user();
+
+        // Check if the user is an admin
+        if (! $this->checkIfUserIsAdmin($user)) {
+            backpack_auth()->logout();
             return $this->respondToUnauthorizedRequest($request);
         }
 

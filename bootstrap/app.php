@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\TwoFactorMiddleware;
+use App\Http\Middleware\CheckIfAdmin;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,7 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+     $middleware->alias([
+        '2fa' => \App\Http\Middleware\TwoFactorMiddleware::class,
+        'checkIfAdmin' => \App\Http\Middleware\CheckIfAdmin::class,
+    ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

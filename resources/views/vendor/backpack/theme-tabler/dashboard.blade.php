@@ -4,7 +4,7 @@
 use App\Models\Child;
 use App\Models\Commandory;
 use App\Models\User;
-use Backpack\CRUD\app\Library\Auth\backpack_auth;
+//use Backpack\CRUD\app\Library\Auth\backpack_auth;
 
 	// Merge widgets that were fluently declared with widgets declared without the fluent syntax:
 	// - $data['widgets']['before_content']
@@ -31,40 +31,54 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 					'title' => 'Dzieci',
 					'icon_class' => 'la la-user-friends',
 					'bg_class' => 'bg-success',
-					'value' => Child::count()
+					'value' => Child::count(),
+					'link' => backpack_url().'/child'
 				],
 				[
 					'type' => 'custom_card_ribbon_widget',
 					'title' => 'Komandorie',
 					'icon_class' => 'la la-flag',
 					'bg_class' => 'bg-danger',
-					'value' => Commandory::count()
+					'value' => Commandory::count(),
+					'link' => backpack_url().'/commandory'
 				],
 				[
 					'type' => 'custom_card_ribbon_widget',
 					'title' => 'Użytkownicy',
 					'icon_class' => 'la la-user-shield',
 					'bg_class' => 'bg-info',
-					'value' => User::count()
+					'value' => User::count(),
+					'link' => '#'
 				],
 		]
 	]);
-
-/* 	Widget::add([
+	Widget::add([
 		'type'        => 'card',
-		'class'       => 'card text-white bg-warning mb-2',
+		'class'       => 'card text-white bg-info mb-2',
 		'content' => [
 			'header' =>'Informacja',
-			'body' => '
-				<ul>Przywrócono z kopii zapasowej wpisy dzieci (bez zdjęć i wpłat):
-					<li>Cezar</li>
-					<li>Joel Suika Sangnyuy</li>
-					<li>Keith Delos Santos</li>
-					<li>Kristian</li>
-				</ul> ',
-			],
-		'wrapper' => ['class'=>'col-md-8']
-	]); */
+			'body' => 'Równolegle trwają pracę nad nową strukturą bazy danych. Do tego momentu większe zmiany w aktualnej strukturze nie będą wprowadzane.',
+	]]);
+	Widget::add([
+		'type'	=> 'custom_collapse_widget',
+		'class'	=> 'card text-white bg-dark mb-2', 
+		'title' =>	'Zmiany 30.11.2024 <span class="mx-2 badge bg-secondary">Nowe</span><span class="mx-2 badge bg-danger">Ważne</span>',
+		'content' => '
+			<ul>Poprawa bezpieczeństwa:
+				<li>Zaimplementowano uwierzytelnianie 2-etapowe</li>
+				<li>Uwierzytelnianie 2-etapowe jest wymagane do uzyskania dostępu do panelu</li>
+			</ul> 
+			<ul>Dodatkowo:
+				<li>Zmieniono szerokość panelu na 100%, dzięki czemu widoczna jest większa ilość danych</li>
+				<li>Ukryto kolumny "Długość adopcji" oraz "Nazwa opiekuna" w widoku listy Dzieci</li>
+				<li>Przywrócono domyślny motyw kolorystyczny</li>
+				<li>Poprawki, zmiany, optymalizacje</li>
+			</ul> 
+			',
+		'number' => '6',
+		'wrapper' => 'col-md-6'
+	]);
+
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
 		'class'	=> 'card text-white bg-dark mb-2', // <span class="mx-2 badge badge-secondary">Nowe</span>
@@ -80,7 +94,7 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 			</ul> 
 			',
 		'number' => '5',
-		'wrapper' => 'col-md-8'
+		'wrapper' => 'col-md-6'
 	]);
 				
 	Widget::add([
@@ -94,7 +108,7 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 				<li>Drobne poprawki i zmiany</li>
 			</ul> ',
 		'number' => '4',
-		'wrapper' => 'col-md-8'
+		'wrapper' => 'col-md-6'
 	]);
 
 	Widget::add([
@@ -111,7 +125,7 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 				<li>Drobne poprawki i optymalizacje</li>
 			</ul> ',
 		'number' => '3',
-		'wrapper' => 'col-md-8'
+		'wrapper' => 'col-md-6'
 	]);
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
@@ -128,7 +142,7 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 				<li>Drobne poprawki i optymalizacje</li>
 			</ul> ',
 		'number' => '2',
-		'wrapper' => 'col-md-8'
+		'wrapper' => 'col-md-6'
 	]);
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
@@ -140,7 +154,7 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 				<li>Eksport danych do pliku w formacie CSV</li>
 			</ul> ',
 		'number' => '1',
-		'wrapper' => 'col-md-8'
+		'wrapper' => 'col-md-6'
 	]);
 
 @endphp

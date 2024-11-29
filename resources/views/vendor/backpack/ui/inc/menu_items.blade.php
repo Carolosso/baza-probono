@@ -1,7 +1,7 @@
 {{-- This file is used for menu items by any Backpack v6 theme --}}
 {{-- <x-backpack::menu-item title="Payments" icon="la la-question" :link="backpack_url('payment')" /> --}}
-<x-backpack::menu-item title="{{ trans('backpack::base.dashboard') }}" icon="la la-home nav-icon" :link="backpack_url('dashboard')" />
-<x-backpack::menu-item title="Lista dzieci" icon="la la-user-friends nav-icon" :link="backpack_url('child')" />
+{{-- <x-backpack::menu-item title="{{ trans('backpack::base.dashboard') }}" icon="la la-home nav-icon" :link="backpack_url('dashboard')" /> --}}
+<x-backpack::menu-item title="Dzieci" icon="la la-user-friends nav-icon" :link="backpack_url('child')" />
 <x-backpack::menu-item title="Komandorie" icon="la la-flag" :link="backpack_url('commandory')" />
 {{--<x-backpack::menu-item title="Adopters" icon="la la-question" :link="backpack_url('adopter')" /> --}}
 

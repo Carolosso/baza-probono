@@ -129,7 +129,7 @@ class ChildCrudController extends CrudController
             ],
         ]);
 
-        CRUD::column([
+        /* CRUD::column([
             'name' => 'length_of_adoption',
             'label' => 'Długość adopcji',
             'type' => 'text',
@@ -141,7 +141,7 @@ class ChildCrudController extends CrudController
             'wrapper' => [
                 //'class' => 'fs-3'
             ],
-        ]);
+        ]); */
 
         CRUD::addColumn([
             'name' => 'remaining_days_of_adoption',
@@ -163,11 +163,6 @@ class ChildCrudController extends CrudController
         CRUD::column([
             'name' => 'coordinator_last_name',
             'label' => 'Nazwisko asystenta',
-        ]);
-
-        CRUD::column([
-            'name' => 'adopter_type_name',
-            'label' => 'Nazwa opiekuna',
         ]);
 
         CRUD::column([
@@ -1075,7 +1070,7 @@ class ChildCrudController extends CrudController
         }
     } 
 
-    public function calculateRemainingDays($child)
+/*     public function calculateRemainingDays($child)
     {
         $currentDate = Carbon::now();
         $adoptionStartDate = Carbon::parse($child->adoption_start_date);
@@ -1091,7 +1086,5 @@ class ChildCrudController extends CrudController
         $child->update([
             'remaining_days_of_adoption'=> $remainingDays,
         ]);
-    }
-
-
+    } */
 }

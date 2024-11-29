@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'DADP'),
+    'name' => env('APP_NAME', 'Adopcja_Serca_Baza'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => 'Europe/Warsaw',
 
     /*
     |--------------------------------------------------------------------------

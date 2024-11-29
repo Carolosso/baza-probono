@@ -22,7 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin'
+        'is_admin',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
+        'two_factor_confirmed_at',
+        'google2fa_secret',
+        'two_factor_enabled',
+        'two_factor_verified',
     ];    
     /**
      * The attributes that should be hidden for serialization.

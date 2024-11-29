@@ -76,8 +76,7 @@
             </a>
           </div>
         </div>
-
-        <div class="col-lg-8">
+        <div class="col-lg-4">
           <div class="card mb-4">
             <div class="card-body">
               <h3 class="mb-3"><span class="text-primary d-flex justify-content-center">Dane dziecka</span></h3>
@@ -181,73 +180,75 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card mb-4 mb-md-0">
-                <div class="card-body p-0">
-                  <h3 class="mb-2 mt-3"><span class="text-primary d-flex justify-content-center">Dane opiekuna</span></h3>
-                  <ul class="list-group list-group-flush rounded-3">
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Rodzaj opiekuna:</p>
-                      <p class="mb-0">{{$entry->adopter_type}}</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Nazwa:</p>
-                      <p class="mb-0">{{$entry->adopter_type_name}}</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Imię:</p>
-                      <p class="mb-0">{{$entry->adopter_first_name}}</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Nazwisko:</p>
-                      <p class="mb-0"> {{$entry->adopter_last_name}}</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Email:</p>
-                      <p class="mb-0"> {{$entry->adopter_email}}</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Telefon:</p>
-                      <p class="mb-0"> {{$entry->adopter_phone}}</p>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Adres:</p>
-                      <p class="mb-0"> {{$entry->adopter_address}}</p>
-                    </li>   
-                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                      <p class="mb-0 fw-bolder">Komandoria:</p>
-                      <p class="mb-0">{{$entry->commandory_name}}</p>
-                    </li>               
-                  </ul>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card mb-4">
+                  <div class="card-body p-0">
+                    <h3 class="mb-2 mt-3"><span class="text-primary d-flex justify-content-center">Dane opiekuna</span></h3>
+                    <ul class="list-group list-group-flush rounded-3">
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Rodzaj opiekuna:</p>
+                        <p class="mb-0">{{$entry->adopter_type}}</p>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Nazwa:</p>
+                        <p class="mb-0">{{$entry->adopter_type_name}}</p>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Imię:</p>
+                        <p class="mb-0">{{$entry->adopter_first_name}}</p>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Nazwisko:</p>
+                        <p class="mb-0"> {{$entry->adopter_last_name}}</p>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Email:</p>
+                        <p class="mb-0"> {{$entry->adopter_email}}</p>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Telefon:</p>
+                        <p class="mb-0"> {{$entry->adopter_phone}}</p>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Adres:</p>
+                        <p class="mb-0"> {{$entry->adopter_address}}</p>
+                      </li>   
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Komandoria:</p>
+                        <p class="mb-0">{{$entry->commandory_name}}</p>
+                      </li>               
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6 ">
-              <div class="card mb-4 mb-md-0">
-                <div class="card-body p-0">
-                  <h3 class="mb-2 mt-3"><span class="text-primary d-flex justify-content-center">Wpłaty</span></h3>
-                   @if($entry->payments->isEmpty())
-                          <p class="p-3">Nie znaleziono wpłat.</p>
-                      @else
-                          <ul class="list-group">
-                              @foreach($entry->payments as $payment)
-                                  <li class="list-group-item d-flex justify-content-between align-items-center p-3">
-                                      <div>
-                                          <strong>Kwota:</strong> {{ $payment->payment_amount }} zł<br>
-                                          <strong>Data:</strong> {{ $payment->payment_date}}<br>
-                                          <strong>Opis:</strong> {{ $payment->payment_description}}
-                                      </div>
-                                  </li>
-                              @endforeach
-                          </ul>
-                      @endif
+              <div class="col-md-12">
+                <div class="card mb-4">
+                  <div class="card-body p-0">
+                    <h3 class="mb-2 mt-3"><span class="text-primary d-flex justify-content-center">Wpłaty</span></h3>
+                    @if($entry->payments->isEmpty())
+                            <p class="p-3">Nie znaleziono wpłat.</p>
+                        @else
+                            <ul class="list-group">
+                                @foreach($entry->payments as $payment)
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <div>
+                                            <strong>Kwota:</strong> {{ $payment->payment_amount }} zł<br>
+                                            <strong>Data:</strong> {{ $payment->payment_date}}<br>
+                                            <strong>Opis:</strong> {{ $payment->payment_description}}
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+    </div>
      
     </section>
 </section>
