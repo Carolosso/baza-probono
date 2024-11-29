@@ -46,7 +46,7 @@
         <div class="col-md-1 align-self-center">
             Płeć:
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
             <select name="sex" class="form-control">
                 <option value="">wszystkie</option>
                 <option value="mężczyzna" {{ request()->input('sex') == 'mężczyzna' ? 'selected' : '' }}>mężczyzna</option>
@@ -71,11 +71,10 @@
                 <option value="kanoniczki (duchaczki)" {{ request()->input('group') == 'kanoniczki (duchaczki)' ? 'selected' : '' }}>kanoniczki (duchaczki)</option>
             </select>
         </div>
-            <div class="col-md-1 align-self-center">
-                Komandoria:
-            </div>
-            <div class="col-md-2">
-              
+          <div class="col-md-1 align-self-center">
+              Komandoria:
+          </div>
+          <div class="col-md-2">        
             <select name="commandory_id" id="CommandoryNameSelect" class="form-control">
               <option value="">wszystkie</option>  <!-- Default "all" option -->
               
@@ -86,20 +85,22 @@
                   </option>
               @endforeach
           </select>
-
         </div>
         <div class="col-md-1">
             <button type="submit" class="btn btn-primary"><i class="las la-filter"></i>&nbsp;Filtruj</button>
         </div>
-
+        
          @if($crud->getOperationSetting('searchableTable'))
+         <div class="col-md-1 align-self-center">
+            Szukaj w widocznych kolumnach:
+        </div>
           <div class="col-sm-2">
             <div id="datatable_search_stack" class="mt-sm-0 mt-2 d-print-none">
               <div class="input-icon">
-                <span class="input-icon-addon">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
-                </span>
                 <input type="search" class="form-control" placeholder="{{ trans('backpack::crud.search') }}..."/>
+       {{--            <span class="input-icon-addon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                </span> --}}
               </div>
             </div>
           </div>
