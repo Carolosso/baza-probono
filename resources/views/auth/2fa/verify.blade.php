@@ -5,8 +5,8 @@
 
 <form method="POST" action="{{ route('2fa.check') }}">
     @csrf
-    <div class="row justify-content-md-center mt-5">
-        <div class="col-lg-4 ">
+    <div class="row justify-content-center mt-5 mx-auto">
+        <div class="col-lg-4">
             <div class="row row-cards">
                 <div class="col-12">
                     <div class="card">
@@ -16,7 +16,7 @@
                         <div class="card-body">
                             <div class="mb-3">
                                 <label class="form-label">Wprowadź kod z aplikacji.</label>
-                                <input type="text" required id="otp" name="one_time_password" class="form-control" data-mask="0 0 0 - 0 0 0" data-mask-visible="true" autocomplete="off" inputmode="numeric" autofocus>
+                                <input type="text" required id="otp" name="one_time_password" class="form-control" data-mask="000-000" data-mask-visible="true" autocomplete="off" inputmode="numeric" autofocus>
                                 @if($errors->any())
                                     <h4>{{$errors->first()}}</h4>
                                 @endif

@@ -8,7 +8,7 @@
     <div class="row justify-content-center mt-5 mx-auto">
         <div class="col-lg-4">
             <div class="row row-cards">
-                <div class="col-12 ">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Konfiguracja weryfikacji 2-etapowej</h3>
