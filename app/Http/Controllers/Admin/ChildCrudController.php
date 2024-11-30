@@ -741,6 +741,14 @@ class ChildCrudController extends CrudController
                 'class' => 'col-md-4'
             ], 
         ])->tab('Dane opiekuna');
+        CRUD::field([
+            'name' => 'adopter_others',
+            'label' => 'Uwagi',
+            'type' => 'textarea',
+            'wrapper' => [
+                'class' => 'col-md-4'
+            ], 
+        ])->tab('Dane opiekuna');
 
         
         // Define a field to display existing payments (if any) and allow managing them
@@ -1070,7 +1078,7 @@ class ChildCrudController extends CrudController
         }
     } 
 
-/*     public function calculateRemainingDays($child)
+    public function calculateRemainingDays($child)
     {
         $currentDate = Carbon::now();
         $adoptionStartDate = Carbon::parse($child->adoption_start_date);
@@ -1086,5 +1094,5 @@ class ChildCrudController extends CrudController
         $child->update([
             'remaining_days_of_adoption'=> $remainingDays,
         ]);
-    } */
+    }
 }
