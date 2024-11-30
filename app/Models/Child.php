@@ -46,6 +46,7 @@ class Child extends Model
         'adopter_type_name', //C
         'adopter_email', //C
         'adopter_phone', //C
+        'adopter_others', //C
         //'flag_comandory', //C
         'adopter_address', //C
         'commandory_id', //C

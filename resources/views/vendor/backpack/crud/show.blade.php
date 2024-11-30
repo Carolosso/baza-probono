@@ -220,6 +220,10 @@
                         <p class="mb-0 fw-bolder">Komandoria:</p>
                         <p class="mb-0">{{$entry->commandory_name}}</p>
                       </li>               
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <p class="mb-0 fw-bolder">Uwagi:</p>
+                        <p class="mb-0">{{$entry->adopter_others}}</p>
+                      </li>               
                     </ul>
                   </div>
                 </div>
