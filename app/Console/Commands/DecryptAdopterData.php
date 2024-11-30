@@ -10,6 +10,12 @@ class DecryptAdopterData extends Command
 {
     protected $signature = 'children:decrypt-data';
     protected $description = 'Decrypt adopter data for existing records';
+    // ------------------------DELETE MUTATORS AND ACCESSORS BEFORE USING !!!! -------------------------------
+    //
+    //
+    //
+    //
+    // -------------------------------------------------------------------------------------------------------
 
     public function handle()
     {

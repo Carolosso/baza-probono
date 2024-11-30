@@ -147,7 +147,6 @@ class Child extends Model
     |--------------------------------------------------------------------------
     */
     // Mutators to encrypt each field before saving
-    // Mutators to encrypt each field before saving
     public function setAdopterFirstNameAttribute($value)
     {
         // Encrypt only if the value is not empty

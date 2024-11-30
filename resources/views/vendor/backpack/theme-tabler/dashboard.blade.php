@@ -72,7 +72,6 @@ use App\Models\User;
 				<li>Zmieniono szerokość panelu na 100%, dzięki czemu widoczna jest większa ilość danych</li>
 				<li>Dodano pole "Uwagi" dla opiekuna</li>
 				<li>Ukryto kolumny "Długość adopcji" oraz "Nazwa opiekuna" w widoku listy Dzieci</li>
-				<li>Przywrócono domyślny motyw kolorystyczny</li>
 				<li>Poprawki, zmiany, optymalizacje</li>
 			</ul> 
 			',

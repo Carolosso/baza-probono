@@ -11,7 +11,12 @@ class EncryptAdopterData extends Command
 {
     protected $signature = 'children:encrypt-data';
     protected $description = 'Encrypt adopter data for existing records';
-
+    // ------------------------DELETE MUTATORS AND ACCESSORS BEFORE USING !!!! -------------------------------
+    //
+    //
+    //
+    //
+    // -------------------------------------------------------------------------------------------------------
     public function handle()
     {
         $children = Child::all();
