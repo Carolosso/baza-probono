@@ -112,57 +112,70 @@ class Child extends Model
     }
     public function getAdopterFirstNameAttribute($value)
     {
-        return Crypt::decryptString($value);
+        // Check if the value is encrypted and decrypt only if it's not empty
+        return !empty($value) ? Crypt::decryptString($value) : null;
     }
 
     public function getAdopterLastNameAttribute($value)
     {
-        return Crypt::decryptString($value);
+        // Check if the value is encrypted and decrypt only if it's not empty
+        return !empty($value) ? Crypt::decryptString($value) : null;
     }
 
     public function getAdopterPhoneAttribute($value)
     {
-        return Crypt::decryptString($value);
+        // Check if the value is encrypted and decrypt only if it's not empty
+        return !empty($value) ? Crypt::decryptString($value) : null;
     }
 
     public function getAdopterEmailAttribute($value)
     {
-        return Crypt::decryptString($value);
+        // Check if the value is encrypted and decrypt only if it's not empty
+        return !empty($value) ? Crypt::decryptString($value) : null;
     }
 
     public function getAdopterAddressAttribute($value)
     {
-        return Crypt::decryptString($value);
+        // Check if the value is encrypted and decrypt only if it's not empty
+        return !empty($value) ? Crypt::decryptString($value) : null;
     }
+
 
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-        // Mutators to encrypt each field before saving
+    // Mutators to encrypt each field before saving
+    // Mutators to encrypt each field before saving
     public function setAdopterFirstNameAttribute($value)
     {
-        $this->attributes['adopter_first_name'] = Crypt::encryptString($value);
+        // Encrypt only if the value is not empty
+        $this->attributes['adopter_first_name'] = !empty($value) ? Crypt::encryptString($value) : null;
     }
 
     public function setAdopterLastNameAttribute($value)
     {
-        $this->attributes['adopter_last_name'] = Crypt::encryptString($value);
+        // Encrypt only if the value is not empty
+        $this->attributes['adopter_last_name'] = !empty($value) ? Crypt::encryptString($value) : null;
     }
 
     public function setAdopterPhoneAttribute($value)
     {
-        $this->attributes['adopter_phone'] = Crypt::encryptString($value);
+        // Encrypt only if the value is not empty
+        $this->attributes['adopter_phone'] = !empty($value) ? Crypt::encryptString($value) : null;
     }
 
     public function setAdopterEmailAttribute($value)
     {
-        $this->attributes['adopter_email'] = Crypt::encryptString($value);
+        // Encrypt only if the value is not empty
+        $this->attributes['adopter_email'] = !empty($value) ? Crypt::encryptString($value) : null;
     }
 
     public function setAdopterAddressAttribute($value)
     {
-        $this->attributes['adopter_address'] = Crypt::encryptString($value);
+        // Encrypt only if the value is not empty
+        $this->attributes['adopter_address'] = !empty($value) ? Crypt::encryptString($value) : null;
     }
+
 }
