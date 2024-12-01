@@ -110,7 +110,7 @@ class Child extends Model
     {
         return $this->commandory ? $this->commandory->commandory_name : 'brak';
     }
-    public function getAdopterFirstNameAttribute($value)
+    /* public function getAdopterFirstNameAttribute($value)
     {
         // Check if the value is encrypted and decrypt only if it's not empty
         return !empty($value) ? Crypt::decryptString($value) : null;
@@ -138,7 +138,7 @@ class Child extends Model
     {
         // Check if the value is encrypted and decrypt only if it's not empty
         return !empty($value) ? Crypt::decryptString($value) : null;
-    }
+    } */
 
 
     /*
@@ -147,7 +147,7 @@ class Child extends Model
     |--------------------------------------------------------------------------
     */
     // Mutators to encrypt each field before saving
-    public function setAdopterFirstNameAttribute($value)
+    /* public function setAdopterFirstNameAttribute($value)
     {
         // Encrypt only if the value is not empty
         $this->attributes['adopter_first_name'] = !empty($value) ? Crypt::encryptString($value) : null;
@@ -175,6 +175,6 @@ class Child extends Model
     {
         // Encrypt only if the value is not empty
         $this->attributes['adopter_address'] = !empty($value) ? Crypt::encryptString($value) : null;
-    }
+    } */
 
 }
