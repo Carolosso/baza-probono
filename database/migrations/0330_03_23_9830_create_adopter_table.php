@@ -24,8 +24,10 @@ return new class extends Migration
         });  */
 
         Schema::table('adopters', function (Blueprint $table) {
-            $table->unsignedBigInteger('adopter_type_id')->nullable()->after('id');
-            $table->foreign('adopter_type_id')->references('id')->on('adopter_types')->onDelete('cascade');
+            // $table->unsignedBigInteger('adopter_type_id')->nullable()->after('id');
+            // $table->foreign('adopter_type_id')->references('id')->on('adopter_types')->onDelete('cascade');
+            $table->unsignedBigInteger('commandory_id')->nullable()->after('id');
+            $table->foreign('commandory_id')->references('id')->on('commandories')->onDelete('cascade');
         });
     }
 

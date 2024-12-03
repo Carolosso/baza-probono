@@ -20,7 +20,7 @@ class Assistant extends Model
     protected $table = 'assistants';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id','commandory_id'];
+    protected $guarded = ['id'];
     protected $fillable = [
         'assistant_first_name',
         'assistant_last_name',
@@ -42,10 +42,6 @@ class Assistant extends Model
     public function declaration()
     {
         return $this->hasMany(Declaration::class,'id');
-    }
-    public function commandory()
-    {
-        return $this->belongsTo(Commandory::class,'id');
     }
     /*
     |--------------------------------------------------------------------------

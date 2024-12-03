@@ -18,8 +18,8 @@ use App\Models\Assistant;
 class DeclarationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -289,6 +289,44 @@ class DeclarationCrudController extends CrudController
         ])->tab('Załączniki');
 
     }
+     // Optionally, you can customize how payments are stored by overriding the store and update methods
+    public function store()
+    {
+        $response = $this->traitStore();  // Save the child data first
+
+        // After saving the child, handle the related payments
+        $this->savePayments($this->crud->entry);
+        //$this->calculateRemainingDays($this->crud->entry);
+        return $response;
+    }
+
+    public function update()
+    {
+        $response = $this->traitUpdate();  // Save the child data first
+
+        // After updating the child, handle the related payments
+        $this->savePayments($this->crud->entry);
+        //$this->calculateRemainingDays($this->crud->entry);
+
+
+        return $response;
+    }
+    protected function savePayments($child)
+    {
+        // Clear existing payments if needed (optional)
+        $child->payments()->delete();
+
+        // Loop through the submitted payments
+        $payments = request()->input('payments', []);
+        foreach ($payments as $paymentData) {
+            $child->payments()->create([
+                'payment_amount' => $paymentData['payment_amount'],
+                'payment_date' => $paymentData['payment_date'],
+                'payment_description' => $paymentData['payment_description'],
+            ]);
+        }
+    }
+
     protected function setupShowOperation()
     {
         CRUD::setFromDb(); // set columns from db columns.

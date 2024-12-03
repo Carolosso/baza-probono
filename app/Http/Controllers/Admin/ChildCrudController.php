@@ -21,8 +21,8 @@ use Spatie\Permission\Exceptions\UnauthorizedException;
 class ChildCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation; //{ show as traitShow; }
 
@@ -411,11 +411,11 @@ class ChildCrudController extends CrudController
 
         CRUD::field([
             'name' => 'group_id',
-            'label' => 'Zgromadzenie',
+            'label' => 'Przypisz zgromadzenie',
             'type' => 'select',
             'entity' => 'group',  // The relationship method in the model
             'model' => 'App\Models\Group',  // The related model
-            'attribute' => 'GroupName',  // The attribute to display (Commandory name)
+            'attribute' => 'group_name',  // The attribute to display (Commandory name)
             'attributes'=> ['id'=>'GroupNameSelect'],
             'options'   => (function ($query) {
                 return $query->orderBy('group_name', 'ASC')->get();  // Sort by name, optional
@@ -423,16 +423,16 @@ class ChildCrudController extends CrudController
             'wrapper' => [
                 'class' => 'col-md-4',
             ]
-        ])->tab('Dane');
+        ])->tab('Powiązania');
 
-        CRUD::field([
+/*         CRUD::field([
             'name' => 'adoption_start_date',
             'label' => 'Data adopcji',
             'type' => 'date',
             'wrapper' => [
                 'class' => 'col-md-2'
             ],  
-        ])->tab('Dane dziecka');
+        ])->tab('Dane dziecka'); */
 
 
         CRUD::field([
@@ -456,25 +456,8 @@ class ChildCrudController extends CrudController
             ],  
         ])->tab('Dane dziecka');
         
-        CRUD::field([
-            'name' => 'coordinator_first_name',
-            'label' => 'Imię asystenta',
-            'type' => 'text',
-            'wrapper' => [
-                'class' => 'col-md-4'
-            ], 
-        ])->tab('Dane opiekuna');
-
-        CRUD::field([
-            'name' => 'coordinator_last_name',
-            'label' => 'Nazwisko asystenta',
-            'type' => 'text',
-            'wrapper' => [
-                'class' => 'col-md-4'
-            ], 
-        ])->tab('Dane opiekuna');
         
-        CRUD::field([
+/*         CRUD::field([
             'name' => 'commandory_id',
             'label' => 'Komandoria',
             'type' => 'select',
@@ -488,28 +471,28 @@ class ChildCrudController extends CrudController
             'wrapper' => [
                 'class' => 'col-md-4',
             ]
-         ])->tab('Dane opiekuna');
+         ])->tab('Dane opiekuna'); */
 
-        CRUD::field([
-            'name' => 'adopter_id',                // Field in the database for the selected Adopter
-            'label' => '<strong>Opiekun</strong>',                  // Label for the field
-            'type' => 'select_grouped',            // Field type
-            'entity' => 'adopter',                 // Relationship method in the Child model
-            'model' => 'App\Models\Adopter',       // Model for the select options
-            'attribute' => 'adopter_full_name',         // Attribute to display as the option label
-            'attributes'=> [
-                'id'=>'AdopterSelect',
-            ],
-            'group_by' => 'adopterType',           // Group by the `adopterType` relationship on the Adopter model
-            'group_by_attribute' => 'type_name',        // Display attribute in the AdopterType model
-            'group_by_relationship_back' => 'adopter',        // Display attribute in the AdopterType model
-            /* 'options' => (function ($query) {
-                return $query->orderBy('type_name')->get(); // Sort adopters within each group
-            }), */
-            'wrapper' => [
-                'class' => 'col-md-8 my-5',
-            ]
-        ])->tab('Dane opiekuna');
+        // CRUD::field([
+        //     'name' => 'adopter_id',                // Field in the database for the selected Adopter
+        //     'label' => '<strong>Opiekun</strong>',                  // Label for the field
+        //     'type' => 'select_grouped',            // Field type
+        //     'entity' => 'adopter',                 // Relationship method in the Child model
+        //     'model' => 'App\Models\Adopter',       // Model for the select options
+        //     'attribute' => 'adopter_full_name',         // Attribute to display as the option label
+        //     'attributes'=> [
+        //         'id'=>'AdopterSelect',
+        //     ],
+        //     'group_by' => 'adopterType',           // Group by the `adopterType` relationship on the Adopter model
+        //     'group_by_attribute' => 'type_name',        // Display attribute in the AdopterType model
+        //     'group_by_relationship_back' => 'adopter',        // Display attribute in the AdopterType model
+        //     /* 'options' => (function ($query) {
+        //         return $query->orderBy('type_name')->get(); // Sort adopters within each group
+        //     }), */
+        //     'wrapper' => [
+        //         'class' => 'col-md-8 my-5',
+        //     ]
+        // ])->tab('Dane opiekuna');
 
         /*  CRUD::field([
             'name' => 'adopter_id',
@@ -876,43 +859,7 @@ class ChildCrudController extends CrudController
 
 
 
- // Optionally, you can customize how payments are stored by overriding the store and update methods
-    public function store()
-    {
-        $response = $this->traitStore();  // Save the child data first
 
-        // After saving the child, handle the related payments
-        $this->savePayments($this->crud->entry);
-        //$this->calculateRemainingDays($this->crud->entry);
-        return $response;
-    }
-
-    public function update()
-    {
-        $response = $this->traitUpdate();  // Save the child data first
-
-        // After updating the child, handle the related payments
-        $this->savePayments($this->crud->entry);
-        $this->calculateRemainingDays($this->crud->entry);
-
-
-        return $response;
-    }
-    protected function savePayments($child)
-    {
-        // Clear existing payments if needed (optional)
-        $child->payments()->delete();
-
-        // Loop through the submitted payments
-        $payments = request()->input('payments', []);
-        foreach ($payments as $paymentData) {
-            $child->payments()->create([
-                'payment_amount' => $paymentData['payment_amount'],
-                'payment_date' => $paymentData['payment_date'],
-                'payment_description' => $paymentData['payment_description'],
-            ]);
-        }
-    }
 
     protected function checkPermissions(){
                 // Define the CRUD operations and their corresponding permissions
@@ -935,24 +882,4 @@ class ChildCrudController extends CrudController
             }
         }
     } 
-
-    public function calculateRemainingDays($child)
-    {
-        $currentDate = Carbon::now();
-        $adoptionStartDate = Carbon::parse($child->adoption_start_date);
-        $lengthOfAdoption = (int)$child->length_of_adoption;
-        //Log::info('lengthOfAdoption: ' . $lengthOfAdoption);
-
-        // Calculate the adoption end date
-        $adoptionEndDate = $adoptionStartDate->addDays($lengthOfAdoption);
-
-        // Calculate remaining days
-        $remainingDays = intval($currentDate->diffInDays($adoptionEndDate, false))+1;
-
-        $child->update([
-            'remaining_days_of_adoption'=> $remainingDays,
-        ]);
-    }
-
-
 }

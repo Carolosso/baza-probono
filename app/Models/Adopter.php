@@ -23,6 +23,7 @@ class Adopter extends Model
     protected $guarded = ['id'];
     protected $fillable = [
         'adopter_type_id',
+        'commandory_id',
         'adopter_type_name',
         'adopter_first_name',
         'adopter_last_name',
@@ -51,6 +52,10 @@ class Adopter extends Model
     public function adopterType()
     {
         return $this->belongsTo(AdopterType::class,'id');
+    }
+        public function commandory()
+    {
+        return $this->belongsTo(Commandory::class,'id');
     }
     /*
     |--------------------------------------------------------------------------

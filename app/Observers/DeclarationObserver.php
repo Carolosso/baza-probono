@@ -1,15 +1,15 @@
 <?php
 namespace App\Observers;
 
-use App\Models\Child;
+use App\Models\Declaration;
 use Carbon\Carbon;
 
-class ChildObserver
+class DeclarationObserver
 {
-    public function creating(Child $child)
+    public function creating(Declaration $declaration)
     {
-        $adoptionStartDate = Carbon::parse($child->adoption_start_date);
-        $lengthOfAdoption = (int)$child->length_of_adoption;
+        $adoptionStartDate = Carbon::parse($declaration->adoption_start_date);
+        $lengthOfAdoption = (int)$declaration->length_of_adoption;
         $adoptionEndDate = $adoptionStartDate->addDays($lengthOfAdoption);
         $remainingDays = Carbon::now()->diffInDays($adoptionEndDate, false);
 

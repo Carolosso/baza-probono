@@ -243,4 +243,21 @@ class AdopterCrudController extends CrudController
             }
         }
     }  */
+     public function calculateRemainingDays($child)
+    {
+        $currentDate = Carbon::now();
+        $adoptionStartDate = Carbon::parse($child->adoption_start_date);
+        $lengthOfAdoption = (int)$child->length_of_adoption;
+        //Log::info('lengthOfAdoption: ' . $lengthOfAdoption);
+
+        // Calculate the adoption end date
+        $adoptionEndDate = $adoptionStartDate->addDays($lengthOfAdoption);
+
+        // Calculate remaining days
+        $remainingDays = intval($currentDate->diffInDays($adoptionEndDate, false))+1;
+
+        $child->update([
+            'remaining_days_of_adoption'=> $remainingDays,
+        ]);
+    }
 }

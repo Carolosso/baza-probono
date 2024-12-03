@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\Child;
-use App\Observers\ChildObserver;
+use App\Models\Declaration;
+use App\Observers\DeclarationObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Child::observe(ChildObserver::class);
+        Declaration::observe(DeclarationObserver::class);
     }
 }

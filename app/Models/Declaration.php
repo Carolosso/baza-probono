@@ -25,7 +25,6 @@ class Declaration extends Model
         'child_id',
         'adopter_id',
         'assistant_id',
-        'commandory_id',
         'evidenceNumber',
         'typeOfAdoption',
         'lengthOfAdoption',

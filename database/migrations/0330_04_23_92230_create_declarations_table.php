@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('declarations', function (Blueprint $table) {
+/*         Schema::create('declarations', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('child_id')->nullable();
@@ -23,8 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('assistant_id')->nullable();
             $table->foreign('assistant_id')->references('id')->on('assistants')->onDelete('set null');
 
-            $table->unsignedBigInteger('commandory_id')->nullable();
-            $table->foreign('commandory_id')->references('id')->on('commandories')->onDelete('set null');
+            //$table->unsignedBigInteger('commandory_id')->nullable();
+            //$table->foreign('commandory_id')->references('id')->on('commandories')->onDelete('set null');
 
             $table->string('evidenceNumber')->nullable();
             $table->string('typeOfAdoption')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->integer('remainingDaysOfAdoption')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
-        }); 
+        });  */
     }
 
     /**
