@@ -22,8 +22,9 @@ class Child extends Model
     protected $table = 'children';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    protected $guarded = ['id','group_id'];
+    protected $guarded = ['id'];
     protected $fillable = [
+        'group_id',
         'first_name', //C
         'last_name', //C       
         'age',  //C
