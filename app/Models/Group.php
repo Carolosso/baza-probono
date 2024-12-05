@@ -39,7 +39,7 @@ class Group extends Model
     */
     public function child()
     {
-        return $this->hasMany(Child::class); 
+        return $this->hasMany(Child::class,'group_id'); 
     }
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,9 @@ class Group extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
+    public function getGroupFullNameAttribute() {
+        return $this->group_name ? $this->group_name : 'brak';
+    }
 
     /*
     |--------------------------------------------------------------------------

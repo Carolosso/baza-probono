@@ -78,7 +78,7 @@ class AdopterCrudController extends CrudController
     protected function setupShowOperation()
     {
         CRUD::column([
-            'name' => 'adopterType_type_name',
+            'name' => 'AdopterTypeTypeName',
             'label' => 'Rodzaj',
         ]);
         CRUD::column([
@@ -143,7 +143,7 @@ class AdopterCrudController extends CrudController
                 'class' => 'col-md-4',
             ]
         ]);
-        
+
          CRUD::field([
             'name' => 'adopter_first_name',
             'label' => 'Imię opiekuna',

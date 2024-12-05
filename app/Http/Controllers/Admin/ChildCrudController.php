@@ -102,12 +102,12 @@ class ChildCrudController extends CrudController
             ],
         ]);
        CRUD::column([
-            'name' => 'group',
-            'label' => 'Zgromadzenie',
-            'type' => 'text',
-            'wrapper' => [
-                //'class' => 'fs-3'
-            ],
+            'name' => 'group_id',                // Field in the database for the selected Adopter
+            'label' => 'Zgromadzenie',                  // Label for the field
+            'type' => 'select',            // Field type
+            'entity' => 'group',                 // Relationship method in the Child model
+            'model' => 'App\Models\Group',       // Model for the select options
+            'attribute' => 'GroupFullName',         // Attribute to display as the option label
         ]);
 
          CRUD::column([
