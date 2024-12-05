@@ -37,9 +37,9 @@ class Commandory extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-        public function adopter()
+    public function adopter()
     {
-        return $this->hasMany(Assistant::class); 
+        return $this->hasMany(Adopter::class,'commandory_id'); 
     }
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,10 @@ class Commandory extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
+    public function getCommandoryFullNameAttribute()
+    {
+        return $this->commandory_name;
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

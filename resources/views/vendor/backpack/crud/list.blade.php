@@ -39,7 +39,7 @@
             @endif
           </div>
         </div>
-@if (Request::is('admin/child*'))
+{{-- @if (Request::is('admin/child*'))
 <hr class="my-3 p-0">
 <form method="GET" action="{{ url($crud->route) }}">
     <div class="row mb-3">
@@ -134,7 +134,7 @@
             </div>
           </div>
           @endif
-@endif
+@endif --}}
 
         {{-- Backpack List Filters
         @if ($crud->filtersEnabled())

@@ -1,4 +1,4 @@
-<div class="col-sm-6 col-lg-4">
+<div class="col-sm-2 col-lg-2">
     <div class="card mb-3  border-start-0 ">
 
         <div class="ribbon ribbon-top {{ $widget['bg_class'] }} ">

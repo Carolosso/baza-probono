@@ -3,6 +3,10 @@
 @php
 use App\Models\Child;
 use App\Models\Commandory;
+use App\Models\Declaration;
+use App\Models\Assistant;
+use App\Models\Group;
+use App\Models\Adopter;
 use App\Models\User;
 use Backpack\CRUD\app\Library\Auth\backpack_auth;
 
@@ -28,25 +32,53 @@ use Backpack\CRUD\app\Library\Auth\backpack_auth;
 		'content' => [
 				[
 					'type' => 'custom_card_ribbon_widget',
+					'title' => 'Deklaracje',
+					'icon_class' => 'la la-address-book',
+					'bg_class' => 'bg-primary',
+					'value' => Declaration::count()
+				],
+				[
+					'type' => 'custom_card_ribbon_widget',
 					'title' => 'Dzieci',
-					'icon_class' => 'la la-user-friends',
-					'bg_class' => 'bg-success',
+					'icon_class' => 'la la-child',
+					'bg_class' => 'bg-secondary',
 					'value' => Child::count()
+				],
+				[
+					'type' => 'custom_card_ribbon_widget',
+					'title' => 'Opiekunowie',
+					'icon_class' => 'la la-user-alt ',
+					'bg_class' => 'bg-success',
+					'value' => Adopter::count()
+				],
+				[
+					'type' => 'custom_card_ribbon_widget',
+					'title' => 'Asystenci',
+					'icon_class' => 'la la-user-tie',
+					'bg_class' => 'bg-danger',
+					'value' => Assistant::count()
+				],
+				[
+					'type' => 'custom_card_ribbon_widget',
+					'title' => 'Zgromadzenia',
+					'icon_class' => 'la la-group',
+					'bg_class' => 'bg-warning',
+					'value' => Group::count()
 				],
 				[
 					'type' => 'custom_card_ribbon_widget',
 					'title' => 'Komandorie',
 					'icon_class' => 'la la-flag',
-					'bg_class' => 'bg-danger',
+					'bg_class' => 'bg-info',
 					'value' => Commandory::count()
 				],
-				[
+/* 				[
 					'type' => 'custom_card_ribbon_widget',
 					'title' => 'Użytkownicy',
 					'icon_class' => 'la la-user-shield',
 					'bg_class' => 'bg-info',
 					'value' => User::count()
-				],
+				], */
 		]
 	]);
 

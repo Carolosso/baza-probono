@@ -53,32 +53,63 @@ class DeclarationCrudController extends CrudController
             'type' => 'text',
         ]);
         CRUD::column([
-            'name' => 'child_id',
-            'label' => 'Dziecko',
-            'type' => 'text',
+            'name' => 'child_id',                // Field in the database for the selected Adopter
+            'label' => 'Dziecko',                  // Label for the field
+            'type' => 'select',            // Field type
+            'entity' => 'child',                 // Relationship method in the Child model
+            'model' => 'App\Models\Child',       // Model for the select options
+            'attribute' => 'ChildFullName',         // Attribute to display as the option label
+            'attributes'=> [
+                'id'=>'ChildSelect',
+            ],
+            'wrapper' => [
+                'href' => function($crud, $column, $entry){
+                    return backpack_url('child/'.$entry->child_id.'/show');
+                },
+                //'target'=>"_blank"
+            ]                     
         ]);
         CRUD::column([
             'name' => 'adopter_id',                // Field in the database for the selected Adopter
             'label' => 'Opiekun',                  // Label for the field
-            'type' => 'text',            // Field type
+            'type' => 'select',                     // Field type
+            'entity' => 'adopter',                 // Relationship method in the Child model
+            'model' => 'App\Models\Adopter',       // Model for the select options
+            'attribute' => 'AdopterFullName',         // Attribute to display as the option label
+            'attributes'=> [
+                'id'=>'AdopterSelect',
+            ],
             'wrapper' => [
-                'href' =>function($crud, $column, $entry){
+                'href' => function($crud, $column, $entry){
                     return backpack_url('adopter/'.$entry->adopter_id.'/show');
-                }
-            ]
+                },
+                //'target'=>"_blank"
+            ]                     
         ]);
         CRUD::column([
-            'name' => 'assistant_id',
-            'label' => 'Asystent',
-            'type' => 'text',
+            'name' => 'assistant_id',                // Field in the database for the selected Adopter
+            'label' => 'Asystent',                  // Label for the field
+            'type' => 'select',            // Field type
+            'entity' => 'assistant',                 // Relationship method in the Child model
+            'model' => 'App\Models\Assistant',       // Model for the select options
+            'attribute' => 'AssistantFullName',         // Attribute to display as the option label
+            'attributes'=> [
+                'id'=>'AssistantSelect',
+            ],
+            'wrapper' => [
+                'href' => function($crud, $column, $entry){
+                    return backpack_url('assistant/'.$entry->assistant_id.'/show');
+                },
+                //'target'=>"_blank"
+            ]                     
+        ]);
+        CRUD::addColumn([
+            'name' => 'adopter.commandory.CommandoryFullName',
+            'label' => 'Komandoria',                  // Label for the field
+            'type' => 'text',            // Field type
         ]);
         CRUD::column([
-            'name' => 'commandory_id',
-            'label' => 'Komandoria',
-            'type' => 'text',
-        ]);
-        CRUD::column([
-            'name' => 'typeOfAdoption',
+            'name' => 'type_of_adoption',
             'label' => 'Rodzaj adopcji',
             'type' => 'text',
         ]);
@@ -96,12 +127,12 @@ class DeclarationCrudController extends CrudController
             ],
         ]);
         CRUD::column([
-            'name' => 'adoptionStartDate',
+            'name' => 'adoption_start_date',
             'label' => 'Data rozpoczęcia adopcji',
             'type' => 'date',
         ]);
         CRUD::column([
-            'name' => 'adoptionEndDate',
+            'name' => 'adoption_end_date',
             'label' => 'Data zakończenia adopcji',
             'type' => 'date',
         ]);
@@ -173,7 +204,7 @@ class DeclarationCrudController extends CrudController
             'type' => 'select_grouped',            // Field type
             'entity' => 'adopter',                 // Relationship method in the Child model
             'model' => 'App\Models\Adopter',       // Model for the select options
-            'attribute' => 'AdopterFullName',         // Attribute to display as the option label
+            'attribute' => 'AdopterTypeFullName',         // Attribute to display as the option label
             'attributes'=> [
                 'id'=>'AdopterSelect',
             ],

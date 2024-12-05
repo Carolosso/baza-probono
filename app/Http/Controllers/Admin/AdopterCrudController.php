@@ -19,7 +19,7 @@ class AdopterCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    //use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -128,6 +128,22 @@ class AdopterCrudController extends CrudController
         // Widget::add()->type('script')->content('js/select2_createAdopter_blade.js');
         // Widget::add()->type('style')->content('css/select2.css');
 
+        CRUD::field([
+            'name' => 'commandory_id',
+            'label' => '<i class="la la-flag">&nbsp;</i><strong>Komandoria</strong>',
+            'type' => 'select',
+            'entity' => 'commandory',  // The relationship method in the model
+            'model' => 'App\Models\Commandory',  // The related model
+            'attribute' => 'CommandoryFullName',  // The attribute to display (Commandory name)
+            'attributes'=> ['id'=>'CommandoryNameSelect'],
+            'options'   => (function ($query) {
+                return $query->orderBy('commandory_name', 'ASC')->get();  // Sort by name, optional
+            }),
+            'wrapper' => [
+                'class' => 'col-md-4',
+            ]
+        ]);
+        
          CRUD::field([
             'name' => 'adopter_first_name',
             'label' => 'Imię opiekuna',

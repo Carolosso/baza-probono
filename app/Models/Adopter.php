@@ -47,15 +47,15 @@ class Adopter extends Model
     */
     public function declaration()
     {
-        return $this->hasMany(Declaration::class,'id');
+        return $this->hasMany(Declaration::class,'declaration_id');
     }
     public function adopterType()
     {
-        return $this->belongsTo(AdopterType::class,'id');
+        return $this->belongsTo(AdopterType::class,'adopter_type_id');
     }
-        public function commandory()
+    public function commandory()
     {
-        return $this->belongsTo(Commandory::class,'id');
+        return $this->belongsTo(Commandory::class,'commandory_id');
     }
     /*
     |--------------------------------------------------------------------------
@@ -69,11 +69,15 @@ class Adopter extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getAdopterFullNameAttribute()
+    public function getAdopterTypeFullNameAttribute()
     {
         $adopterTypeTypeName = $this->adopterType->type_name ? "{$this->adopterType->type_name} - " : "";
         $adopterTypeName = $this->adopter_type_name ? "{$this->adopter_type_name} - " : "";
         return "$adopterTypeTypeName $adopterTypeName {$this->adopter_first_name} {$this->adopter_last_name}";
+    }
+    public function getAdopterFullNameAttribute()
+    {
+        return $this->adopter_first_name.' '.$this->adopter_last_name;
     }
 
     public function getAdopterTypeTypeNameAttribute()

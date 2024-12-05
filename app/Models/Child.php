@@ -50,11 +50,11 @@ class Child extends Model
 
     public function declaration()
     {
-        return $this->hasOne(Declaration::class,'id');
+        return $this->hasOne(Declaration::class);
     }
     public function group()
     {
-        return $this->belongsTo(Group::class,'id');
+        return $this->belongsTo(Group::class);
     }
 
     /*

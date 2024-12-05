@@ -9,7 +9,7 @@
                 <div class="col-lg-auto ms-lg-auto">
                         <ul class="list-inline list-inline-dots mb-0">
                             <li class="list-inline-item">
-                                <h2 class="text-white bg-danger p-2"><i class="las la-exclamation"></i>WERSJA ROZWOJOWA</h2>
+                                <h2 class="text-white bg-danger rounded p-3"><i class="las la-tools"></i>WERSJA TESTOWA</h2>
                             </li>
                         </ul>
                     </div>

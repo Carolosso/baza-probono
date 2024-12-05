@@ -48,19 +48,19 @@ class Declaration extends Model
     */
     public function child()
     {
-        return $this->belongsTo(Child::class,'id');
+        return $this->belongsTo(Child::class, 'child_id');
     }
     public function adopter()
     {
-        return $this->belongsTo(Adopter::class,'id');
+        return $this->belongsTo(Adopter::class, 'adopter_id');
     }
     public function assistant()
     {
-        return $this->belongsTo(Assistant::class,'id');
+        return $this->belongsTo(Assistant::class, 'assistant_id');
     }
     public function payments()
     {
-        return $this->hasMany(Payment::class,'id');
+        return $this->hasMany(Payment::class, 'declaration_id');
     }
     /*
     |--------------------------------------------------------------------------

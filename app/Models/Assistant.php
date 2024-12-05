@@ -41,7 +41,7 @@ class Assistant extends Model
     */
     public function declaration()
     {
-        return $this->hasMany(Declaration::class,'id');
+        return $this->hasMany(Declaration::class);
     }
     /*
     |--------------------------------------------------------------------------

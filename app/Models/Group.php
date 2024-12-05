@@ -39,7 +39,7 @@ class Group extends Model
     */
     public function child()
     {
-        return $this->hasMany(Child::class,'id'); 
+        return $this->hasMany(Child::class); 
     }
     /*
     |--------------------------------------------------------------------------
