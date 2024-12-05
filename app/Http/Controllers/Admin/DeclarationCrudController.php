@@ -21,7 +21,7 @@ class DeclarationCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    //use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -58,9 +58,14 @@ class DeclarationCrudController extends CrudController
             'type' => 'text',
         ]);
         CRUD::column([
-            'name' => 'adopter_id',
-            'label' => 'Opiekun',
-            'type' => 'text',
+            'name' => 'adopter_id',                // Field in the database for the selected Adopter
+            'label' => 'Opiekun',                  // Label for the field
+            'type' => 'text',            // Field type
+            'wrapper' => [
+                'href' =>function($crud, $column, $entry){
+                    return backpack_url('adopter/'.$entry->adopter_id.'/show');
+                }
+            ]
         ]);
         CRUD::column([
             'name' => 'assistant_id',
@@ -132,7 +137,7 @@ class DeclarationCrudController extends CrudController
         Widget::add()->type('script')->content('js/age_calculation.js');
         //Widget::add()->type('script')->content('js/end_date.js');
         Widget::add()->type('script')->content('js/select2.min.js');
-        Widget::add()->type('script')->content('js/select2_createChild_blade.js');
+        Widget::add()->type('script')->content('js/select2_createDeclaration_blade.js');
         Widget::add()->type('style')->content('css/select2.css');
 
         CRUD::setValidation(DeclarationRequest::class);
@@ -145,13 +150,14 @@ class DeclarationCrudController extends CrudController
                 'class' => 'col-md-2'
             ],  
         ])->tab('Dane');
+
         CRUD::field([
             'name' => 'child_id',
-            'label' => 'Dziecko',
+            'label' => '<i class="la la-child">&nbsp;</i><strong>Dziecko</strong>',
             'type' => 'select',
             'entity' => 'child',  // The relationship method in the model
             'model' => 'App\Models\Child',  // The related model
-            'attribute' => 'childFullName',  // The attribute to display (Commandory name)
+            'attribute' => 'ChildFullName',  // The attribute to display (Commandory name)
             'attributes'=> ['id'=>'ChildNameSelect'],
             'options'   => (function ($query) {
                 return $query->orderBy('first_name', 'ASC')->get();  // Sort by name, optional
@@ -163,11 +169,11 @@ class DeclarationCrudController extends CrudController
         
         CRUD::field([
             'name' => 'adopter_id',                // Field in the database for the selected Adopter
-            'label' => '<strong>Opiekun</strong>',                  // Label for the field
+            'label' => '<i class="la la-user-alt">&nbsp;</i><strong>Opiekun</strong>',                  // Label for the field
             'type' => 'select_grouped',            // Field type
             'entity' => 'adopter',                 // Relationship method in the Child model
             'model' => 'App\Models\Adopter',       // Model for the select options
-            'attribute' => 'adopter_full_name',         // Attribute to display as the option label
+            'attribute' => 'AdopterFullName',         // Attribute to display as the option label
             'attributes'=> [
                 'id'=>'AdopterSelect',
             ],
@@ -183,7 +189,7 @@ class DeclarationCrudController extends CrudController
         ])->tab('Dane');
         CRUD::field([
             'name' => 'assistant_id',
-            'label' => 'Asystent',
+            'label' => '<i class="la la-user-tie">&nbsp;</i><strong>Asystent</strong>',
             'type' => 'select',
             'entity' => 'assistant',  // The relationship method in the model
             'model' => 'App\Models\Assistant',  // The related model
@@ -224,8 +230,18 @@ class DeclarationCrudController extends CrudController
                 'class' => 'col-md-2'
             ],  
         ])->tab('Dane');
+
         CRUD::field([
-            'name' => 'adoptionStartDate',
+            'name' => 'child.age',
+            'label' => 'wiek',
+            'type' => 'number',
+            'wrapper' => [
+                'class' => 'col-md-2'
+            ],  
+        ])->tab('Dane');
+
+        CRUD::field([
+            'name' => 'adoption_start_date',
             'label' => 'Data rozpoczęcia adopcji',
             'type' => 'date',
             'wrapper' => [

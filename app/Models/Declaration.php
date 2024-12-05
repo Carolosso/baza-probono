@@ -25,12 +25,12 @@ class Declaration extends Model
         'child_id',
         'adopter_id',
         'assistant_id',
-        'evidenceNumber',
-        'typeOfAdoption',
-        'lengthOfAdoption',
-        'adoptionStartDate',
-        'adoptionEndDate',
-        'remainingDaysOfAdoption',
+        'evidence_number',
+        'type_of_adoption',
+        'length_of_adoption',
+        'adoption_start_date',
+        'adoption_end_date',
+        'remaining_days_of_adoption',
         'status'
     ];
     // protected $hidden = [];
@@ -73,14 +73,11 @@ class Declaration extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-    public function getChildFullNameAttribute()
-    {
-        return $this->child ? $this->child->first_name : '-';
-    }
-    public function getAssistantFullNameAttribute()
+
+    /* public function getAssistantFullNameAttribute()
     {
         return $this->assistant ? $this->assistant->assistant_first_name : '-';
-    }
+    } */
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

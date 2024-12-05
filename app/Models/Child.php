@@ -68,6 +68,10 @@ class Child extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
+    public function getChildFullNameAttribute()
+    {
+        return  $this->first_name.' '.$this->last_name;
+    }
     // public function getCommandoryNameAttribute()
     // {
     //     return $this->commandory ? $this->commandory->commandory_name : '-';

@@ -54,7 +54,10 @@ class Assistant extends Model
     | ACCESSORS
     |--------------------------------------------------------------------------
     */
-
+    public function getAssistantFullNameAttribute()
+    {
+        return  $this->assistant_first_name.' '.$this->assistant_last_name;
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

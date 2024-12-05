@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Strona główna</title>
     <link href= "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="p-3 mb-2 bg-dark bg-gradient
- d-flex align-items-center justify-content-center" style="height: 100vh;">
-    <div class="text-center text-dark">
+<body class="row bg-dark m-0 align-items-center justify-content-center p-0 bg-gggrain" style="height: 100vh;">
+    <div class="row align-items-center justify-content-center">
+      <div class="col-md-4 bg-dark rounded border p-5 m-5 text-center text-dark">
         <h1 style="color: #FCC52D;"><img src="/favicon.ico" style="width:20%"></img><b>Hearts</b>OMSIPII</h1>
         <h3 class="mb-4" style="color: lightgrey;">
           Baza adopcyjna
@@ -19,10 +18,25 @@
             </svg>&nbsp;Przejdź do logowania
           </button>
         </a>
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-center">
+      <div class="col-md-3 bg-danger  rounded p-2 m-2 text-center text-white">
+        <h3>WERSJA ROZWOJOWA</h3>
+      </div>
     </div>
   <script src=
       "https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js">
   </script>
+<style>
+
+  .bg-gggrain{
+    background: no-repeat url({{asset('img/gggrain-11.svg')}});
+    background-size: cover;
+    backdrop-filter: blur(10px);
+  }
+
+</style>
 </body>
 
 </html>
