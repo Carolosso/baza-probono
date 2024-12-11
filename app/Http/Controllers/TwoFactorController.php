@@ -83,7 +83,7 @@ class TwoFactorController extends Controller
         /* $serverTime = now();
         Log::info('Server Time: ' . $serverTime); */
 
-        $valid = $google2fa->verifyKey($user->google2fa_secret, $request->one_time_password,4);
+        $valid = $google2fa->verifyKey($user->google2fa_secret, $request->one_time_password,2);
         
         if ($valid) {
             $user->two_factor_verified = true;
