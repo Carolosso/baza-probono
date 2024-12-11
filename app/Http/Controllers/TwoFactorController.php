@@ -82,8 +82,9 @@ class TwoFactorController extends Controller
         //Log::info('OTP Provided: ' . $request->one_time_password);
         /* $serverTime = now();
         Log::info('Server Time: ' . $serverTime); */
+        //Log::info('Formatted request input: '."'".$request->one_time_password."'"); 
 
-        $valid = $google2fa->verifyKey($user->google2fa_secret, $request->one_time_password,2);
+        $valid = $google2fa->verifyKey($user->google2fa_secret, $request->one_time_password,5);
         
         if ($valid) {
             $user->two_factor_verified = true;
