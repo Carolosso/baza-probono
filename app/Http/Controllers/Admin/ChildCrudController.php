@@ -757,6 +757,13 @@ class ChildCrudController extends CrudController
             'label' => 'Manage Payments',
             'type'  => 'custom_payment_field', // You will create this as a custom field in Step 2
         ])->tab('Wpłaty');
+
+        // Define a field to display existing attachments (if any) and allow managing them
+        CRUD::field([
+            'name'  => 'attachments_section',
+            'label' => 'Manage Payments',
+            'type'  => 'custom_attachment_field', // You will create this as a custom field in Step 2
+        ])->tab('Załączniki');
     }
 
     /**
@@ -1025,6 +1032,7 @@ class ChildCrudController extends CrudController
 
         // After saving the child, handle the related payments
         $this->savePayments($this->crud->entry);
+        $this->saveAttachments($this->crud->entry);
         //$this->calculateRemainingDays($this->crud->entry);
         return $response;
     }
@@ -1035,11 +1043,61 @@ class ChildCrudController extends CrudController
 
         // After updating the child, handle the related payments
         $this->savePayments($this->crud->entry);
+        $this->saveAttachments($this->crud->entry);
         $this->calculateRemainingDays($this->crud->entry);
 
 
         return $response;
     }
+
+    protected function saveAttachments($child)
+    {
+        $attachmentsData = request()->input('attachments', []);
+        $uploadedFiles = request()->file('attachments', []);
+
+        // Track existing attachment IDs for deletion
+        $existingAttachmentIds = $child->attachments()->pluck('id')->toArray();
+
+        foreach ($attachmentsData as $index => $attachmentData) {
+            // Validate required fields
+            $validatedData = [
+                'attachment_description' => $attachmentData['attachment_description'] ?? null,
+            ];
+            
+            if (isset($attachmentData['id'])) {
+                // Update existing attachment
+                $attachment = $child->attachments()->find($attachmentData['id']);
+                if ($attachment) {
+                    // Update description
+                    $attachment->attachment_description = $validatedData['attachment_description'];
+
+                    // Replace file if a new one is uploaded
+                    if (isset($uploadedFiles[$index]['file'])) {
+                        $filePath = $uploadedFiles[$index]['file']->store('attachments', 'public');
+                        $attachment->attachments_url = $filePath;
+                    }
+
+                    $attachment->save();
+                    $existingAttachmentIds = array_diff($existingAttachmentIds, [$attachment->id]);
+                }
+            } else {
+                // Create new attachment
+                if (isset($uploadedFiles[$index]['file'])) {
+                    $filePath = $uploadedFiles[$index]['file']->store('attachments', 'public');
+                    $child->attachments()->create([
+                        'attachment_url' => $filePath,
+                        'attachment_description' => $validatedData['attachment_description'],
+                    ]);
+                }
+            }
+        }
+
+        // Delete attachments not included in the current request
+        $child->attachments()->whereIn('id', $existingAttachmentIds)->delete();
+    }
+
+
+
     protected function savePayments($child)
     {
         // Clear existing payments if needed (optional)

@@ -52,17 +52,26 @@ use App\Models\User;
 				],
 		]
 	]);
-	Widget::add([
+	/* Widget::add([
 		'type'        => 'card',
 		'class'       => 'card text-white bg-info mb-2',
 		'content' => [
 			'header' =>'Informacja',
 			'body' => 'Równolegle trwają pracę nad nową strukturą bazy danych. Do tego momentu większe zmiany w aktualnej strukturze nie będą wprowadzane.',
-	]]);
+	]]); */
 	Widget::add([
 		'type'	=> 'custom_collapse_widget',
 		'class'	=> 'card text-white bg-dark mb-2', 
-		'title' =>	'Zmiany 30.11.2024 <span class="mx-2 badge bg-secondary">Nowe</span><span class="mx-2 badge bg-danger">Ważne</span>',
+		'title' =>	'Zmiany 11.01.2025 <span class="mx-2 badge bg-secondary">Nowe</span>',
+		'content' => '
+			Dodano obsługę załączników.',
+		'number' => '7',
+		'wrapper' => 'col-md-6'
+	]);
+	Widget::add([
+		'type'	=> 'custom_collapse_widget',
+		'class'	=> 'card text-white bg-dark mb-2', 
+		'title' =>	'Zmiany 30.11.2024',
 		'content' => '
 			<ul>Poprawa bezpieczeństwa:
 				<li>Zaimplementowano uwierzytelnianie 2-etapowe</li>

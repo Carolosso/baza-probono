@@ -89,6 +89,10 @@ class Child extends Model
         return $this->hasMany(Payment::class); // A child can have multiple payments
     }
 
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class); // A child can have multiple attachment
+    }
     public function commandory()
     {
         return $this->belongsTo(Commandory::class); //
