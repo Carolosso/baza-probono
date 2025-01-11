@@ -261,7 +261,7 @@
                                 @foreach($entry->attachments as $attachment)
                                     <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                         <div>
-                                            <strong>Podgląd:</strong><a href="{{ asset('storage/' . $attachment->attachment_url) }}" target="_blank">otwórz w nowej karcie</a><br>
+                                            <strong>Plik: </strong><a href="{{ asset('storage/' . $attachment->attachment_url) }}" target="_blank"> otwórz w nowej karcie</a><br>
                                             <strong>Opis:</strong> {{ $attachment->attachment_description}}
                                         </div>
                                     </li>
