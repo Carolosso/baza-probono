@@ -69,7 +69,11 @@
             <div class="attachment-item col-md-4">
                
                 <label>Dodaj plik</label>
-                <input type="file" name="attachments[${attachmentIndex}][file]" class="form-control">
+
+                <input type="file" name="attachments[${attachmentIndex}][file]" 
+                       id="attachments[${attachmentIndex}][file]"
+                       class="form-control attachment-file"
+                       accept=".jpg,.jpeg,.png,.pdf">
 
                  <label>Opis załącznika</label>
                 <input type="text" name="attachments[${attachmentIndex}][attachment_description]" class="form-control">
