@@ -250,6 +250,27 @@
                   </div>
                 </div>
               </div>
+               <div class="col-md-12">
+                <div class="card mb-4">
+                  <div class="card-body p-0">
+                    <h3 class="mb-2 mt-3"><span class="text-primary d-flex justify-content-center">Załączniki</span></h3>
+                    @if($entry->attachments->isEmpty())
+                            <p class="p-3">Nie znaleziono załączników.</p>
+                        @else
+                            <ul class="list-group">
+                                @foreach($entry->attachments as $attachment)
+                                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <div>
+                                            <strong>Podgląd:</strong><a href="{{ asset('storage/' . $attachment->attachment_url) }}" target="_blank">otwórz w nowej karcie</a><br>
+                                            <strong>Opis:</strong> {{ $attachment->attachment_description}}
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
     </div>
