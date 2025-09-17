@@ -1,1 +1,2 @@
 >certbot certonly --manual -d baza-adopcja.parafiamatkibozej.com.pl
+I ZMIENIĆ ŚCIEŻKE NA Website folder: /baza-adopcja dla domeny 
